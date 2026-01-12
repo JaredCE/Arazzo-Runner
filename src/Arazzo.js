@@ -199,10 +199,15 @@ class Arazzo extends Document {
       this.logger.notice(`Running Step: ${this.step.stepId}`);
 
       await this.loadOperationData();
-
+      console.log(this.openAPISteps);
       if (this.openAPISteps) {
         await this.runOpenAPIStep();
       }
+
+      this.isAnOperationId = false;
+      this.isAWorkflowId = false;
+      this.isAnOperationPath = false;
+      this.openAPISteps = false;
 
       return { noMoreSteps: false };
     } else {
@@ -810,6 +815,14 @@ class Arazzo extends Document {
 
       operationId = operationId.split(".").at(-1);
       await this.sourceDescriptionFile.getOperationById(operationId);
+    } else {
+      let workflowIdArr = this.step?.workflowId?.split(".") || [];
+
+      if (workflowIdArr.length === 1) {
+        console.log("run the workflow we just found");
+        await this.runWorkflowById(workflowIdArr.at(0));
+      } else {
+      }
     }
   }
 
@@ -840,6 +853,11 @@ class Arazzo extends Document {
   }
 
   getOperationType() {
+    this.isAnOperationId = false;
+    this.isAWorkflowId = false;
+    this.isAnOperationPath = false;
+    this.openAPISteps = false;
+
     let operationOrWorkflowPointer;
 
     if (this.step.operationId) {
@@ -847,6 +865,7 @@ class Arazzo extends Document {
       this.isAnOperationId = true;
       this.openAPISteps = true;
     } else if (this.step.workflowId) {
+      console.log("i am here");
       operationOrWorkflowPointer = this.step.workflowId;
       this.isAWorkflowId = true;
     } else {
@@ -855,18 +874,6 @@ class Arazzo extends Document {
       this.openAPISteps = true;
     }
     return operationOrWorkflowPointer;
-  }
-
-  matchesExpectedRunTimeExpression(string, runtimeExpression) {
-    const result = this.parser.parse(string, { peg$library: true });
-
-    if (result.peg$success) {
-      if (result.peg$result[0] === runtimeExpression) {
-        return true;
-      }
-    }
-
-    return false;
   }
 
   async getSourceDescriptions() {
@@ -908,6 +915,13 @@ class Arazzo extends Document {
     }
 
     this.workflows = workflows;
+  }
+
+  async runWorkflowById(workflowId) {
+    const workflowIndex = this.findWorkflowIndexByWorkflowId(workflowId);
+
+    await this.runWorkflow(workflowIndex);
+    console.log("i got back here");
   }
 }
 
