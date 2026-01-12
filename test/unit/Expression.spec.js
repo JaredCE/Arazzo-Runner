@@ -369,6 +369,40 @@ describe(`Expression`, function () {
     });
   });
 
+  describe(`checkRegexExpression`, function () {
+    describe(`number`, function () {
+      it(`returns true `, function () {
+        const expression = new Expression();
+
+        expression.addToContext("statusCode", 200);
+
+        const expected = expression.checkRegexExpression(
+          "$statusCode",
+          "^200$",
+        );
+
+        expect(expected).to.be.true;
+      });
+    });
+  });
+
+  xdescribe(`checkJSONPathExpression`, function () {
+    describe(`object`, function () {
+      it(`returns true `, function () {
+        const expression = new Expression();
+
+        expression.addToContext("response.body", [{ pets: ["dog", "cat"] }]);
+
+        const expected = expression.checkJSONPathExpression(
+          "$response.body",
+          "$[?count(@.pets) > 0]",
+        );
+
+        expect(expected).to.be.true;
+      });
+    });
+  });
+
   describe(`resolveExpression`, function () {
     it(`can resolve a simple expression`, function () {
       const expression = new Expression();
