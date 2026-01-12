@@ -7,6 +7,11 @@ const path = require("node:path");
 const Document = require("./Document");
 
 class Input extends Document {
+  /**
+   *
+   * @param {string} filePath The Path to the Input File
+   * @param {string} name
+   */
   constructor(filePath, name) {
     super(filePath, name, {});
 
