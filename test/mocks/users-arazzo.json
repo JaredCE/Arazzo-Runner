@@ -1,0 +1,325 @@
+{
+  "arazzo": "1.0.1",
+  "info": {
+    "title": "users",
+    "description": "The Arazzo Workflow for a Pet Store User",
+    "summary": "Araazo Workflow for Pet Store User",
+    "version": "1.0.0"
+  },
+  "sourceDescriptions": [
+    {
+      "name": "users-openAPI",
+      "url": "https://raw.githubusercontent.com/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+      "type": "openapi"
+    }
+  ],
+  "workflows": [
+    {
+      "workflowId": "createUser",
+      "summary": "Create a new User",
+      "description": "A Workflow to create a new User",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "username": { "type": "string" },
+              "firstName": { "type": "string" },
+              "lastName": { "type": "string" },
+              "email": { "type": "string" },
+              "password": { "type": "string" },
+              "phone": { "type": "string" },
+              "userStatus": { "type": "integer" }
+            }
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepId": "createAUser",
+          "operationId": "createUser",
+          "requestBody": {
+            "contentType": "application/json",
+            "payload": "$inputs.user"
+          },
+          "outputs": { "id": "$response.body#/id" }
+        }
+      ]
+    },
+    {
+      "workflowId": "LoginNewUser",
+      "summary": "Create and Login a new User",
+      "description": "Create a new User and Log Them in",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "username": { "type": "string" },
+              "firstName": { "type": "string" },
+              "lastName": { "type": "string" },
+              "email": { "type": "string" },
+              "password": { "type": "string" },
+              "phone": { "type": "string" },
+              "userStatus": { "type": "integer" }
+            }
+          },
+          "username": { "type": "string" },
+          "password": { "type": "string" }
+        }
+      },
+      "steps": [
+        {
+          "stepId": "createUser",
+          "workflowId": "$sourceDescriptions.users-openAPI.createUser"
+        },
+        {
+          "stepId": "LoginNewUser",
+          "operationId": "loginUser",
+          "requestBody": {
+            "contentType": "application/json",
+            "payload": {
+              "username": "$inputs.username",
+              "password": "$inputs.password"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "workflowId": "createUsersByArray",
+      "summary": "Create new users from an Array",
+      "description": "Create New Users from an Array",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "userArray": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "username": { "type": "string" },
+                "firstName": { "type": "string" },
+                "lastName": { "type": "string" },
+                "email": { "type": "string" },
+                "password": { "type": "string" },
+                "phone": { "type": "string" },
+                "userStatus": { "type": "integer" }
+              }
+            }
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepId": "Login",
+          "workflowId": "$sourceDescriptions.users-openAPI.LoginExistingUser"
+        },
+        {
+          "stepId": "createAUserArray",
+          "operationId": "createWithArray",
+          "parameters": [
+            {
+              "name": "Authorization",
+              "in": "header",
+              "value": "$workflows.LoginExistingUser.outputs.AccessToken"
+            }
+          ],
+          "requestBody": {
+            "contentType": "application/json",
+            "payload": "$inputs.userArray"
+          }
+        }
+      ]
+    },
+    {
+      "workflowId": "createUsersByList",
+      "summary": "Create new users from a list",
+      "description": "Creates new users from a List",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "userList": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "username": { "type": "string" },
+                "firstName": { "type": "string" },
+                "lastName": { "type": "string" },
+                "email": { "type": "string" },
+                "password": { "type": "string" },
+                "phone": { "type": "string" },
+                "userStatus": { "type": "integer" }
+              }
+            }
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepId": "Login",
+          "workflowId": "$sourceDescriptions.users-openAPI.LoginExistingUser"
+        },
+        {
+          "stepId": "createAUserList",
+          "operationId": "createWithList",
+          "parameters": [
+            {
+              "name": "Authorization",
+              "in": "header",
+              "value": "$workflows.LoginExistingUser.outputs.AccessToken"
+            }
+          ],
+          "requestBody": {
+            "contentType": "application/json",
+            "payload": "$inputs.userList"
+          }
+        }
+      ]
+    },
+    {
+      "workflowId": "loginExistingUser",
+      "summary": "Logs in an existing user",
+      "description": "Logs in an existing user",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "username": { "type": "string" },
+          "password": { "type": "string" }
+        }
+      },
+      "outputs": {
+        "AccessToken": "$steps.LoginExistingUser.outputs.AccessToken"
+      },
+      "steps": [
+        {
+          "stepId": "LoginExistingUser",
+          "operationId": "loginUser",
+          "requestBody": {
+            "contentType": "application/json",
+            "payload": {
+              "username": "$inputs.username",
+              "password": "$inputs.password"
+            }
+          },
+          "outputs": { "AccessToken": "$response.body#/AccessToken" }
+        }
+      ]
+    },
+    {
+      "workflowId": "loginAndOutUser",
+      "summary": "Logs a user in and then logs them out",
+      "description": "Logs a user in and then logs them out",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "username": { "type": "string" },
+          "password": { "type": "string" }
+        }
+      },
+      "steps": [
+        {
+          "stepId": "Login",
+          "workflowId": "$sourceDescriptions.users-openAPI.LoginExistingUser"
+        },
+        {
+          "stepId": "LogoutUser",
+          "operationId": "logout",
+          "parameters": [
+            {
+              "name": "Authorization",
+              "in": "header",
+              "value": "$workflows.LoginExistingUser.outputs.AccessToken"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "workflowId": "getUser",
+      "summary": "Gets a user by username",
+      "description": "Gets a user by username",
+      "inputs": {
+        "type": "object",
+        "properties": { "username": { "type": "string" } }
+      },
+      "steps": [
+        {
+          "stepId": "getAUser",
+          "operationId": "getUserByName",
+          "parameters": [
+            { "name": "username", "in": "path", "value": "$inputs.username" }
+          ]
+        }
+      ]
+    },
+    {
+      "workflowId": "deleteCurrentUser",
+      "summary": "Deletes the current user",
+      "description": "Logs the user in and then deletes them",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "username": { "type": "string" },
+          "password": { "type": "string" }
+        }
+      },
+      "steps": [
+        {
+          "stepId": "LoginUser",
+          "workflowId": "$sourceDescriptions.users-openAPI.loginExistingUser"
+        },
+        {
+          "stepId": "deleteUser",
+          "operationId": "deleteUser",
+          "parameters": [
+            {
+              "name": "Authorization",
+              "in": "header",
+              "value": "$workflows.LoginExistingUser.outputs.AccessToken"
+            },
+            { "name": "username", "in": "path", "value": "$inputs.username" }
+          ]
+        }
+      ]
+    },
+    {
+      "workflowId": "updateCurrentUser",
+      "summary": "Update the current user",
+      "description": "Login and update the current user",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "username": { "type": "string" },
+          "password": { "type": "string" },
+          "firstName": { "type": "string" }
+        }
+      },
+      "steps": [
+        {
+          "stepId": "Login",
+          "workflowId": "$sourceDescriptions.users-openAPI.LoginExistingUser"
+        },
+        {
+          "stepId": "deleteUser",
+          "operationId": "updateUser",
+          "parameters": [
+            {
+              "name": "Authorization",
+              "in": "header",
+              "value": "$workflows.LoginExistingUser.outputs.AccessToken"
+            },
+            { "name": "username", "in": "path", "value": "$inputs.username" }
+          ],
+          "requestBody": {
+            "contentType": "application/json",
+            "payload": { "firstName": "$inputs.firstName" }
+          }
+        }
+      ]
+    }
+  ]
+}

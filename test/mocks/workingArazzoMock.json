@@ -1,0 +1,57 @@
+{
+  "arazzo": "1.0.1",
+  "info": {
+    "title": "Arazzo Pet Store",
+    "summary": "An Arazzo Specification for a pet store",
+    "description": "An Arazzo Specification for a pet store",
+    "version": "1.0.0"
+  },
+  "sourceDescriptions": [
+    {
+      "name": "Arazzo-Workflow-for-Petstore-openAPI",
+      "url": "https://raw.githubusercontent.com/readmeio/oas-examples/refs/heads/main/3.1/json/petstore.json",
+      "type": "openapi"
+    }
+  ],
+  "workflows": [
+    {
+      "workflowId": "findByStatus",
+      "summary": "Find a pet by status",
+      "description": "This worflow finds a pet by status",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["available", "pending", "sold"]
+          }
+        },
+        "required": ["status"]
+      },
+      "steps": [
+        {
+          "description": "The step to find a pet by status",
+          "stepId": "findByStatus",
+          "operationId": "findPetsByStatus",
+          "parameters": [
+            {
+              "name": "status",
+              "in": "query",
+              "value": "$inputs.status"
+            }
+          ],
+          "successCriteria": [
+            {
+              "condition": "$statusCode == 200"
+            }
+          ],
+          "outputs": {
+            "availablePets": "$response.body",
+            "contentType": "$response.header.content-type",
+            "pet": "$response.body#/[0].id"
+          }
+        }
+      ]
+    }
+  ]
+}

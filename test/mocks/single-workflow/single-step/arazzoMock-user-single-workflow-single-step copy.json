@@ -1,0 +1,54 @@
+{
+  "arazzo": "1.0.1",
+  "info": {
+    "title": "users",
+    "description": "The Arazzo Workflow for a Pet Store User",
+    "summary": "Araazo Workflow for Pet Store User",
+    "version": "1.0.0"
+  },
+  "sourceDescriptions": [
+    {
+      "name": "users-openAPI",
+      "url": "https://raw.githubusercontent.com/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+      "type": "openapi"
+    }
+  ],
+  "workflows": [
+    {
+      "workflowId": "createUsersByArray",
+      "summary": "Create a new User",
+      "description": "A Workflow to create a new User",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "userArray": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "username": { "type": "string" },
+                "firstName": { "type": "string" },
+                "lastName": { "type": "string" },
+                "email": { "type": "string" },
+                "password": { "type": "string" },
+                "phone": { "type": "string" },
+                "userStatus": { "type": "integer" }
+              }
+            }
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepId": "createAUser",
+          "operationId": "createUsersWithArrayInput",
+          "requestBody": {
+            "contentType": "application/json",
+            "payload": "$inputs.userArray"
+          },
+          "outputs": { "id": "$response.body#/id" }
+        }
+      ]
+    }
+  ]
+}
