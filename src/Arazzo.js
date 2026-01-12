@@ -94,14 +94,24 @@ class Arazzo extends Document {
       console.log(`Running Workflow: ${workflow.workflowId}`);
       this.logger.notice(`Running Workflow: ${workflow.workflowId}`);
 
+      this.workflow = workflow;
+
+      if (workflow.dependsOn) {
+        console.log(`${workflow.workflowId} has dependsOn`);
+        // console.log(this.expression.context);
+        await this.runDependsOnWorkflows();
+        // console.log(this.expression.context);
+        console.log("end dependsOn");
+        this.workflow = workflow;
+      }
+
       this.inputs = await this.inputFile.getWorkflowInputs(
-        workflow.workflowId,
-        workflow.inputs,
+        this.workflow.workflowId,
+        this.workflow.inputs,
       );
 
       this.expression.addToContext("inputs", this.inputs);
 
-      this.workflow = workflow;
       this.workflow.rules = rules;
 
       if (this.workflow.onSuccess) {
@@ -133,6 +143,18 @@ class Arazzo extends Document {
 
       return { noMoreWorkflows: true };
     }
+  }
+
+  async runDependsOnWorkflows() {
+    console.log("depends on workflows running first");
+    for await (const workflowId of this.workflow.dependsOn) {
+      const workflowIndex = this.findWorkflowIndexByWorkflowId(workflowId);
+
+      if (workflowIndex !== -1) {
+        await this.runWorkflow(workflowIndex);
+      }
+    }
+    console.log("all dependsOn have been run");
   }
 
   async runStepByIdFromRetry(stepId) {
@@ -262,6 +284,7 @@ class Arazzo extends Document {
       if (this.retryAfter) await sleep(this.retryAfter * 1000);
 
       console.log(`fetching: ${url}`);
+      console.log(options);
       const response = await fetch(url, options);
 
       if (response.headers.has("retry-after")) {
@@ -784,6 +807,7 @@ class Arazzo extends Document {
     if (this.isAnOperationId) {
       // this.logger.notice(`Getting OperationId: ${this.step.operationId}`);
       let operationId = this.step.operationId;
+
       operationId = operationId.split(".").at(-1);
       await this.sourceDescriptionFile.getOperationById(operationId);
     }
