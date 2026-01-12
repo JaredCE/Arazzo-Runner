@@ -20,7 +20,7 @@ class DocumentFactory {
     if (type === "openapi") {
       document = new OpenAPI(path, name, options);
     } else {
-      document = new Arazzo(path, name, options);
+      document = new Arazzo(path, name, options, this);
     }
 
     await document.loadDocument();
