@@ -5,14 +5,15 @@ const URLParams = require("openapi-params");
 const path = require("node:path");
 
 const Document = require("./Document");
-const docFactory = require("./DocFactory");
+// const docFactory = require("./DocFactory");
 const Expression = require("./Expression");
 const Rules = require("./Rules");
 
 class Arazzo extends Document {
-  constructor(url, name, options) {
+  constructor(url, name, options, docFactory) {
     super(url, name, options);
 
+    this.docFactory = docFactory;
     this.type = "arazzo";
     this.outputs = {};
     this.loadedSourceDescriptions = {};
@@ -873,7 +874,7 @@ class Arazzo extends Document {
         `Getting Source Description for: ${this.sourceDescription.name}`,
       );
 
-      this.sourceDescriptionFile = await docFactory.buildDocument(
+      this.sourceDescriptionFile = await this.docFactory.buildDocument(
         this.sourceDescription.type,
         this.sourceDescription.url,
         this.sourceDescription.name,
@@ -898,6 +899,7 @@ class Arazzo extends Document {
         console.log("run the workflow we just found");
         await this.runWorkflowById(workflowIdArr.at(0));
       } else {
+        this.sourceDescription.runWorkflowById(flowIdArr.at(-1));
       }
     }
   }
