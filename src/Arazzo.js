@@ -5,14 +5,15 @@ const URLParams = require("openapi-params");
 const path = require("node:path");
 
 const Document = require("./Document");
-const docFactory = require("./DocFactory");
+// const docFactory = require("./DocFactory");
 const Expression = require("./Expression");
 const Rules = require("./Rules");
 
 class Arazzo extends Document {
-  constructor(url, name, options) {
+  constructor(url, name, options, docFactory) {
     super(url, name, options);
 
+    this.docFactory = docFactory;
     this.type = "arazzo";
     this.outputs = {};
     this.loadedSourceDescriptions = {};
@@ -28,6 +29,12 @@ class Arazzo extends Document {
     this.filePath = path.resolve(this.url);
   }
 
+  /**
+   * Run the workflows of an Arazzo Document
+   * @function runWorkflows
+   * @public
+   * @param {*} inputFile
+   */
   async runWorkflows(inputFile) {
     this.inputFile = inputFile;
     await this.getSourceDescriptions();
@@ -40,6 +47,10 @@ class Arazzo extends Document {
     console.log("All Workflows run");
   }
 
+  /**
+   * @private
+   * @param {number} index
+   */
   async startWorkflows(index = 0) {
     this.workflowIndex = index;
     if (index <= this.workflows.length - 1) {
@@ -82,6 +93,11 @@ class Arazzo extends Document {
     // }
   }
 
+  /**
+   * @private
+   * @param {number} index
+   * @returns
+   */
   async runWorkflow(index) {
     if (this.abortWorkflowController.signal.aborted) {
       throw new DOMException("Aborted", "AbortError");
@@ -145,6 +161,9 @@ class Arazzo extends Document {
     }
   }
 
+  /**
+   * @private
+   */
   async runDependsOnWorkflows() {
     console.log("depends on workflows running first");
     for await (const workflowId of this.workflow.dependsOn) {
@@ -157,6 +176,9 @@ class Arazzo extends Document {
     console.log("all dependsOn have been run");
   }
 
+  /**
+   * @private
+   */
   async runStepByIdFromRetry(stepId) {
     const stepIndex = this.workflow.steps.findIndex(
       (step) => step.stepId === stepId,
@@ -165,6 +187,10 @@ class Arazzo extends Document {
     return await this.runStep(stepIndex);
   }
 
+  /**
+   * @private
+   * @param {number} index
+   */
   async runSteps(index = 0) {
     if (this.abortWorkflowController.signal.aborted) {
       throw new DOMException("Aborted", "AbortError");
@@ -178,6 +204,11 @@ class Arazzo extends Document {
     }
   }
 
+  /**
+   * @private
+   * @param {*} index
+   * @returns
+   */
   async runStep(index) {
     if (this.abortWorkflowController.signal.aborted) {
       throw new DOMException("Aborted", "AbortError");
@@ -217,6 +248,9 @@ class Arazzo extends Document {
     }
   }
 
+  /**
+   * @private
+   */
   async runOpenAPIStep() {
     this.operations = await this.sourceDescriptionFile.buildOperation(
       this.inputs,
@@ -228,6 +262,12 @@ class Arazzo extends Document {
     await this.runOperation();
   }
 
+  /**
+   *
+   * @private
+   * @param {*} retry
+   * @param {*} retryAfter
+   */
   async runOperation(retry = 0, retryAfter = 0) {
     const sleep = function (ms) {
       return new Promise((resolve) => setTimeout(resolve, ms));
@@ -308,6 +348,10 @@ class Arazzo extends Document {
     }
   }
 
+  /**
+   * @private
+   * @param {*} response
+   */
   async dealWithResponse(response) {
     this.doNotProcessStep = false;
     this.alreadyProcessingOnFailure = false;
@@ -343,6 +387,10 @@ class Arazzo extends Document {
     }
   }
 
+  /**
+   * @private
+   * @returns
+   */
   hasPassedSuccessCriteria() {
     const hasPassed = [];
     for (const criteriaObject of this.step.successCriteria) {
@@ -358,6 +406,10 @@ class Arazzo extends Document {
     return hasPassed.length === this.step.successCriteria.length;
   }
 
+  /**
+   * @private
+   * @param {*} response
+   */
   async dealWithPassedRule(response) {
     if (this.step?.outputs) {
       await this.dealWithStepOutputs(response);
@@ -422,6 +474,11 @@ class Arazzo extends Document {
     }
   }
 
+  /**
+   * @private
+   * @param {string} stepId
+   * @returns
+   */
   findStepIndexInWorkflowByStepId(stepId) {
     const stepIndex = this.workflow.steps.findIndex(
       (step) => step.stepId === stepId,
@@ -434,6 +491,11 @@ class Arazzo extends Document {
     return stepIndex;
   }
 
+  /**
+   * @private
+   * @param {string} workflowId
+   * @returns
+   */
   findWorkflowIndexByWorkflowId(workflowId) {
     const resolvedWorkflowId = this.expression.resolveExpression(workflowId);
 
@@ -448,6 +510,10 @@ class Arazzo extends Document {
     return workflowIndex;
   }
 
+  /**
+   * @private
+   * @param {*} response
+   */
   async dealWithFailedRule(response) {
     // if (this.step?.outputs) {
     //   await this.dealWithStepOutputs(response);
@@ -493,6 +559,10 @@ class Arazzo extends Document {
     }
   }
 
+  /**
+   * @private
+   * @param {*} gotoRule
+   */
   async gotoRule(gotoRule) {
     if (gotoRule.stepId) {
       console.log("goto stepId");
@@ -559,6 +629,10 @@ class Arazzo extends Document {
     }
   }
 
+  /**
+   * @private
+   * @param {*} gotoRule
+   */
   async handleGotoRule(gotoRule) {
     if (gotoRule.stepId) {
       const stepIndex = this.workflow.steps.findIndex(
@@ -600,6 +674,10 @@ class Arazzo extends Document {
     }
   }
 
+  /**
+   * @private
+   * @param {*} whatNext
+   */
   async retryProcessing(whatNext) {
     console.log(whatNext);
     this.retryContext = {
@@ -671,6 +749,10 @@ class Arazzo extends Document {
     console.log("I need to return here after retrying");
   }
 
+  /**
+   * @private
+   * @param {*} response
+   */
   async dealWithStepOutputs(response) {
     const json = await response?.json().catch((err) => {
       console.error(err);
@@ -691,6 +773,9 @@ class Arazzo extends Document {
     });
   }
 
+  /**
+   * @private
+   */
   mapInputs() {
     this.mapParameters();
     this.mapRequestBody();
@@ -701,6 +786,9 @@ class Arazzo extends Document {
     }
   }
 
+  /**
+   * @private
+   */
   mapParameters() {
     const headers = new Headers();
     const queryParams = new URLSearchParams();
@@ -741,6 +829,12 @@ class Arazzo extends Document {
     }
   }
 
+  /**
+   * @private
+   * @param {*} params
+   * @param {*} paramType
+   * @param {*} contextType
+   */
   addParamsToContext(params, paramType, contextType) {
     const parameters = {};
     for (const [key, value] of params.entries()) {
@@ -750,6 +844,9 @@ class Arazzo extends Document {
     this.expression.addToContext(contextType, { [paramType]: parameters });
   }
 
+  /**
+   * @private
+   */
   mapRequestBody() {
     if (this.step?.requestBody) {
       const payload = this.expression.resolveExpression(
@@ -766,29 +863,9 @@ class Arazzo extends Document {
     }
   }
 
-  getValueByPath(obj, path, defaultValue = undefined) {
-    if (typeof path !== "string" || !path.trim()) {
-      throw new Error("Path must be a non-empty string.");
-    }
-
-    // Convert array indexes to dot notation: users[0].name -> users.0.name
-    const normalizedPath = path.replace(/\[(\d+)\]/g, ".$1");
-
-    // Split into keys
-    const keys = normalizedPath.split(".");
-
-    // Traverse the object
-    let result = obj;
-    for (const key of keys) {
-      if (result && Object.prototype.hasOwnProperty.call(result, key)) {
-        result = result[key];
-      } else {
-        return defaultValue;
-      }
-    }
-    return result;
-  }
-
+  /**
+   * @private
+   */
   async loadOperationData() {
     this.sourceDescription = this.getOperationIdSourceDescription();
 
@@ -797,11 +874,11 @@ class Arazzo extends Document {
         `Getting Source Description for: ${this.sourceDescription.name}`,
       );
 
-      this.sourceDescriptionFile = await docFactory.buildDocument(
+      this.sourceDescriptionFile = await this.docFactory.buildDocument(
         this.sourceDescription.type,
         this.sourceDescription.url,
         this.sourceDescription.name,
-        { parser: this.parser, logger: this.logger },
+        { logger: this.logger },
       );
 
       Object.assign(this.loadedSourceDescriptions, {
@@ -822,10 +899,15 @@ class Arazzo extends Document {
         console.log("run the workflow we just found");
         await this.runWorkflowById(workflowIdArr.at(0));
       } else {
+        this.sourceDescription.runWorkflowById(flowIdArr.at(-1));
       }
     }
   }
 
+  /**
+   * @private
+   * @returns
+   */
   getOperationIdSourceDescription() {
     const operationOrWorkflowPointer = this.getOperationType();
 
@@ -852,6 +934,10 @@ class Arazzo extends Document {
     );
   }
 
+  /**
+   * @private
+   * @returns
+   */
   getOperationType() {
     this.isAnOperationId = false;
     this.isAWorkflowId = false;
@@ -876,6 +962,9 @@ class Arazzo extends Document {
     return operationOrWorkflowPointer;
   }
 
+  /**
+   * @private
+   */
   async getSourceDescriptions() {
     const pipeline = this.JSONPicker("sourceDescriptions", this.filePath);
 
@@ -902,6 +991,9 @@ class Arazzo extends Document {
     // this.expression.addToContext('sourceDescriptions', sourceDescriptions)
   }
 
+  /**
+   * private
+   */
   async getWorkflows() {
     const pipeline = this.JSONPicker("workflows", this.filePath);
 
@@ -917,6 +1009,10 @@ class Arazzo extends Document {
     this.workflows = workflows;
   }
 
+  /**
+   * private
+   * @param {string} workflowId
+   */
   async runWorkflowById(workflowId) {
     const workflowIndex = this.findWorkflowIndexByWorkflowId(workflowId);
 

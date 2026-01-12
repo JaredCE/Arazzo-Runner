@@ -1,9 +1,11 @@
 "use strict";
 
 class Logger {
-  constructor(serverlessVersion, log) {
-    this.serverlessVersion = serverlessVersion;
-    this.logOutput = log;
+  constructor() {
+    this.logOutput = {
+      notice: () => console.log,
+      error: () => console.error,
+    };
 
     this.logTypes = {
       NOTICE: "notice",
@@ -19,16 +21,7 @@ class Logger {
   }
 
   log(str, type = this.defaultLog) {
-    switch (this.serverlessVersion) {
-      case "4":
-      case "3":
-        this.logOutput[type](str);
-        break;
-
-      default:
-        process.stdout.write(str.join(" "));
-        break;
-    }
+    this.logOutput[type](str);
   }
 
   debug(str) {
