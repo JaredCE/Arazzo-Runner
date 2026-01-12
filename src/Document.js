@@ -15,10 +15,9 @@ const fsp = require("node:fs/promises");
 const path = require("node:path");
 
 class Document {
-  constructor(url, name, { parser, logger }) {
+  constructor(url, name, { logger, reporter }) {
     this.url = url;
     this.name = name;
-    this.parser = parser;
     this.logger = logger;
   }
 
@@ -67,17 +66,6 @@ class Document {
     } catch (err) {
       console.error("Error reading stream:", err);
     }
-  }
-
-  matchesExpectedRunTimeExpression(string, runtimeExpression) {
-    const result = this.parser.parse(string, { peg$library: true });
-    if (result.peg$success) {
-      if (result.peg$result[0] === runtimeExpression) {
-        return true;
-      }
-    }
-
-    return false;
   }
 
   JSONPickerToIndex(key, index, file = this.filePath) {
