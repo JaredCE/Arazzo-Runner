@@ -20,5 +20,13 @@
   "bugs": {
     "url": "https://github.com/JaredCE/Arazzo-Runner/issues"
   },
-  "homepage": "https://github.com/JaredCE/Arazzo-Runner#readme"
+  "homepage": "https://github.com/JaredCE/Arazzo-Runner#readme",
+  "devDependencies": {
+    "chai": "^6.2.2",
+    "husky": "^9.1.7",
+    "mocha": "^11.7.5",
+    "nock": "^14.0.10",
+    "nyc": "^17.1.0",
+    "sinon": "^21.0.1"
+  }
 }
