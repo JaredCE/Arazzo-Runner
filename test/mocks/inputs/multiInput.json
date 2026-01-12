@@ -1,0 +1,18 @@
+{
+  "createUserMultiStep": {
+    "user": {
+      "username": "DannyB",
+      "firstName": "Danny",
+      "lastName": "Brown",
+      "email": "dannyb@example.com",
+      "phone": "+443333333333",
+      "userStatus": 1
+    }
+  },
+  "loginUser": {
+    "password": "--p4ssW0rd"
+  },
+  "findPetByTag": {
+    "tags": "tag1"
+  }
+}
