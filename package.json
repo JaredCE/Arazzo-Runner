@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --config './test/.mocharc.js'",
-    "test-coverage": "nyc --reporter=text mocha",
+    "test-coverage": "nyc mocha --config './test/.mocharc.js'",
     "prepare": "husky"
   },
   "repository": {
@@ -30,5 +30,10 @@
     "nock": "^14.0.10",
     "nyc": "^17.1.0",
     "sinon": "^21.0.1"
+  },
+  "dependencies": {
+    "@swaggerexpert/arazzo-runtime-expression": "^1.0.1",
+    "@swaggerexpert/json-pointer": "^2.10.2",
+    "jsonpath": "^1.1.1"
   }
 }
