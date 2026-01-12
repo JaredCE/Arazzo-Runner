@@ -11,7 +11,7 @@ const fsp = require("node:fs/promises");
 
 const openAPIMock = require("../mocks/petStoreOpenAPI.json");
 
-const Expression = require("../../src/Expression.js");
+const docFactory = require("../../src/DocFactory");
 const Input = require("../../src/Input.js");
 const Logger = require("../../src/Logger.js");
 const OpenAPI = require("../../src/OpenAPI.js");
@@ -20,18 +20,18 @@ const Arazzo = require("../../src/Arazzo");
 
 describe(`Arazzo Document`, function () {
   let parser = {};
-  const logger = new Logger("3", {
-    notice: (str) => {},
-    error: (str) => {},
-    success: (str) => {},
-    verbose: (str) => {},
-  });
+  const logger = new Logger();
 
   describe(`constructor`, function () {
     it(`should set the type to arazzo`, function () {
-      const expected = new Arazzo("./arazzo.json", "arazzo", {
-        logger: logger,
-      });
+      const expected = new Arazzo(
+        "./arazzo.json",
+        "arazzo",
+        {
+          logger: logger,
+        },
+        docFactory,
+      );
 
       expect(expected).to.be.instanceOf(Arazzo);
       expect(expected.type).to.be.equal("arazzo");
@@ -40,9 +40,14 @@ describe(`Arazzo Document`, function () {
 
   describe(`setMainArazzo`, function () {
     it(`should correctly set the filePath`, function () {
-      const arazzo = new Arazzo("./arazzo.json", "arazzo", {
-        logger: logger,
-      });
+      const arazzo = new Arazzo(
+        "./arazzo.json",
+        "arazzo",
+        {
+          logger: logger,
+        },
+        docFactory,
+      );
       arazzo.setMainArazzo();
 
       expect(arazzo.filePath).to.be.equal(
@@ -129,6 +134,7 @@ describe(`Arazzo Document`, function () {
                   "./test/mocks/single-workflow/single-step/arazzoMock-user-single-workflow-single-step.json",
                   "arazzo",
                   { logger: logger, parser },
+                  docFactory,
                 );
                 arazzo.setMainArazzo();
 
@@ -201,6 +207,7 @@ describe(`Arazzo Document`, function () {
                   "./test/mocks/single-workflow/single-step/arazzoMock-user-single-workflow-single-step.json",
                   "arazzo",
                   { logger: logger, parser },
+                  docFactory,
                 );
                 arazzo.setMainArazzo();
 
@@ -273,6 +280,7 @@ describe(`Arazzo Document`, function () {
                   "./test/mocks/single-workflow/single-step/arazzoMock-user-single-workflow-single-step.json",
                   "arazzo",
                   { logger: logger, parser },
+                  docFactory,
                 );
                 arazzo.setMainArazzo();
 
@@ -345,6 +353,7 @@ describe(`Arazzo Document`, function () {
                   "./test/mocks/single-workflow/single-step/arazzoMock-user-single-workflow-single-step copy.json",
                   "arazzo",
                   { logger: logger, parser },
+                  docFactory,
                 );
                 arazzo.setMainArazzo();
 
@@ -413,6 +422,7 @@ describe(`Arazzo Document`, function () {
                   "./test/mocks/single-workflow/single-step/arazzoMock-user-single-workflow-single-step.json",
                   "arazzo",
                   { logger: logger, parser },
+                  docFactory,
                 );
                 arazzo.setMainArazzo();
 
@@ -483,6 +493,7 @@ describe(`Arazzo Document`, function () {
                   "./test/mocks/single-workflow/single-step/arazzoMock-user-single-workflow-single-step-with-successCriteria.json",
                   "arazzo",
                   { logger: logger, parser },
+                  docFactory,
                 );
                 arazzo.setMainArazzo();
 
@@ -555,6 +566,7 @@ describe(`Arazzo Document`, function () {
                   "./test/mocks/single-workflow/single-step/arazzoMock-user-single-workflow-single-step-with-successCriteria.json",
                   "arazzo",
                   { logger: logger, parser },
+                  docFactory,
                 );
                 arazzo.setMainArazzo();
 
@@ -627,6 +639,7 @@ describe(`Arazzo Document`, function () {
                         "./test/mocks/single-workflow/single-step/arazzoMock-user-single-workflow-single-step-with-successCriteria-and-onFailure-set-to-end.json",
                         "arazzo",
                         { logger: logger, parser },
+                        docFactory,
                       );
                       arazzo.setMainArazzo();
 
@@ -697,6 +710,7 @@ describe(`Arazzo Document`, function () {
                         "./test/mocks/single-workflow/single-step/arazzoMock-user-single-workflow-single-step-with-successCriteria-and-onFailure-set-to-retry.json",
                         "arazzo",
                         { logger: logger, parser },
+                        docFactory,
                       );
                       arazzo.setMainArazzo();
 
@@ -772,6 +786,7 @@ describe(`Arazzo Document`, function () {
                         "./test/mocks/single-workflow/single-step/arazzoMock-user-single-workflow-single-step-with-successCriteria-and-onFailure-set-to-retry.json",
                         "arazzo",
                         { logger: logger, parser },
+                        docFactory,
                       );
                       arazzo.setMainArazzo();
 
@@ -850,6 +865,7 @@ describe(`Arazzo Document`, function () {
                           "./test/mocks/single-workflow/single-step/onFailure/arazzoMock-user-with-successCriteria-and-onFailure-set-to-end.json",
                           "arazzo",
                           { logger: logger, parser },
+                          docFactory,
                         );
                         arazzo.setMainArazzo();
 
@@ -922,6 +938,7 @@ describe(`Arazzo Document`, function () {
                           "./test/mocks/single-workflow/single-step/onFailure/arazzoMock-user-with-successCriteria-and-onFailure-set-to-goto-non-existant-step.json",
                           "arazzo",
                           { logger: logger, parser },
+                          docFactory,
                         );
                         arazzo.setMainArazzo();
 
@@ -995,6 +1012,7 @@ describe(`Arazzo Document`, function () {
                           "./test/mocks/single-workflow/single-step/onFailure/arazzoMock-user-with-successCriteria-and-onFailure-set-to-goto-non-existant-workflow.json",
                           "arazzo",
                           { logger: logger, parser },
+                          docFactory,
                         );
                         arazzo.setMainArazzo();
 
@@ -1068,6 +1086,7 @@ describe(`Arazzo Document`, function () {
                           "./test/mocks/single-workflow/single-step/onFailure/arazzoMock-user-with-successCriteria-and-onFailure-set-to-goto-non-existant-sourceDescription-workflow.json",
                           "arazzo",
                           { logger: logger, parser },
+                          docFactory,
                         );
                         arazzo.setMainArazzo();
 
@@ -1148,6 +1167,7 @@ describe(`Arazzo Document`, function () {
                           "./test/mocks/single-workflow/single-step/onFailure/arazzoMock-user-with-successCriteria-and-onFailure-set-to-goto-self-referential.json",
                           "arazzo",
                           { logger: logger, parser },
+                          docFactory,
                         );
                         arazzo.setMainArazzo();
 
@@ -1234,6 +1254,7 @@ describe(`Arazzo Document`, function () {
                           "./test/mocks/single-workflow/single-step/onFailure/arazzoMock-user-with-successCriteria-and-onFailure-set-to-retry.json",
                           "arazzo",
                           { logger: logger, parser },
+                          docFactory,
                         );
                         arazzo.setMainArazzo();
 
@@ -1310,6 +1331,7 @@ describe(`Arazzo Document`, function () {
                           "./test/mocks/single-workflow/single-step/onFailure/arazzoMock-user-with-successCriteria-and-onFailure-set-to-retry-multiple-times.json",
                           "arazzo",
                           { logger: logger, parser },
+                          docFactory,
                         );
                         arazzo.setMainArazzo();
 
@@ -1398,6 +1420,7 @@ describe(`Arazzo Document`, function () {
                           "./test/mocks/single-workflow/single-step/onFailure/arazzoMock-user-with-successCriteria-and-onFailure-set-to-retry-multiple-times.json",
                           "arazzo",
                           { logger: logger, parser },
+                          docFactory,
                         );
                         arazzo.setMainArazzo();
 
@@ -1496,6 +1519,7 @@ describe(`Arazzo Document`, function () {
                           "./test/mocks/single-workflow/single-step/onFailure/arazzoMock-user-with-successCriteria-and-onFailure-set-to-retry-with-different-types.json",
                           "arazzo",
                           { logger: logger, parser },
+                          docFactory,
                         );
                         arazzo.setMainArazzo();
 
@@ -1581,6 +1605,7 @@ describe(`Arazzo Document`, function () {
                             "./test/mocks/single-workflow/single-step/onFailure/arazzoMock-user-with-successCriteria-and-onFailure-set-to-retry-with-delay.json",
                             "arazzo",
                             { logger: logger, parser },
+                            docFactory,
                           );
                           arazzo.setMainArazzo();
 
@@ -1662,6 +1687,7 @@ describe(`Arazzo Document`, function () {
                             "./test/mocks/single-workflow/single-step/onFailure/arazzoMock-user-with-successCriteria-and-onFailure-set-to-retry-with-delay.json",
                             "arazzo",
                             { logger: logger, parser },
+                            docFactory,
                           );
                           arazzo.setMainArazzo();
 
@@ -1751,6 +1777,7 @@ describe(`Arazzo Document`, function () {
                           "./test/mocks/single-workflow/single-step/onFailure/arazzoMock-user-with-successCriteria-and-onFailure-set-to-retry-with-delay.json",
                           "arazzo",
                           { logger: logger, parser },
+                          docFactory,
                         );
                         arazzo.setMainArazzo();
 
@@ -1828,6 +1855,7 @@ describe(`Arazzo Document`, function () {
                       "./test/mocks/single-workflow/single-step/arazzoMock-user-single-workflow-single-step-with-successCriteria-and-onSuccess-set-to-end.json",
                       "arazzo",
                       { logger: logger, parser },
+                      docFactory,
                     );
                     arazzo.setMainArazzo();
 
@@ -1900,6 +1928,7 @@ describe(`Arazzo Document`, function () {
                       "./test/mocks/single-workflow/single-step/arazzoMock-user-with-successCriteria-and-onSuccess-set-to-goto-non-existant-step.json",
                       "arazzo",
                       { logger: logger, parser },
+                      docFactory,
                     );
                     arazzo.setMainArazzo();
 
@@ -1973,6 +2002,7 @@ describe(`Arazzo Document`, function () {
                       "./test/mocks/single-workflow/single-step/arazzoMock-user-with-successCriteria-and-onSuccess-set-to-goto-non-existant-workflow.json",
                       "arazzo",
                       { logger: logger, parser },
+                      docFactory,
                     );
                     arazzo.setMainArazzo();
 
@@ -2046,6 +2076,7 @@ describe(`Arazzo Document`, function () {
                       "./test/mocks/single-workflow/single-step/arazzoMock-user-with-successCriteria-and-onSuccess-set-to-goto-non-existant-sourceDescription-workflow.json",
                       "arazzo",
                       { logger: logger, parser },
+                      docFactory,
                     );
                     arazzo.setMainArazzo();
 
@@ -2126,6 +2157,7 @@ describe(`Arazzo Document`, function () {
                       "./test/mocks/single-workflow/single-step/arazzoMock-user-with-successCriteria-and-onSuccess-set-to-goto-self-referential.json",
                       "arazzo",
                       { logger: logger, parser },
+                      docFactory,
                     );
                     arazzo.setMainArazzo();
 
@@ -2223,6 +2255,7 @@ describe(`Arazzo Document`, function () {
                   "./test/mocks/single-workflow/multiple-steps/arazzoMock-user-single-workflow-multiple-step.json",
                   "arazzo",
                   { logger: logger, parser },
+                  docFactory,
                 );
                 arazzo.setMainArazzo();
 
@@ -2295,6 +2328,7 @@ describe(`Arazzo Document`, function () {
                   "./test/mocks/single-workflow/multiple-steps/arazzoMock-user-single-workflow-multiple-step.json",
                   "arazzo",
                   { logger: logger, parser },
+                  docFactory,
                 );
                 arazzo.setMainArazzo();
 
@@ -2379,6 +2413,7 @@ describe(`Arazzo Document`, function () {
                   "./test/mocks/single-workflow/multiple-steps/arazzoMock-user-single-workflow-multiple-step.json",
                   "arazzo",
                   { logger: logger, parser },
+                  docFactory,
                 );
                 arazzo.setMainArazzo();
 
@@ -2459,6 +2494,7 @@ describe(`Arazzo Document`, function () {
                   "./test/mocks/single-workflow/multiple-steps/arazzoMock-user-single-workflow-multiple-step.json",
                   "arazzo",
                   { logger: logger, parser },
+                  docFactory,
                 );
                 arazzo.setMainArazzo();
 
@@ -2533,6 +2569,7 @@ describe(`Arazzo Document`, function () {
                   "./test/mocks/single-workflow/multiple-steps/arazzoMock-user-single-workflow-multiple-step-using-output-from-oneStep.json",
                   "arazzo",
                   { logger: logger, parser },
+                  docFactory,
                 );
                 arazzo.setMainArazzo();
 
@@ -2604,6 +2641,7 @@ describe(`Arazzo Document`, function () {
                   "./test/mocks/single-workflow/multiple-steps/arazzoMock-user-single-workflow-multiple-step-with-successCriteria.json",
                   "arazzo",
                   { logger: logger, parser },
+                  docFactory,
                 );
                 arazzo.setMainArazzo();
 
@@ -2682,6 +2720,7 @@ describe(`Arazzo Document`, function () {
                   "./test/mocks/single-workflow/multiple-steps/arazzoMock-user-single-workflow-multiple-step-with-successCriteria.json",
                   "arazzo",
                   { logger: logger, parser },
+                  docFactory,
                 );
                 arazzo.setMainArazzo();
 
@@ -2754,6 +2793,7 @@ describe(`Arazzo Document`, function () {
                         "./test/mocks/single-workflow/single-step/arazzoMock-user-single-workflow-single-step-with-successCriteria-and-onFailure-set-to-end.json",
                         "arazzo",
                         { logger: logger, parser },
+                        docFactory,
                       );
                       arazzo.setMainArazzo();
 
@@ -2824,6 +2864,7 @@ describe(`Arazzo Document`, function () {
                         "./test/mocks/single-workflow/single-step/arazzoMock-user-single-workflow-single-step-with-successCriteria-and-onFailure-set-to-retry.json",
                         "arazzo",
                         { logger: logger, parser },
+                        docFactory,
                       );
                       arazzo.setMainArazzo();
 
@@ -2899,6 +2940,7 @@ describe(`Arazzo Document`, function () {
                         "./test/mocks/single-workflow/single-step/arazzoMock-user-single-workflow-single-step-with-successCriteria-and-onFailure-set-to-retry.json",
                         "arazzo",
                         { logger: logger, parser },
+                        docFactory,
                       );
                       arazzo.setMainArazzo();
 
@@ -2978,6 +3020,7 @@ describe(`Arazzo Document`, function () {
                             "./test/mocks/single-workflow/single-step/onFailure/arazzoMock-user-with-successCriteria-and-onFailure-set-to-end.json",
                             "arazzo",
                             { logger: logger, parser },
+                            docFactory,
                           );
                           arazzo.setMainArazzo();
 
@@ -3050,6 +3093,7 @@ describe(`Arazzo Document`, function () {
                             "./test/mocks/single-workflow/single-step/onFailure/arazzoMock-user-with-successCriteria-and-onFailure-set-to-goto-non-existant-step.json",
                             "arazzo",
                             { logger: logger, parser },
+                            docFactory,
                           );
                           arazzo.setMainArazzo();
 
@@ -3123,6 +3167,7 @@ describe(`Arazzo Document`, function () {
                             "./test/mocks/single-workflow/single-step/onFailure/arazzoMock-user-with-successCriteria-and-onFailure-set-to-goto-non-existant-workflow.json",
                             "arazzo",
                             { logger: logger, parser },
+                            docFactory,
                           );
                           arazzo.setMainArazzo();
 
@@ -3196,6 +3241,7 @@ describe(`Arazzo Document`, function () {
                             "./test/mocks/single-workflow/single-step/onFailure/arazzoMock-user-with-successCriteria-and-onFailure-set-to-goto-non-existant-sourceDescription-workflow.json",
                             "arazzo",
                             { logger: logger, parser },
+                            docFactory,
                           );
                           arazzo.setMainArazzo();
 
@@ -3276,6 +3322,7 @@ describe(`Arazzo Document`, function () {
                             "./test/mocks/single-workflow/single-step/onFailure/arazzoMock-user-with-successCriteria-and-onFailure-set-to-goto-self-referential.json",
                             "arazzo",
                             { logger: logger, parser },
+                            docFactory,
                           );
                           arazzo.setMainArazzo();
 
@@ -3369,6 +3416,7 @@ describe(`Arazzo Document`, function () {
                             "./test/mocks/single-workflow/multiple-steps/onFailure/arazzoMock-user-with-successCriteria-and-onFailure-set-to-execute-a-step-and-retry.json",
                             "arazzo",
                             { logger: logger, parser },
+                            docFactory,
                           );
                           arazzo.setMainArazzo();
 
@@ -3466,6 +3514,7 @@ describe(`Arazzo Document`, function () {
                             "./test/mocks/single-workflow/multiple-steps/onFailure/arazzoMock-user-with-successCriteria-and-onFailure-set-to-execute-a-step-and-retry-do-not-execute-sequential-step.json",
                             "arazzo",
                             { logger: logger, parser },
+                            docFactory,
                           );
                           arazzo.setMainArazzo();
 
@@ -3547,6 +3596,7 @@ describe(`Arazzo Document`, function () {
                             "./test/mocks/single-workflow/single-step/onFailure/arazzoMock-user-with-successCriteria-and-onFailure-set-to-retry.json",
                             "arazzo",
                             { logger: logger, parser },
+                            docFactory,
                           );
                           arazzo.setMainArazzo();
 
@@ -3623,6 +3673,7 @@ describe(`Arazzo Document`, function () {
                             "./test/mocks/single-workflow/single-step/onFailure/arazzoMock-user-with-successCriteria-and-onFailure-set-to-retry-multiple-times.json",
                             "arazzo",
                             { logger: logger, parser },
+                            docFactory,
                           );
                           arazzo.setMainArazzo();
 
@@ -3711,6 +3762,7 @@ describe(`Arazzo Document`, function () {
                             "./test/mocks/single-workflow/single-step/onFailure/arazzoMock-user-with-successCriteria-and-onFailure-set-to-retry-multiple-times.json",
                             "arazzo",
                             { logger: logger, parser },
+                            docFactory,
                           );
                           arazzo.setMainArazzo();
 
@@ -3809,6 +3861,7 @@ describe(`Arazzo Document`, function () {
                             "./test/mocks/single-workflow/single-step/onFailure/arazzoMock-user-with-successCriteria-and-onFailure-set-to-retry-with-different-types.json",
                             "arazzo",
                             { logger: logger, parser },
+                            docFactory,
                           );
                           arazzo.setMainArazzo();
 
@@ -3892,6 +3945,7 @@ describe(`Arazzo Document`, function () {
                             "./test/mocks/single-workflow/single-step/onFailure/arazzoMock-user-with-successCriteria-and-onFailure-set-to-retry-with-delay.json",
                             "arazzo",
                             { logger: logger, parser },
+                            docFactory,
                           );
                           arazzo.setMainArazzo();
 
@@ -3969,6 +4023,7 @@ describe(`Arazzo Document`, function () {
                             "./test/mocks/single-workflow/single-step/onFailure/arazzoMock-user-with-successCriteria-and-onFailure-set-to-retry-with-delay.json",
                             "arazzo",
                             { logger: logger, parser },
+                            docFactory,
                           );
                           arazzo.setMainArazzo();
 
@@ -4056,6 +4111,7 @@ describe(`Arazzo Document`, function () {
                             "./test/mocks/single-workflow/single-step/onFailure/arazzoMock-user-with-successCriteria-and-onFailure-set-to-retry-with-delay.json",
                             "arazzo",
                             { logger: logger, parser },
+                            docFactory,
                           );
                           arazzo.setMainArazzo();
 
@@ -4127,6 +4183,7 @@ describe(`Arazzo Document`, function () {
                         "./test/mocks/single-workflow/single-step/arazzoMock-user-single-workflow-single-step-with-successCriteria.json",
                         "arazzo",
                         { logger: logger, parser },
+                        docFactory,
                       );
                       arazzo.setMainArazzo();
 
@@ -4284,6 +4341,7 @@ describe(`Arazzo Document`, function () {
                       "./test/mocks/single-workflow/multiple-steps/arazzoMock-user-with-successCriteria-and-onSuccess-set-to-end.json",
                       "arazzo",
                       { logger: logger, parser },
+                      docFactory,
                     );
                     arazzo.setMainArazzo();
 
@@ -4362,6 +4420,7 @@ describe(`Arazzo Document`, function () {
                       "./test/mocks/single-workflow/multiple-steps/arazzoMock-user-with-successCriteria-and-onSuccess-set-to-goto-non-existant-step.json",
                       "arazzo",
                       { logger: logger, parser },
+                      docFactory,
                     );
                     arazzo.setMainArazzo();
 
@@ -4435,6 +4494,7 @@ describe(`Arazzo Document`, function () {
                       "./test/mocks/single-workflow/multiple-steps/arazzoMock-user-with-successCriteria-and-onSuccess-set-to-goto-non-existant-workflow.json",
                       "arazzo",
                       { logger: logger, parser },
+                      docFactory,
                     );
                     arazzo.setMainArazzo();
 
@@ -4508,6 +4568,7 @@ describe(`Arazzo Document`, function () {
                       "./test/mocks/single-workflow/single-step/arazzoMock-user-with-successCriteria-and-onSuccess-set-to-goto-non-existant-sourceDescription-workflow.json",
                       "arazzo",
                       { logger: logger, parser },
+                      docFactory,
                     );
                     arazzo.setMainArazzo();
 
@@ -4594,6 +4655,7 @@ describe(`Arazzo Document`, function () {
                       "./test/mocks/single-workflow/multiple-steps/arazzoMock-user-with-successCriteria-and-onSuccess-set-to-goto-self-referential.json",
                       "arazzo",
                       { logger: logger, parser },
+                      docFactory,
                     );
                     arazzo.setMainArazzo();
 
@@ -4680,6 +4742,7 @@ describe(`Arazzo Document`, function () {
               "./test/mocks/multiple-workflows/single-sourceDescription/arazzoMock-user-multiple-workflow-multiple-step.json",
               "arazzo",
               { logger: logger, parser },
+              docFactory,
             );
             arazzo.setMainArazzo();
 
@@ -4758,6 +4821,7 @@ describe(`Arazzo Document`, function () {
               "./test/mocks/multiple-workflows/single-sourceDescription/arazzoMock-user-multiple-workflow-dependsOn.json",
               "arazzo",
               { logger: logger, parser },
+              docFactory,
             );
             arazzo.setMainArazzo();
 
@@ -4832,6 +4896,7 @@ describe(`Arazzo Document`, function () {
               "./test/mocks/multiple-workflows/single-sourceDescription/arazzoMock-user-multiple-step-to-workflow.json",
               "arazzo",
               { logger: logger, parser },
+              docFactory,
             );
             arazzo.setMainArazzo();
 
@@ -4916,6 +4981,7 @@ describe(`Arazzo Document`, function () {
                     "./test/mocks/multiple-workflows/single-sourceDescription/arazzoMock-user-with-successCriteria-and-onSuccess-set-to-goto-different-workflow.json",
                     "arazzo",
                     { logger: logger, parser },
+                    docFactory,
                   );
                   arazzo.setMainArazzo();
 
@@ -5005,6 +5071,7 @@ describe(`Arazzo Document`, function () {
                         "./test/mocks/multiple-workflows/single-sourceDescription/onFailure/arazzoMock-user-with-successCriteria-and-onFailure-set-to-goto-different-workflow.json",
                         "arazzo",
                         { logger: logger, parser },
+                        docFactory,
                       );
                       arazzo.setMainArazzo();
 
@@ -5095,6 +5162,7 @@ describe(`Arazzo Document`, function () {
                         "./test/mocks/multiple-workflows/single-sourceDescription/onFailure/arazzoMock-user-with-successCriteria-and-onFailure-set-to-execute-a-step-and-retry-workflow.json",
                         "arazzo",
                         { logger: logger, parser },
+                        docFactory,
                       );
                       arazzo.setMainArazzo();
 
@@ -5251,6 +5319,7 @@ describe(`Arazzo Document`, function () {
               "./test/mocks/multiple-workflows/multiple-sourceDescription/arazzoMock-user-multiple-workflow.json",
               "arazzo",
               { logger: logger, parser },
+              docFactory,
             );
             arazzo.setMainArazzo();
 
@@ -5329,6 +5398,7 @@ describe(`Arazzo Document`, function () {
           "./test/mocks/workingArazzoMock.json",
           "arazzo",
           { logger: logger, parser },
+          docFactory,
         );
         arazzo.setMainArazzo();
 
@@ -5407,6 +5477,7 @@ describe(`Arazzo Document`, function () {
             "./test/mocks/users-arazzo.json",
             "arazzo",
             { logger: logger, parser },
+            docFactory,
           );
 
           arazzo.setMainArazzo();
@@ -5482,10 +5553,12 @@ describe(`Arazzo Document`, function () {
         "inputs",
       );
 
-      const arazzo = new Arazzo("./test/mocks/users-arazzo.json", "arazzo", {
-        logger: logger,
-        parser,
-      });
+      const arazzo = new Arazzo(
+        "./test/mocks/users-arazzo.json",
+        "arazzo",
+        { logger: logger, parser },
+        docFactory,
+      );
       arazzo.setMainArazzo();
 
       try {
@@ -5575,6 +5648,7 @@ describe(`Arazzo Document`, function () {
         "./test/mocks/correctSourceDescriptionReference-pets-arazzo.json",
         "arazzo",
         { logger: logger, parser },
+        docFactory,
       );
       arazzo.setMainArazzo();
 
@@ -5595,6 +5669,7 @@ describe(`Arazzo Document`, function () {
         "./test/mocks/incorrectSourceDescriptionReference-pets-arazzo.json",
         "arazzo",
         { logger: logger, parser },
+        docFactory,
       );
       arazzo.setMainArazzo();
 
@@ -5623,10 +5698,15 @@ describe(`Arazzo Document`, function () {
         "inputs",
       );
 
-      const arazzo = new Arazzo("./test/mocks/users-arazzo.json", "arazzo", {
-        logger: logger,
-        parser,
-      });
+      const arazzo = new Arazzo(
+        "./test/mocks/users-arazzo.json",
+        "arazzo",
+        {
+          logger: logger,
+          parser,
+        },
+        docFactory,
+      );
 
       arazzo.setMainArazzo();
 
@@ -5651,6 +5731,7 @@ describe(`Arazzo Document`, function () {
         "./test/mocks/arazzoMockMissingSteps.json",
         "arazzo",
         { logger: logger, parser },
+        docFactory,
       );
       arazzo.setMainArazzo();
 
@@ -5675,6 +5756,7 @@ describe(`Arazzo Document`, function () {
         "./test/mocks/arazzoMockWithInvalidInputs.json",
         "arazzo",
         { logger: logger, parser },
+        docFactory,
       );
       arazzo.setMainArazzo();
 
@@ -5694,6 +5776,7 @@ describe(`Arazzo Document`, function () {
         "./test/mocks/arazzoMockMissingWorkflows.json",
         "arazzo",
         { logger: logger, parser },
+        docFactory,
       );
       arazzo.setMainArazzo();
 
@@ -5711,6 +5794,7 @@ describe(`Arazzo Document`, function () {
         "./test/mocks/arazzoMockMissingSourceDescriptions.json",
         "arazzo",
         { logger: logger, parser },
+        docFactory,
       );
       arazzo.setMainArazzo();
 
@@ -5724,3 +5808,26 @@ describe(`Arazzo Document`, function () {
     });
   });
 });
+
+/**
+ * Retry After test ideas
+console.log('Seconds format:');
+console.log(parseRetryAfter('120')); // 120
+console.log(parseRetryAfter('0')); // 0
+console.log(parseRetryAfter('3600')); // 3600
+
+console.log('\nDate format:');
+const futureDate = new Date(Date.now() + 60000); // 60 seconds from now
+console.log(parseRetryAfter(futureDate.toUTCString())); // ~60
+
+console.log('\nHTTP date format:');
+console.log(parseRetryAfter('Fri, 31 Dec 2099 23:59:59 GMT')); // seconds until that date
+
+console.log('\nInvalid values:');
+console.log(parseRetryAfter('invalid')); // null
+console.log(parseRetryAfter('')); // null
+console.log(parseRetryAfter(null)); // null
+console.log(parseRetryAfter(undefined)); // null
+console.log(parseRetryAfter('120.5')); // null (not a valid integer format)
+console.log(parseRetryAfter('-10'));
+ */
