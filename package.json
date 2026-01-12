@@ -6,7 +6,11 @@
   "scripts": {
     "test": "mocha --config './test/.mocharc.js'",
     "test-coverage": "nyc mocha --config './test/.mocharc.js'",
-    "prepare": "husky"
+    "prepare": "husky",
+    "start": "node cli.js"
+  },
+  "bin": {
+    "arazzo-runner": "./cli.js"
   },
   "repository": {
     "type": "git",
