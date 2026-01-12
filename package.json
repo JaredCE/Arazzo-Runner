@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --config './test/.mocharc.js'",
-    "test-coverage": "nyc --reporter=text mocha"
+    "test-coverage": "nyc --reporter=text mocha",
+    "prepare": "husky"
   },
   "repository": {
     "type": "git",
