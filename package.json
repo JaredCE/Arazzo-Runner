@@ -36,6 +36,7 @@
     "@swaggerexpert/arazzo-runtime-expression": "^1.0.1",
     "@swaggerexpert/json-pointer": "^2.10.2",
     "jsonpath": "^1.1.1",
+    "openapi-params": "^0.0.4",
     "stream-chain": "^3.4.0",
     "stream-json": "^1.9.1"
   }
