@@ -41,6 +41,28 @@ arazzo-runner --help
 arazzo-runner --version
 ```
 
+### Input file
+
+The input file is where you keep your variables that you wish to use within your workflow and should be a json file structured like:
+
+```json
+{
+  "worflowId1": {
+    "name": "Jared"
+  }
+}
+```
+
+The file should contain objects for each workflow, by workflowId, with the variables matching up to the inputs that you defined in your workflow inputs schema.
+
+This file is likely to be comitted to your repository, so you should not store secrets in the file, instead you might use something like [jq](https://jqlang.org/) that can take repository variables and insert them into your input file:
+
+```bash
+jq --arg password "$secret_password" '.workflowId1.password = $password' input.json
+```
+
+Obviously, if you have a lot of secret variables that need adding as inputs, then you might need to write a script that can alter the `input.json` file for you within your CI/CD runner.
+
 ## Still unsupported
 
 ### OpenAPI Params
