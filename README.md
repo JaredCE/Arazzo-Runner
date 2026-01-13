@@ -7,6 +7,9 @@
   <a href="https://github.com/JaredCE/arazzo-runner/actions/workflows/node.yml">
     <img src="https://github.com/JaredCE/arazzo-runner/actions/workflows/node.yml/badge.svg">
   </a>
+  <a href="https://www.buymeacoffee.com/jarede">
+    <img src="https://raw.githubusercontent.com/pachadotdev/buymeacoffee-badges/main/bmc-donate-yellow.svg">
+  </a>
 </p>
 
 Run your [OpenAPI Arazzo Workflow Spec](https://www.openapis.org/arazzo-specification).
@@ -42,8 +45,24 @@ arazzo-runner --version
 
 ### OpenAPI Params
 
-OpenAPI Param types with style and explode are not quite supported yet
+OpenAPI parameter types with style and explode are not quite supported yet
 
-### Reporting && Logging
+### OpenAPI Servers on various levels
 
-A better reporter/logger than console.log
+This pulls from the top level servers object of an OpenAPI Document. Server variables do not work either.
+
+### JSONPath and XPath criteria objects
+
+Criteria Objects set as type JSON Path or XPath do not work
+
+### Non application/json Responses
+
+Responses that do not conform to application/json do not work
+
+### Non application/json Requests
+
+Requests that do not conform to application/json do not work
+
+#### Reporting && Logging
+
+A better reporter/logger than console.log still needs to be implemented.
