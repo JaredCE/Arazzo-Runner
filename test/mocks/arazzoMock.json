@@ -1,0 +1,53 @@
+{
+  "info": {
+    "title": "Arazzo Pet Store",
+    "summary": "An Arazzo Specification for a pet store",
+    "description": "An Arazzo Specification for a pet store",
+    "version": "1.0.0"
+  },
+  "workflows": [
+    {
+      "workflowId": "loginUser",
+      "summary": "Login the user",
+      "description": "This Workflow lays out how to login a user",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepId": "loginStep",
+          "description": "This step demonstrates the user login step",
+          "operationId": "login",
+          "parameters": [
+            {
+              "name": "username",
+              "in": "query",
+              "value": "$inputs.username"
+            },
+            {
+              "name": "password",
+              "in": "query",
+              "value": "$inputs.password"
+            }
+          ],
+          "successCriteria": [
+            {
+              "condition": "$statusCode == 200"
+            }
+          ],
+          "outputs": {
+            "token": "$response.body"
+          }
+        }
+      ]
+    }
+  ]
+}

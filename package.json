@@ -1,10 +1,16 @@
 {
   "name": "arazzo-runner",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A runner to run through Arazzo Document workflows",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --config './test/.mocharc.js'",
+    "test-coverage": "nyc mocha --config './test/.mocharc.js'",
+    "prepare": "husky",
+    "start": "node cli.js"
+  },
+  "bin": {
+    "arazzo-runner": "./cli.js"
   },
   "repository": {
     "type": "git",
@@ -20,5 +26,23 @@
   "bugs": {
     "url": "https://github.com/JaredCE/Arazzo-Runner/issues"
   },
-  "homepage": "https://github.com/JaredCE/Arazzo-Runner#readme"
+  "homepage": "https://github.com/JaredCE/Arazzo-Runner#readme",
+  "devDependencies": {
+    "chai": "^6.2.2",
+    "husky": "^9.1.7",
+    "mocha": "^11.7.5",
+    "nock": "^14.0.10",
+    "nyc": "^17.1.0",
+    "sinon": "^21.0.1"
+  },
+  "dependencies": {
+    "@redocly/openapi-core": "^2.14.5",
+    "@swaggerexpert/arazzo-runtime-expression": "^1.0.1",
+    "@swaggerexpert/json-pointer": "^2.10.2",
+    "ajv": "^8.17.1",
+    "jsonpath": "^1.1.1",
+    "openapi-params": "^0.0.4",
+    "stream-chain": "^3.4.0",
+    "stream-json": "^1.9.1"
+  }
 }

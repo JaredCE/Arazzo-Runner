@@ -1,0 +1,115 @@
+{
+  "$schema": "https://spec.openapis.org/arazzo/1.0/schema/2025-10-15",
+  "arazzo": "1.0.1",
+  "info": {
+    "title": "users",
+    "description": "The Arazzo Workflow for a Pet Store User",
+    "summary": "Araazo Workflow for Pet Store User",
+    "version": "1.0.0"
+  },
+  "sourceDescriptions": [
+    {
+      "name": "users-openAPI",
+      "url": "https://raw.githubusercontent.com/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+      "type": "openapi"
+    }
+  ],
+  "workflows": [
+    {
+      "workflowId": "createUserWithMoreSteps",
+      "summary": "Create a few Users",
+      "description": "A Workflow to create a few Users",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "username": { "type": "string" },
+              "firstName": { "type": "string" },
+              "lastName": { "type": "string" },
+              "email": { "type": "string" },
+              "password": { "type": "string" },
+              "phone": { "type": "string" },
+              "userStatus": { "type": "integer" }
+            }
+          },
+          "userArray": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "username": { "type": "string" },
+                "firstName": { "type": "string" },
+                "lastName": { "type": "string" },
+                "email": { "type": "string" },
+                "password": { "type": "string" },
+                "phone": { "type": "string" },
+                "userStatus": { "type": "integer" }
+              }
+            }
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepId": "createAUser",
+          "operationId": "createUser",
+          "requestBody": {
+            "contentType": "application/json",
+            "payload": "$inputs.user"
+          },
+          "successCriteria": [
+            {
+              "condition": "$statusCode == 201"
+            }
+          ],
+          "outputs": { "username": "$response.body#/username" }
+        },
+        {
+          "stepId": "createAUserWithArray",
+          "operationId": "createUsersWithArrayInput",
+          "requestBody": {
+            "contentType": "application/json",
+            "payload": "$inputs.userArray"
+          },
+          "successCriteria": [
+            {
+              "condition": "$statusCode == 201"
+            }
+          ],
+          "outputs": { "username": "$response.body#/username" }
+        },
+        {
+          "stepId": "getAUser",
+          "operationId": "getUserByName",
+          "parameters": [
+            {
+              "name": "username",
+              "in": "path",
+              "value": "$steps.createAUser.outputs.username"
+            }
+          ],
+          "outputs": { "id": "$response.body#/id" },
+          "successCriteria": [
+            {
+              "condition": "$statusCode == 200"
+            }
+          ],
+          "onFailure": [
+            {
+              "name": "retryStepOnce",
+              "stepId": "createAUser",
+              "type": "retry",
+              "criteria": [
+                {
+                  "condition": "$statusCode == 404"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

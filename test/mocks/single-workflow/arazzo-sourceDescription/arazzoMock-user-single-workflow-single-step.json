@@ -1,0 +1,49 @@
+{
+  "arazzo": "1.0.1",
+  "info": {
+    "title": "users",
+    "description": "The Arazzo Workflow for a Pet Store User",
+    "summary": "Araazo Workflow for Pet Store User",
+    "version": "1.0.0"
+  },
+  "sourceDescriptions": [
+    {
+      "name": "users-arazzo",
+      "url": "https://raw.githubusercontent.com/JaredCE/Arazzo-Runner/refs/heads/create-a-runner/test/mocks/single-workflow/single-step/arazzoMock-user-single-workflow-single-step.json",
+      "type": "arazzo"
+    }
+  ],
+  "workflows": [
+    {
+      "workflowId": "createUsersByArray",
+      "summary": "Create a new User",
+      "description": "A Workflow to create a new User",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "userArray": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "username": { "type": "string" },
+                "firstName": { "type": "string" },
+                "lastName": { "type": "string" },
+                "email": { "type": "string" },
+                "password": { "type": "string" },
+                "phone": { "type": "string" },
+                "userStatus": { "type": "integer" }
+              }
+            }
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepId": "createAUser",
+          "workflowId": "$sourceDescription.users-arazzo.createUser"
+        }
+      ]
+    }
+  ]
+}
