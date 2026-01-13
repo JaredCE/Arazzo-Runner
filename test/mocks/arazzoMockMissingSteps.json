@@ -1,0 +1,38 @@
+{
+  "arazzo": "1.0.1",
+  "info": {
+    "title": "Arazzo Pet Store",
+    "summary": "An Arazzo Specification for a pet store",
+    "description": "An Arazzo Specification for a pet store",
+    "version": "1.0.0"
+  },
+  "sourceDescriptions": [
+    {
+      "name": "Arazzo Workflow for AuthAPI-openAPI",
+      "url": "https://raw.githubusercontent.com/readmeio/oas-examples/refs/heads/main/3.1/json/petstore.json",
+      "type": "openapi"
+    }
+  ],
+  "workflows": [
+    {
+      "workflowId": "Login",
+      "summary": "Login as a user",
+      "description": "Login as a particular user",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "clientId": {
+            "type": "string"
+          }
+        },
+        "required": ["username", "password"]
+      }
+    }
+  ]
+}

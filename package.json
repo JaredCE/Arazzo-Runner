@@ -6,7 +6,11 @@
   "scripts": {
     "test": "mocha --config './test/.mocharc.js'",
     "test-coverage": "nyc mocha --config './test/.mocharc.js'",
-    "prepare": "husky"
+    "prepare": "husky",
+    "start": "node cli.js"
+  },
+  "bin": {
+    "arazzo-runner": "./cli.js"
   },
   "repository": {
     "type": "git",
@@ -32,8 +36,13 @@
     "sinon": "^21.0.1"
   },
   "dependencies": {
+    "@redocly/openapi-core": "^2.14.5",
     "@swaggerexpert/arazzo-runtime-expression": "^1.0.1",
     "@swaggerexpert/json-pointer": "^2.10.2",
-    "jsonpath": "^1.1.1"
+    "ajv": "^8.17.1",
+    "jsonpath": "^1.1.1",
+    "openapi-params": "^0.0.4",
+    "stream-chain": "^3.4.0",
+    "stream-json": "^1.9.1"
   }
 }

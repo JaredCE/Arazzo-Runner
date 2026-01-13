@@ -1,0 +1,51 @@
+{
+  "arazzo": "1.0.1",
+  "info": {
+    "title": "pets",
+    "description": "This is an example of an Arazzo Specification",
+    "summary": "Example Arazzo Specification",
+    "version": "1.0.0"
+  },
+  "sourceDescriptions": [
+    {
+      "name": "pets-openAPI",
+      "url": "https://raw.githubusercontent.com/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-pets/openapi.json",
+      "type": "openapi"
+    },
+    {
+      "name": "usersOpenAPI",
+      "url": "https://raw.githubusercontent.com/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+      "type": "openapi"
+    }
+  ],
+  "workflows": [
+    {
+      "workflowId": "loginUserAndRetrievePet",
+      "summary": "Login User and then retrieve pets",
+      "description": "This workflow lays out the steps to login a user and then retrieve pets",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "username": { "type": "string" },
+          "password": { "type": "string" },
+          "petId": { "type": "integer" }
+        }
+      },
+      "steps": [
+        {
+          "stepId": "loginStep",
+          "description": "This step demonstrates the user login step",
+          "operationId": "$sourceDescriptions.usersOpenAPI.loginUser",
+          "requestBody": {
+            "contentType": "application/json",
+            "payload": {
+              "username": "$inputs.username",
+              "password": "$inputs.password"
+            }
+          },
+          "outputs": { "AccessToken": "$response.body/AccessToken" }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "createUser": {
+    "user": {
+      "username": "DannyB",
+      "firstName": "Danny",
+      "lastName": "Brown",
+      "email": "dannyb@example.com",
+      "phone": "+443333333333",
+      "userStatus": 1
+    }
+  },
+  "createUserMultiStep": {
+    "user": {
+      "username": "DannyB",
+      "firstName": "Danny",
+      "lastName": "Brown",
+      "email": "dannyb@example.com",
+      "phone": "+443333333333",
+      "userStatus": 1
+    },
+    "username": "DannyB"
+  },
+  "LoginNewUser": {
+    "user": {
+      "username": "FatboyS",
+      "firstName": "Norman",
+      "lastName": "Cook",
+      "email": "NormanC@example.com",
+      "phone": "+441111111111",
+      "userStatus": 1
+    },
+    "username": "FatboyS",
+    "password": "--p4ssW0rd"
+  },
+  "createUsersByArray": {
+    "username": "FatboyS",
+    "password": "--p4ssW0rd",
+    "userArray": [
+      {
+        "username": "SlimS",
+        "firstName": "Marshall",
+        "lastName": "Mathers",
+        "email": "MarshamM@example.com",
+        "phone": "+442222222222",
+        "userStatus": 1
+      },
+      {
+        "username": "IceC",
+        "firstName": "O'Shea",
+        "lastName": "Jackson",
+        "email": "OSheaJ@example.com",
+        "phone": "+444444444444",
+        "userStatus": 1
+      }
+    ]
+  },
+  "createUsersByList": {
+    "username": "FatboyS",
+    "password": "--p4ssW0rd",
+    "userArray": [
+      {
+        "username": "DrDre",
+        "firstName": "Andre",
+        "lastName": "Young",
+        "email": "AndreY@example.com",
+        "phone": "+445555555555",
+        "userStatus": 1
+      },
+      {
+        "username": "KDot",
+        "firstName": "Kendrick",
+        "lastName": "Lamar",
+        "email": "KendrickL@example.com",
+        "phone": "+446666666666",
+        "userStatus": 1
+      }
+    ]
+  },
+  "loginExistingUser": {
+    "username": "DannyB",
+    "password": "--p4ssW0rd"
+  },
+  "loginAndOutUser": {
+    "username": "DannyB",
+    "password": "--p4ssW0rd"
+  },
+  "getUser": {
+    "username": "KDot"
+  },
+  "deleteCurrentUser": {
+    "username": "DrDre",
+    "password": "--p4ssW0rd"
+  },
+  "updateCurrentUser": {
+    "username": "SlimS",
+    "password": "--p4ssW0rd",
+    "firstName": "Slim"
+  },
+  "loginUser": {
+    "password": "--p4ssW0rd"
+  },
+  "createUserWithMoreSteps": {
+    "user": {
+      "username": "DannyB",
+      "firstName": "Danny",
+      "lastName": "Brown",
+      "email": "dannyb@example.com",
+      "phone": "+443333333333",
+      "userStatus": 1
+    },
+    "userArray": [
+      {
+        "username": "SlimS",
+        "firstName": "Marshall",
+        "lastName": "Mathers",
+        "email": "MarshamM@example.com",
+        "phone": "+442222222222",
+        "userStatus": 1
+      },
+      {
+        "username": "IceC",
+        "firstName": "O'Shea",
+        "lastName": "Jackson",
+        "email": "OSheaJ@example.com",
+        "phone": "+444444444444",
+        "userStatus": 1
+      }
+    ]
+  }
+}
