@@ -10,7 +10,7 @@
     "start": "node cli.js"
   },
   "bin": {
-    "arazzo-runner": "./cli.js"
+    "arazzo-runner": "cli.js"
   },
   "repository": {
     "type": "git",
