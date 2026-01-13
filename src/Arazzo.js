@@ -36,15 +36,19 @@ class Arazzo extends Document {
    * @param {*} inputFile
    */
   async runWorkflows(inputFile) {
-    this.inputFile = inputFile;
-    await this.getSourceDescriptions();
-    await this.getWorkflows();
+    await this.loadWorkflowData(inputFile);
 
     console.log("Starting Workflows");
 
     await this.startWorkflows();
 
     console.log("All Workflows run");
+  }
+
+  async loadWorkflowData(inputFile) {
+    this.inputFile = inputFile;
+    await this.getSourceDescriptions();
+    await this.getWorkflows();
   }
 
   /**
@@ -99,8 +103,10 @@ class Arazzo extends Document {
    * @returns
    */
   async runWorkflow(index) {
-    if (this.abortWorkflowController.signal.aborted) {
+    if (this?.abortWorkflowController?.signal?.aborted) {
       throw new DOMException("Aborted", "AbortError");
+    } else {
+      this.abortWorkflowController = new AbortController();
     }
 
     const rules = new Rules(this.expression);
@@ -899,7 +905,9 @@ class Arazzo extends Document {
         console.log("run the workflow we just found");
         await this.runWorkflowById(workflowIdArr.at(0));
       } else {
-        this.sourceDescription.runWorkflowById(flowIdArr.at(-1));
+        console.log("running external arazzo", workflowIdArr.at(-1));
+        await this.sourceDescriptionFile.loadWorkflowData(this.inputFile);
+        await this.sourceDescriptionFile.runWorkflowById(workflowIdArr.at(-1));
       }
     }
   }
@@ -1013,9 +1021,10 @@ class Arazzo extends Document {
    * private
    * @param {string} workflowId
    */
+
   async runWorkflowById(workflowId) {
     const workflowIndex = this.findWorkflowIndexByWorkflowId(workflowId);
-
+    console.log(workflowIndex);
     await this.runWorkflow(workflowIndex);
     console.log("i got back here");
   }
