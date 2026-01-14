@@ -2,3 +2,4 @@
 .github/*
 .gitignore
 .husky/*
+.nyc_output/*
