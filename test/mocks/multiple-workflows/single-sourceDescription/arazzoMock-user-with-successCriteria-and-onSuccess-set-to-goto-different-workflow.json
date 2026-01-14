@@ -85,7 +85,7 @@
           "requestBody": {
             "contentType": "application/json",
             "payload": {
-              "username": "$workflows.createUser.outputs.username",
+              "username": "$workflow.createUser.outputs.username",
               "password": "$inputs.password"
             }
           },

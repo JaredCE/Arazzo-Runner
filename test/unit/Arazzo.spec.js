@@ -18,7 +18,7 @@ const OpenAPI = require("../../src/OpenAPI.js");
 
 const Arazzo = require("../../src/Arazzo");
 
-xdescribe(`Arazzo Document`, function () {
+describe(`Arazzo Document`, function () {
   let parser = {};
   const logger = new Logger();
 
@@ -4915,7 +4915,7 @@ xdescribe(`Arazzo Document`, function () {
 
           describe(`with successCriteria`, function () {
             describe(`with onSuccess`, function () {
-              xdescribe(`goto`, function () {
+              describe(`goto`, function () {
                 it(`should handle going to a different workflow`, async function () {
                   nock("https://raw.githubusercontent.com:443", {
                     encodedQueryParams: true,
@@ -5333,7 +5333,7 @@ xdescribe(`Arazzo Document`, function () {
         });
       });
 
-      xit(`should throw an error when the operationId does not exist in the OpenAPI document`, async function () {
+      it(`should throw an error when the operationId does not exist in the OpenAPI document`, async function () {
         nock("https://raw.githubusercontent.com:443", {
           encodedQueryParams: true,
         })
@@ -5503,17 +5503,16 @@ xdescribe(`Arazzo Document`, function () {
         describe(`single workflow`, function () {
           describe(`single step`, function () {
             it(`resolve if the outputs resolve on a 201`, async function () {
-              // nock.recorder.rec();
               nock("https://raw.githubusercontent.com:443", {
                 encodedQueryParams: true,
               })
                 .get(
-                  "/JaredCE/Arazzo-Runner/refs/heads/create-a-runner/test/mocks/single-workflow/single-step/arazzoMock-user-single-workflow-single-step.json",
+                  "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/single-workflow/single-step/arazzoMock-user-single-workflow-single-step.json",
                 )
                 .reply(
                   200,
                   [
-                    "1f8b080000000000001395534d6fdb300cbdfb5710ea8e8bd55e73cbba1dba4351a01d76187a506c2651674b1a49374883fcf741b2e38ff403a94f32f91ef5483eed330065c8bcbc78350775955fe657ea6b0c5ab78aa17d0600a0c44a8511d130122704802a910bb241ac7731f7b04158a45af0dbd3df55e5b7b0f20406ee50e05e3c21fc62a4239d9bba36b48bd40519734a7b9bf48cc4dd7d51eda5ca000e4931fb860afc3e686235873f89d57601a09ca98736663ea05bdcdd74a501544355cc6e4402cfb526b3cdd75636cd32e20bef049de485aff54f43585effd08cf48c5421f3ac9de26cdbb5c09a70c57a83a6645d1bebb420cb989034e8a8c1049b3fb1778310d985a4b3cbaa143f64008fa9d5fe92d71d1e533765e41784467034bfe9d8af531a0c38dcc21475b2dbc5b01bf150bccfb32e34c2bd73a6dd2c9fb0901e0ba002f9802416a70c68377412fba8d2c7d5fa8addfef7432516b26ead5a0f4df02b4b2cb79f2054e67378ac8dadce0507c3bcf5549e8ddf7877b692389a7b31d2f094619de01a4925eb0ddff86f381f4f87c1698261b0288c6cdaa7c7365d4c9c9420719f267af05d3b2718e1bf0659bef972f7da33ddbb7de87a322154b64845f5e4d1f583de55dea4ebbeb466ce9317c73d4f353672b43c28db12093978c7982f7db9bbd0b6546f0cea7178d5d921fb0f25cc3d638b050000",
+                    "1f8b08000000000000139553b172db300cddf51538a6632326ab3737ed900eb95c935e875e065a826d2612c902507d8ecfffde23259b96ebe41c4d14f11e80073c6e0a0065c8bcbe7a3501755d5e95d7ea73bcb46e1eaf36050080122b0d4644c7489c1000aa46aec806b1dec5d8e312619a72c12f4f2ff3c6af60ee090cdca3c0837842f8c9483b3a776d6b681da95332e698769af41789877ab1db2b55006c53c7ec3baaf06bee89d5047e2756af024039d36619973ea09bdedf0ea90154474d8c2e45024fb426b32a175696dd2ce22bef049d94956ff5774358df7cd3bddccb1f9d73489a70ce7a89a666dd1aebb4208b6e7df5c23a9632c1ea5cd8045b3eb377b9baac436a6e88aa74bf2d009e92bed5309c13b276a1db3af22b42237830b4f1ac6f52180c385cc11875b4d0695e8878a8dee659173ae1bd5dc66a66cf58c91e0ba002f9802416c70ce8d77274f75ea6f7b3ed330e4bdfe44c2c64dd42f5c619e1e79658ee3e4068ccc7f0d81adb9c0b0e8679e5a93e1bbff4eeec4ee2681ec448c7638675820b2495ac97bfc3bf7cde9db6d96982215b140e6cba0f1fda743a725282c47d9ae8c137ed9c60847f3a64f9e2ebf5ff9e191eebe3a0c984d0d82a25d5a347b71ff4baf12695fbd49bb94c5e3cd43ceeb1939de541d99e48c8c13bc672e6ebf585b6b53a31a8a7fcaa8b6df10f42f86f7f80050000",
                   ],
                   {
                     "accept-ranges": "bytes",
@@ -5521,27 +5520,27 @@ xdescribe(`Arazzo Document`, function () {
                     "cache-control": "max-age=300",
                     connection: "keep-alive",
                     "content-encoding": "gzip",
-                    "content-length": "511",
+                    "content-length": "510",
                     "content-security-policy":
                       "default-src 'none'; style-src 'unsafe-inline'; sandbox",
                     "content-type": "text/plain; charset=utf-8",
                     "cross-origin-resource-policy": "cross-origin",
-                    date: "Tue, 13 Jan 2026 00:12:25 GMT",
-                    etag: 'W/"77ce00e01c3f4b4a62b9ebe7f7692ef30b0e53580fe6b59ac67d490a344ac1eb"',
-                    expires: "Tue, 13 Jan 2026 00:17:25 GMT",
-                    "source-age": "135",
+                    date: "Wed, 14 Jan 2026 15:38:18 GMT",
+                    etag: 'W/"92f9a0783c41491dd6ace8818df8d07c359dca87d21d472a7d1038dc51736661"',
+                    expires: "Wed, 14 Jan 2026 15:43:18 GMT",
+                    "source-age": "0",
                     "strict-transport-security": "max-age=31536000",
                     vary: "Authorization,Accept-Encoding",
                     via: "1.1 varnish",
                     "x-cache": "HIT",
-                    "x-cache-hits": "1",
+                    "x-cache-hits": "0",
                     "x-content-type-options": "nosniff",
                     "x-fastly-request-id":
-                      "2ae7ed75448e64ff71c4abcde83507c53d2dd5d2",
+                      "f7c7ddab65b5f8352f08e6b18a3ca2ca429ce591",
                     "x-frame-options": "deny",
-                    "x-github-request-id": "AD24:1C90BF:9F368:13BB55:69658C24",
-                    "x-served-by": "cache-lhr-egll1980079-LHR",
-                    "x-timer": "S1768263145.270707,VS0,VE0",
+                    "x-github-request-id": "29AB:37AEF1:11C32:1EE31:6967B633",
+                    "x-served-by": "cache-lhr-egll1980085-LHR",
+                    "x-timer": "S1768405098.425447,VS0,VE97",
                     "x-xss-protection": "1; mode=block",
                   },
                 );
@@ -5568,9 +5567,9 @@ xdescribe(`Arazzo Document`, function () {
                       "default-src 'none'; style-src 'unsafe-inline'; sandbox",
                     "content-type": "text/plain; charset=utf-8",
                     "cross-origin-resource-policy": "cross-origin",
-                    date: "Tue, 13 Jan 2026 00:06:15 GMT",
+                    date: "Wed, 14 Jan 2026 15:38:18 GMT",
                     etag: 'W/"d38379461bc9571f3e57ed61b7c4f2b6d189a3b3cf79f0449c1fde6e9379637e"',
-                    expires: "Tue, 13 Jan 2026 00:11:15 GMT",
+                    expires: "Wed, 14 Jan 2026 15:43:18 GMT",
                     "source-age": "0",
                     "strict-transport-security": "max-age=31536000",
                     vary: "Authorization,Accept-Encoding",
@@ -5579,11 +5578,11 @@ xdescribe(`Arazzo Document`, function () {
                     "x-cache-hits": "0",
                     "x-content-type-options": "nosniff",
                     "x-fastly-request-id":
-                      "8c6469ffb4eafc17295e8846265683f8c5db8d51",
+                      "3479045fc73c4841062577a40fda91247932c871",
                     "x-frame-options": "deny",
-                    "x-github-request-id": "FD2A:205ED8:90DED:118AE0:69657E8B",
-                    "x-served-by": "cache-lhr-egll1980090-LHR",
-                    "x-timer": "S1768262775.420141,VS0,VE96",
+                    "x-github-request-id": "71BA:2BAC73:289635:4D4859:6967AB80",
+                    "x-served-by": "cache-lhr-egll1980085-LHR",
+                    "x-timer": "S1768405099.546242,VS0,VE104",
                     "x-xss-protection": "1; mode=block",
                   },
                 );
