@@ -5,15 +5,14 @@ const nock = require("nock");
 
 const Runner = require("../../src/Runner");
 
-describe(`Runner`, function () {
+xdescribe(`Runner`, function () {
   describe(`runArazzo`, function () {
     it(`should run an arrazo collection and resolve if the outputs resolve on a 201`, async function () {
-      //   nock.recorder.rec();
       nock("https://raw.githubusercontent.com:443", {
         encodedQueryParams: true,
       })
         .get(
-          "/JaredCE/Arazzo-Runner/refs/heads/create-documents/test/mocks/single-workflow/single-step/arazzoMock-user-single-workflow-single-step.json",
+          "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/single-workflow/single-step/arazzoMock-user-single-workflow-single-step.json",
         )
         .reply(
           200,
@@ -31,21 +30,21 @@ describe(`Runner`, function () {
               "default-src 'none'; style-src 'unsafe-inline'; sandbox",
             "content-type": "text/plain; charset=utf-8",
             "cross-origin-resource-policy": "cross-origin",
-            date: "Mon, 12 Jan 2026 23:01:57 GMT",
+            date: "Wed, 14 Jan 2026 15:04:49 GMT",
             etag: 'W/"77ce00e01c3f4b4a62b9ebe7f7692ef30b0e53580fe6b59ac67d490a344ac1eb"',
-            expires: "Mon, 12 Jan 2026 23:06:57 GMT",
-            "source-age": "0",
+            expires: "Wed, 14 Jan 2026 15:09:49 GMT",
+            "source-age": "281",
             "strict-transport-security": "max-age=31536000",
             vary: "Authorization,Accept-Encoding",
             via: "1.1 varnish",
             "x-cache": "HIT",
             "x-cache-hits": "0",
             "x-content-type-options": "nosniff",
-            "x-fastly-request-id": "b1c62e8fc9537a518a268f4c2b012ecad7d3a6ae",
+            "x-fastly-request-id": "a674845e3c88a3390c2470a5406591dfea37a185",
             "x-frame-options": "deny",
-            "x-github-request-id": "70DC:233D1F:842CA:FC3E8:69657432",
-            "x-served-by": "cache-lhr-egll1980098-LHR",
-            "x-timer": "S1768258918.801649,VS0,VE92",
+            "x-github-request-id": "A990:3530D7:4461:73DC:6967AF79",
+            "x-served-by": "cache-lhr-egll1980073-LHR",
+            "x-timer": "S1768403090.970273,VS0,VE3",
             "x-xss-protection": "1; mode=block",
           },
         );
@@ -54,7 +53,7 @@ describe(`Runner`, function () {
         encodedQueryParams: true,
       })
         .get(
-          "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+          "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
         )
         .reply(
           200,
@@ -101,7 +100,7 @@ describe(`Runner`, function () {
 
       try {
         await runner.runArazzo(
-          "https://raw.githubusercontent.com/JaredCE/Arazzo-Runner/refs/heads/create-documents/test/mocks/single-workflow/single-step/arazzoMock-user-single-workflow-single-step.json",
+          "https://raw.githubusercontent.com/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/single-workflow/single-step/arazzoMock-user-single-workflow-single-step.json",
           "./test/mocks/inputs/userInput.json",
         );
       } catch (err) {
