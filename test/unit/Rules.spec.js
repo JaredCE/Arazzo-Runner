@@ -3,10 +3,13 @@
 const expect = require("chai").expect;
 
 const Expression = require("../../src/Expression");
+const Logger = require("../../src/Logger.js");
 
 const Rules = require("../../src/Rules");
 
 describe(`Rules`, function () {
+  const logger = new Logger();
+
   describe(`constructor`, function () {
     it(`returns an instance of Rules`, function () {
       const expression = new Expression();
