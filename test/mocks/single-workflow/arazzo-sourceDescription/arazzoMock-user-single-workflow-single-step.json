@@ -9,7 +9,7 @@
   "sourceDescriptions": [
     {
       "name": "users-arazzo",
-      "url": "https://raw.githubusercontent.com/JaredCE/Arazzo-Runner/refs/heads/create-a-runner/test/mocks/single-workflow/single-step/arazzoMock-user-single-workflow-single-step.json",
+      "url": "https://raw.githubusercontent.com/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/single-workflow/single-step/arazzoMock-user-single-workflow-single-step.json",
       "type": "arazzo"
     }
   ],

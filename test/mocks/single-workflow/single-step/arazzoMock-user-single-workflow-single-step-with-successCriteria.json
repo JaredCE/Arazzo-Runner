@@ -9,7 +9,7 @@
   "sourceDescriptions": [
     {
       "name": "users-openAPI",
-      "url": "https://raw.githubusercontent.com/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+      "url": "https://raw.githubusercontent.com/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
       "type": "openapi"
     }
   ],
