@@ -3,8 +3,13 @@
 class Logger {
   constructor() {
     this.logOutput = {
-      notice: () => console.log,
-      error: () => console.error,
+      debug: (message) => console.debug(message),
+      error: (message) => console.error(`❌ ${message}`),
+      info: (message) => console.info(message),
+      notice: (message) => console.log(message),
+      success: (message) => console.log(`✅ ${message}`),
+      verbose: (message) => console.log(message),
+      warning: (message) => console.warn(message),
     };
 
     this.logTypes = {

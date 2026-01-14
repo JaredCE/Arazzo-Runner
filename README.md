@@ -63,6 +63,34 @@ jq --arg password "$secret_password" '.workflowId1.password = $password' input.j
 
 Obviously, if you have a lot of secret variables that need adding as inputs, then you might need to write a script that can alter the `input.json` file for you within your CI/CD runner.
 
+## Logging And Reporting
+
+### Logging
+
+Logging is currently pretty verbose, with an example Log looking like:
+
+```bash
+Running Workflows
+Running Workflow: createUser
+Running Step: createAUser
+Getting Source Description for: users-openAPI
+Making a POST to http://petstore.swagger.io/v2/user
+http://petstore.swagger.io/v2/user responded with a: 200
+==================================================================================
+Checking: $statusCode == 200
+✅ $statusCode == 200 passed
+==================================================================================
+✅ All criteria checks passed
+Running onSuccess Rules
+✅ Step createAUser completed
+✅ Workflow createUser completed
+✅ All Workflows run
+```
+
+### Reporting
+
+Work on Reporting still needs completeing.
+
 ## Still unsupported
 
 ### OpenAPI Params
@@ -84,7 +112,3 @@ Responses that do not conform to application/json do not work
 ### Non application/json Requests
 
 Requests that do not conform to application/json do not work
-
-#### Reporting && Logging
-
-A better reporter/logger than console.log still needs to be implemented.
