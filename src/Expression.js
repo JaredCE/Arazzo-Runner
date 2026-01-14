@@ -61,7 +61,6 @@ class Expression {
       const normalisedExpression = this.normalisedExpression(expression);
       return this.safeEvaluate(normalisedExpression);
     } catch (e) {
-      console.error("Error evaluating expression:", expression, e);
       return false;
     }
   }
@@ -77,7 +76,6 @@ class Expression {
       const regex = new RegExp(pattern);
       return regex.test(String(value));
     } catch (e) {
-      console.error("Error evaluating regex expression:", expression, e);
       return false;
     }
   }
@@ -90,10 +88,8 @@ class Expression {
   checkJSONPathExpression(expression, jsonPath) {
     try {
       const value = this.resolveExpression(expression);
-      console.log(value);
       return jp.query(value, jsonPath);
     } catch (e) {
-      console.error("Error evaluating JSONPath expression:", expression, e);
       return null;
     }
   }

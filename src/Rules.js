@@ -1,10 +1,16 @@
 "use strict";
 
 class Rules {
-  constructor(expression) {
+  constructor(expression, options) {
     this.expression = expression;
     this.failureRules = [];
     this.successRules = [];
+
+    this.logger = options?.logger || {
+      notice: () => {},
+      error: () => {},
+      success: () => {},
+    };
   }
 
   setWorkflowFailures(failureActions) {
@@ -36,6 +42,12 @@ class Rules {
 
     const obj = {};
 
+    if (successRules) {
+      this.logger.notice(`Running onSuccess Rules`);
+    } else {
+      this.logger.notice(`Running onFailure Rules`);
+    }
+
     for (const rule of this.rules) {
       if (rule.criteria) {
         const passedCriteria = this.criteriaChecks(rule);
@@ -66,16 +78,41 @@ class Rules {
   criteriaChecks(rule) {
     const passedCriteria = [];
 
+    this.logger.notice(
+      "==================================================================================",
+    );
+
     for (const criteriaObject of rule.criteria) {
       if (criteriaObject?.type) {
+        if (criteriaObject.type === "regex") {
+          const hasPassedCheck = this.expression.checkRegexExpression(
+            criteriaObject.context,
+            criteriaObject.condition,
+          );
+
+          if (hasPassedCheck) hasPassed.push(true);
+        } else {
+        }
       } else {
+        this.logger.notice(
+          `checking ${rule.name} rule: ${criteriaObject.condition} `,
+        );
         const hasPassedCheck = this.expression.checkSimpleExpression(
           criteriaObject.condition,
         );
-        // console.log(criteriaObject.condition);
-        if (hasPassedCheck) passedCriteria.push(hasPassedCheck);
+
+        if (hasPassedCheck) {
+          this.logger.success(`${criteriaObject.condition} passed`);
+          passedCriteria.push(hasPassedCheck);
+        } else {
+          this.logger.error(`${criteriaObject.condition} failed`);
+        }
       }
     }
+
+    this.logger.notice(
+      "==================================================================================",
+    );
 
     return passedCriteria;
   }
