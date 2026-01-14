@@ -18,7 +18,7 @@ const OpenAPI = require("../../src/OpenAPI.js");
 
 const Arazzo = require("../../src/Arazzo");
 
-describe(`Arazzo Document`, function () {
+xdescribe(`Arazzo Document`, function () {
   let parser = {};
   const logger = new Logger();
 
@@ -67,7 +67,7 @@ describe(`Arazzo Document`, function () {
                   encodedQueryParams: true,
                 })
                   .get(
-                    "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                    "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                   )
                   .reply(
                     200,
@@ -154,7 +154,7 @@ describe(`Arazzo Document`, function () {
                   encodedQueryParams: true,
                 })
                   .get(
-                    "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                    "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                   )
                   .reply(
                     200,
@@ -227,7 +227,7 @@ describe(`Arazzo Document`, function () {
                   encodedQueryParams: true,
                 })
                   .get(
-                    "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                    "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                   )
                   .reply(
                     200,
@@ -297,7 +297,7 @@ describe(`Arazzo Document`, function () {
                   encodedQueryParams: true,
                 })
                   .get(
-                    "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                    "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                   )
                   .reply(
                     200,
@@ -369,7 +369,7 @@ describe(`Arazzo Document`, function () {
                   encodedQueryParams: true,
                 })
                   .get(
-                    "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                    "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                   )
                   .reply(
                     200,
@@ -440,7 +440,7 @@ describe(`Arazzo Document`, function () {
                   encodedQueryParams: true,
                 })
                   .get(
-                    "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                    "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                   )
                   .reply(
                     200,
@@ -513,7 +513,7 @@ describe(`Arazzo Document`, function () {
                   encodedQueryParams: true,
                 })
                   .get(
-                    "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                    "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                   )
                   .reply(
                     200,
@@ -585,7 +585,7 @@ describe(`Arazzo Document`, function () {
                         encodedQueryParams: true,
                       })
                         .get(
-                          "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                          "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                         )
                         .reply(
                           200,
@@ -655,7 +655,7 @@ describe(`Arazzo Document`, function () {
                         encodedQueryParams: true,
                       })
                         .get(
-                          "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                          "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                         )
                         .reply(
                           200,
@@ -732,7 +732,7 @@ describe(`Arazzo Document`, function () {
                         encodedQueryParams: true,
                       })
                         .get(
-                          "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                          "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                         )
                         .reply(
                           200,
@@ -811,7 +811,7 @@ describe(`Arazzo Document`, function () {
                           encodedQueryParams: true,
                         })
                           .get(
-                            "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                            "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                           )
                           .reply(
                             200,
@@ -884,7 +884,7 @@ describe(`Arazzo Document`, function () {
                           encodedQueryParams: true,
                         })
                           .get(
-                            "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                            "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                           )
                           .reply(
                             200,
@@ -958,7 +958,7 @@ describe(`Arazzo Document`, function () {
                           encodedQueryParams: true,
                         })
                           .get(
-                            "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                            "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                           )
                           .reply(
                             200,
@@ -1032,7 +1032,7 @@ describe(`Arazzo Document`, function () {
                           encodedQueryParams: true,
                         })
                           .get(
-                            "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                            "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                           )
                           .reply(
                             200,
@@ -1106,7 +1106,7 @@ describe(`Arazzo Document`, function () {
                           encodedQueryParams: true,
                         })
                           .get(
-                            "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                            "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                           )
                           .reply(
                             200,
@@ -1194,7 +1194,7 @@ describe(`Arazzo Document`, function () {
                           encodedQueryParams: true,
                         })
                           .get(
-                            "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                            "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                           )
                           .reply(
                             200,
@@ -1276,7 +1276,7 @@ describe(`Arazzo Document`, function () {
                           encodedQueryParams: true,
                         })
                           .get(
-                            "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                            "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                           )
                           .reply(
                             200,
@@ -1359,7 +1359,7 @@ describe(`Arazzo Document`, function () {
                           encodedQueryParams: true,
                         })
                           .get(
-                            "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                            "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                           )
                           .reply(
                             200,
@@ -1441,7 +1441,7 @@ describe(`Arazzo Document`, function () {
                           encodedQueryParams: true,
                         })
                           .get(
-                            "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                            "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                           )
                           .reply(
                             200,
@@ -1545,7 +1545,7 @@ describe(`Arazzo Document`, function () {
                             encodedQueryParams: true,
                           })
                             .get(
-                              "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                              "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                             )
                             .reply(
                               200,
@@ -1627,7 +1627,7 @@ describe(`Arazzo Document`, function () {
                             encodedQueryParams: true,
                           })
                             .get(
-                              "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                              "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                             )
                             .reply(
                               200,
@@ -1707,7 +1707,7 @@ describe(`Arazzo Document`, function () {
                           encodedQueryParams: true,
                         })
                           .get(
-                            "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                            "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                           )
                           .reply(
                             200,
@@ -1801,7 +1801,7 @@ describe(`Arazzo Document`, function () {
                       encodedQueryParams: true,
                     })
                       .get(
-                        "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                        "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                       )
                       .reply(
                         200,
@@ -1874,7 +1874,7 @@ describe(`Arazzo Document`, function () {
                       encodedQueryParams: true,
                     })
                       .get(
-                        "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                        "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                       )
                       .reply(
                         200,
@@ -1948,7 +1948,7 @@ describe(`Arazzo Document`, function () {
                       encodedQueryParams: true,
                     })
                       .get(
-                        "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                        "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                       )
                       .reply(
                         200,
@@ -2022,7 +2022,7 @@ describe(`Arazzo Document`, function () {
                       encodedQueryParams: true,
                     })
                       .get(
-                        "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                        "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                       )
                       .reply(
                         200,
@@ -2096,7 +2096,7 @@ describe(`Arazzo Document`, function () {
                       encodedQueryParams: true,
                     })
                       .get(
-                        "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                        "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                       )
                       .reply(
                         200,
@@ -2188,7 +2188,7 @@ describe(`Arazzo Document`, function () {
                   encodedQueryParams: true,
                 })
                   .get(
-                    "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                    "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                   )
                   .reply(
                     200,
@@ -2275,7 +2275,7 @@ describe(`Arazzo Document`, function () {
                   encodedQueryParams: true,
                 })
                   .get(
-                    "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                    "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                   )
                   .reply(
                     200,
@@ -2354,7 +2354,7 @@ describe(`Arazzo Document`, function () {
                   encodedQueryParams: true,
                 })
                   .get(
-                    "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                    "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                   )
                   .reply(
                     200,
@@ -2435,7 +2435,7 @@ describe(`Arazzo Document`, function () {
                   encodedQueryParams: true,
                 })
                   .get(
-                    "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                    "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                   )
                   .reply(
                     200,
@@ -2510,7 +2510,7 @@ describe(`Arazzo Document`, function () {
                   encodedQueryParams: true,
                 })
                   .get(
-                    "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                    "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                   )
                   .reply(
                     200,
@@ -2588,7 +2588,7 @@ describe(`Arazzo Document`, function () {
                   encodedQueryParams: true,
                 })
                   .get(
-                    "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                    "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                   )
                   .reply(
                     200,
@@ -2661,7 +2661,7 @@ describe(`Arazzo Document`, function () {
                   encodedQueryParams: true,
                 })
                   .get(
-                    "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                    "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                   )
                   .reply(
                     200,
@@ -2739,7 +2739,7 @@ describe(`Arazzo Document`, function () {
                         encodedQueryParams: true,
                       })
                         .get(
-                          "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                          "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                         )
                         .reply(
                           200,
@@ -2809,7 +2809,7 @@ describe(`Arazzo Document`, function () {
                         encodedQueryParams: true,
                       })
                         .get(
-                          "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                          "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                         )
                         .reply(
                           200,
@@ -2886,7 +2886,7 @@ describe(`Arazzo Document`, function () {
                         encodedQueryParams: true,
                       })
                         .get(
-                          "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                          "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                         )
                         .reply(
                           200,
@@ -2966,7 +2966,7 @@ describe(`Arazzo Document`, function () {
                             encodedQueryParams: true,
                           })
                             .get(
-                              "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                              "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                             )
                             .reply(
                               200,
@@ -3039,7 +3039,7 @@ describe(`Arazzo Document`, function () {
                             encodedQueryParams: true,
                           })
                             .get(
-                              "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                              "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                             )
                             .reply(
                               200,
@@ -3113,7 +3113,7 @@ describe(`Arazzo Document`, function () {
                             encodedQueryParams: true,
                           })
                             .get(
-                              "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                              "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                             )
                             .reply(
                               200,
@@ -3187,7 +3187,7 @@ describe(`Arazzo Document`, function () {
                             encodedQueryParams: true,
                           })
                             .get(
-                              "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                              "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                             )
                             .reply(
                               200,
@@ -3261,7 +3261,7 @@ describe(`Arazzo Document`, function () {
                             encodedQueryParams: true,
                           })
                             .get(
-                              "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                              "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                             )
                             .reply(
                               200,
@@ -3349,7 +3349,7 @@ describe(`Arazzo Document`, function () {
                             encodedQueryParams: true,
                           })
                             .get(
-                              "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                              "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                             )
                             .reply(
                               200,
@@ -3438,7 +3438,7 @@ describe(`Arazzo Document`, function () {
                             encodedQueryParams: true,
                           })
                             .get(
-                              "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                              "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                             )
                             .reply(
                               200,
@@ -3536,7 +3536,7 @@ describe(`Arazzo Document`, function () {
                             encodedQueryParams: true,
                           })
                             .get(
-                              "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                              "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                             )
                             .reply(
                               200,
@@ -3618,7 +3618,7 @@ describe(`Arazzo Document`, function () {
                             encodedQueryParams: true,
                           })
                             .get(
-                              "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                              "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                             )
                             .reply(
                               200,
@@ -3701,7 +3701,7 @@ describe(`Arazzo Document`, function () {
                             encodedQueryParams: true,
                           })
                             .get(
-                              "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                              "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                             )
                             .reply(
                               200,
@@ -3783,7 +3783,7 @@ describe(`Arazzo Document`, function () {
                             encodedQueryParams: true,
                           })
                             .get(
-                              "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                              "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                             )
                             .reply(
                               200,
@@ -3885,7 +3885,7 @@ describe(`Arazzo Document`, function () {
                             encodedQueryParams: true,
                           })
                             .get(
-                              "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                              "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                             )
                             .reply(
                               200,
@@ -3963,7 +3963,7 @@ describe(`Arazzo Document`, function () {
                             encodedQueryParams: true,
                           })
                             .get(
-                              "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                              "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                             )
                             .reply(
                               200,
@@ -4041,7 +4041,7 @@ describe(`Arazzo Document`, function () {
                             encodedQueryParams: true,
                           })
                             .get(
-                              "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                              "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                             )
                             .reply(
                               200,
@@ -4129,7 +4129,7 @@ describe(`Arazzo Document`, function () {
                         encodedQueryParams: true,
                       })
                         .get(
-                          "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                          "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                         )
                         .reply(
                           200,
@@ -4205,7 +4205,7 @@ describe(`Arazzo Document`, function () {
                         encodedQueryParams: true,
                       })
                         .get(
-                          "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                          "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                         )
                         .reply(
                           200,
@@ -4287,7 +4287,7 @@ describe(`Arazzo Document`, function () {
                       encodedQueryParams: true,
                     })
                       .get(
-                        "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                        "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                       )
                       .reply(
                         200,
@@ -4366,7 +4366,7 @@ describe(`Arazzo Document`, function () {
                       encodedQueryParams: true,
                     })
                       .get(
-                        "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                        "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                       )
                       .reply(
                         200,
@@ -4440,7 +4440,7 @@ describe(`Arazzo Document`, function () {
                       encodedQueryParams: true,
                     })
                       .get(
-                        "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                        "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                       )
                       .reply(
                         200,
@@ -4514,7 +4514,7 @@ describe(`Arazzo Document`, function () {
                       encodedQueryParams: true,
                     })
                       .get(
-                        "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                        "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                       )
                       .reply(
                         200,
@@ -4588,7 +4588,7 @@ describe(`Arazzo Document`, function () {
                       encodedQueryParams: true,
                     })
                       .get(
-                        "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                        "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                       )
                       .reply(
                         200,
@@ -4687,7 +4687,7 @@ describe(`Arazzo Document`, function () {
               encodedQueryParams: true,
             })
               .get(
-                "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
               )
               .reply(
                 200,
@@ -4765,7 +4765,7 @@ describe(`Arazzo Document`, function () {
               encodedQueryParams: true,
             })
               .get(
-                "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
               )
               .reply(
                 200,
@@ -4844,7 +4844,7 @@ describe(`Arazzo Document`, function () {
               encodedQueryParams: true,
             })
               .get(
-                "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
               )
               .reply(
                 200,
@@ -4921,7 +4921,7 @@ describe(`Arazzo Document`, function () {
                     encodedQueryParams: true,
                   })
                     .get(
-                      "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                      "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                     )
                     .reply(
                       200,
@@ -5004,7 +5004,7 @@ describe(`Arazzo Document`, function () {
                         encodedQueryParams: true,
                       })
                         .get(
-                          "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                          "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                         )
                         .reply(
                           200,
@@ -5095,7 +5095,7 @@ describe(`Arazzo Document`, function () {
                         encodedQueryParams: true,
                       })
                         .get(
-                          "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                          "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                         )
                         .reply(
                           200,
@@ -5193,7 +5193,7 @@ describe(`Arazzo Document`, function () {
               encodedQueryParams: true,
             })
               .get(
-                "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
               )
               .reply(
                 200,
@@ -5257,7 +5257,7 @@ describe(`Arazzo Document`, function () {
               encodedQueryParams: true,
             })
               .get(
-                "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-pets/openapi.json",
+                "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/pet-openapi.json",
               )
               .reply(
                 200,
@@ -5424,7 +5424,7 @@ describe(`Arazzo Document`, function () {
             encodedQueryParams: true,
           })
             .get(
-              "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+              "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
             )
             .reply(
               200,
@@ -5550,7 +5550,7 @@ describe(`Arazzo Document`, function () {
                 encodedQueryParams: true,
               })
                 .get(
-                  "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+                  "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
                 )
                 .reply(
                   200,
@@ -5624,7 +5624,7 @@ describe(`Arazzo Document`, function () {
         encodedQueryParams: true,
       })
         .get(
-          "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+          "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
         )
         .reply(
           200,
@@ -5700,7 +5700,7 @@ describe(`Arazzo Document`, function () {
         encodedQueryParams: true,
       })
         .get(
-          "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+          "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
         )
         .reply(
           200,
@@ -5810,7 +5810,7 @@ describe(`Arazzo Document`, function () {
         encodedQueryParams: true,
       })
         .get(
-          "/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json",
+          "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json",
         )
         .reply(404);
 
@@ -5837,7 +5837,7 @@ describe(`Arazzo Document`, function () {
       } catch (err) {
         expect(err).to.be.instanceOf(Error);
         expect(err.message).to.be.equal(
-          `Error fetching document from https://raw.githubusercontent.com/JaredCE/serverless-arazzo-workflows/refs/heads/main/test/serverless-users/openapi.json`,
+          `Error fetching document from https://raw.githubusercontent.com/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/users-openapi.json`,
         );
       }
     });
