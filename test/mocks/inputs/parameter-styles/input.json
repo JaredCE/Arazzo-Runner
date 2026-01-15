@@ -32,6 +32,9 @@
   "FindpetbyID-PathObjectExploded": {
     "petId": { "R": 100, "G": 200, "B": 150 }
   },
+  "FindpetbyID-PathObject": {
+    "petId": { "R": 100, "G": 200, "B": 150 }
+  },
   "FindpetbyID-PathPrimitiveExploded": {
     "petId": "blue"
   },
