@@ -68,7 +68,6 @@ class Arazzo extends Document {
       } catch (err) {
         if (err.name === "AbortError") {
           if (err.goto) {
-            // console.log("goto error");
             await this.handleGotoRule(err.goto);
           }
         } else {
@@ -692,8 +691,6 @@ class Arazzo extends Document {
 
     if (this.retryLimits[whatNext.name] === 0)
       this.retrySet.delete(whatNext.name);
-
-    // console.log("I need to return here after retrying");
   }
 
   /**
@@ -738,13 +735,14 @@ class Arazzo extends Document {
    * @private
    */
   mapParameters() {
-    const headers = new Headers();
-    const queryParams = new URLSearchParams();
-    const pathParams = {};
+    const headersObj = new Headers();
+    const headers = new URLParams();
+    const queryParams = new URLParams();
+    const pathParams = new URLParams();
 
     for (const param of this.step?.parameters || []) {
       const operationDetailParam =
-        this.sourceDescription.operationDetails?.parameters
+        this.sourceDescriptionFile.operationDetails?.parameters
           .filter((obj) => obj.name === param.name && obj.in === param.in)
           .at(0);
 
@@ -752,27 +750,61 @@ class Arazzo extends Document {
 
       switch (param.in) {
         case "header":
-          headers.append(param.name, value);
+          const headerStyle = operationDetailParam?.style || "simple";
+          const headerExplode = operationDetailParam?.explode || false;
+          headers.append(param.name, value, {
+            style: headerStyle,
+            explode: headerExplode,
+          });
+          for (const [header, value] of headers) {
+            if (header === param.name) {
+              headersObj.append(param.name, value);
+            }
+          }
 
           break;
 
         case "path":
           for (const operation of this.operations) {
-            operation.url = operation.url.replace(`{${param.name}}`, value);
-            Object.assign(pathParams, { [param.name]: value });
+            const pathStyle = operationDetailParam?.style || "simple";
+            const pathExplode = operationDetailParam?.explode || false;
+            pathParams.append(param.name, value, {
+              style: pathStyle,
+              explode: pathExplode,
+            });
+            for (const [name, value] of pathParams.entries()) {
+              operation.url = operation.url.replace(`{${name}}`, value);
+            }
+            // operation.url = operation.url.replace(`{${param.name}}`, value);
+            // Object.assign(pathParams, { [param.name]: value });
           }
           break;
 
         case "query":
-          queryParams.append(param.name, value);
+          // queryParams.append(param.name, value);
+          const style = operationDetailParam?.style || "form";
+          let explode = false;
+          if (Object.hasOwn(operationDetailParam, "explode")) {
+            explode = operationDetailParam.explode;
+          } else {
+            if (style === "form") {
+              explode = true;
+            }
+          }
+          // const explode = operationDetailParam?.explode || false;
+          queryParams.append(param.name, value, {
+            style: style,
+            explode: explode,
+          });
           break;
       }
     }
 
-    this.expression.addToContext("request.path", pathParams);
+    this.addParamsToContext(pathParams, "path", "request");
+    // this.expression.addToContext("request.path", pathParams);
 
     for (const operation of this.operations) {
-      operation.headers = headers;
+      operation.headers = headersObj;
       operation.queryParams = queryParams;
     }
   }

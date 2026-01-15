@@ -10,7 +10,7 @@
   "sourceDescriptions": [
     {
       "name": "pets-openAPI",
-      "url": "https://raw.githubusercontent.com/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/parameter-styles/query/form/simple-array-exploded.json",
+      "url": "https://raw.githubusercontent.com/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/parameter-styles/query/form/array.json",
       "type": "openapi"
     }
   ],
