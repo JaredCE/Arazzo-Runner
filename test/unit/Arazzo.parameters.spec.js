@@ -595,17 +595,17 @@ describe(`OpenAPI Parameter Types`, function () {
           }
         });
 
-        xit(`handle when pathParam of label is unexploded`, async function () {
+        it(`handle when pathParam of label is unexploded`, async function () {
           nock("https://raw.githubusercontent.com:443", {
             encodedQueryParams: true,
           })
             .get(
-              "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/parameter-styles/path/label/array-exploded.json",
+              "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/parameter-styles/path/label/array.json",
             )
             .reply(
               200,
               [
-                "1f8b0800000000000013ed59516fdb36107ecfaf38b07bd88054ced2620f795ad63480b1610d96f661c8829591ce365b89e4c85352afc87f1f48c9b64452929b06030ac44f9644de1d3f7e77df51fa7c00c09446c9b56027c05e6447d90b76e8eee6aad24aa224cb4ee0f3010000b3f90a2bbebbe18619e48417489d9b008cd61a9d4175f30173f216db27da288d8604dade0c678a132e955907f7c7ac8d5bf44f4591b8dbb12924e1124d60d40f592853716a07fdf4920523eec3294cf20ac7bd5932422e234bbdebc02efb5495a985b5ced8ab0d6c7d239dab9ec1749061804108f88957baf4030ab55c0a6483e6f54a917a67ca7833b63eb8317c1dba1084557203c7a0fb42a836b1459bcdee0cd71a1d55c8d4b82792c4978fbeca24c5a7483e4cf3bd883e4df504d9c7e83e49f890f2a9644aef656737dff2c74d24e221ef1f4a0c4b9cea116aa493ac409b1ba14928e9c98a048d21101268856049198c5253d6153b812bc66fb928f94d89ecd04d96857701ccaab260d7dd58b7ff3b513383ffd4c2f8955e35901c7693f9ba3334c6718ba1138283d0d1d64dab16c5a3c84582f1135c8f581e3c36c88b37b25cc79b7d3fb2a66f6f313dae3ea96ed2ee93ea3ea9ee93eac66e9f5417be39d5bd403af5699194a9306392d9329629635992ce90c9ec9810b751798b193828714f15e02115202d7d53656020e8f1ec9c12c1d8cdb0104e88c4884c4c77125f0ee2a0288e57bf299493e2f8282b1f4890e914194b923dd3649f4449a6ca78b2ec912e71c2a4537268bfc785f351d23125a05f47a20121dd23591f24a60f92d3b146607f511dc0372dac93c7c07365aaaf3f0a3ee4a410e0fe4e17ee980dce14a885475e074b79fcd669e3b5ddf101bf2310bed3a5e20516e7a2c4afc73157c5088efb1caa5f1c0f23d6da19c76b707685d6f2e5971998046e987ed1f675d6792324df69f9ce66a4240f6c18c395c4d16ba479917615efd29010eccc712dfefe8803cd6e3f9a2696762ab398d746d0fad27de5e8f1899dd6b45246fccb5baea750d1e257ecc1b22922fdc95ddc7cdaac90176882900edab098900bb5fb0043829a56e8f28e2f9768e002a95b52c3947cbb121684050ed6775160d1dc76a6b5d719c09faa869c4b58085980aa092af798dfb8bf1b679ce06a45a44f6633dbdcca84bafe3ebaf50328034ac2953079b6308852159849a44378d68e4acc9a0993cf7ec800ce9501728137311fc2ba8dadb6e84b0ad7023ee21ade5b8db9e0e5f38fb87e0fa480d05233a20b392c4449686cf6d7067d768bc6b610fd981d65479bfb84a6b26f1697686e45ee818ec3f463669b19b992c4f3ee1bc0edbe6fb79a61c545d9928490573fefccb11e054b91a3b498b276aa79be4238de060bc06a537662bcbbbbcbb81f9529b39cb5b6ececb7f9abd7bf5fbe7e7e9c1d652baa4a16506cc37b2797fed120edafaeb753bd8832cd69d5f93e38d348b3cf3e9fefbb6b5886af486d5d55dc1fc8d8b9239c6b146ed6303feba647c0e53f906a233d97855c968db274863b1df081fa62e27c5e20fdb29e173db9e08657e8d8b05d6df31b68009ada14be4e6a9a1b4eab09459c9f3915748b2305c6c71fbfa6ddf62aae4f8bde00eab291b1c4434beba61894fc06c38344fbadf67f3d050db767dbffdd171aadc25c39907b6f3a224236bf608b06c839e6d1a0d5cae5442856c74747b116079b69eb3c476b1775095baa85a0bb6a809252a873ad4b91fb59b30f365091ddd28776cd3ffdcee0c285f26cb6fb3a3f6b3fcacf825e35c421751d36fe8d14797486bbeb977b603597b7bc1405cccfc0d66ee11825d19ebe5e4efaba4002a90816aa967b7b89db91a8283a61b4714decd75cdd0a69d61188dbe35d856dcae486e97d4b9d1ab32be9c1e25edfa259d34ac865abc56b5537f2dd51974f8446f2f24ce541c7d68fb5233ac355f6bcabffc93e298abf7fa60b0d9efaac710570db7428e3f764d4686d3b6d5f68f3cd26ff6c8b4a7ff43020638b6d4d397cc353ea2090366edb9a1d4f86b08ffbb6d7dab417833be8887a707ff01fe2db0b11c1230000",
+                "1f8b0800000000000013ed59516fdb36107ecfaf38b07bd88054ced2620f795ad63480b1610d96f661c8829591ce365b89e4c85352afc87f1f48c9b64452929b06030ac44f9644de1d3f7e77df51fa7c00c09446c9b56027c05e6447d90b76e8eee6aad24aa224cb4ee0f3010000b3f90a2bbebbe18619e48417489d9b008cd61a9d4175f30173f216db27da288d8604dade0c678a132e955907f7c7ac8d5bf44f4591b8dbb12924e1124d60d40f592853716a07fdf4920523eec3294cf20ac7bd5932422e234bbdebc02efb5495a985b5ced8ab0d6c7d239dab9ec1749061804108f88957baf4030ab55c0a6483e6f54a917a67ca7833b63eb8317c1dba1084557203c7a0fb42a836b1459bcdee0cd71a1d55c8d4b82792c4978fbeca24c5a7483e4cf3bd883e4df504d9c7e83e49f890f2a9644aef656737dff2c74d24e221ef1f4a0c4b9cea116aa493ac409b1ba14928e9c98a048d21101268856049198c5253d6153b812bc66fb928f94d89ecd04d96857701ccaab260d7dd58b7ff3b513383ffd4c2f8955e35901c7693f9ba3334c6718ba1138283d0d1d64dab16c5a3c84582f1135c8f581e3c36c88b37b25cc79b7d3fb2a66f6f313dae3ea96ed2ee93ea3ea9ee93eac66e9f5417be39d5bd403af5699194a9306392d9329629635992ce90c9ec9810b751798b193828714f15e02115202d7d53656020e8f1ec9c12c1d8cdb0104e88c4884c4c77125f0ee2a0288e57bf299493e2f8282b1f4890e914194b923dd3649f4449a6ca78b2ec912e71c2a4537268bfc785f351d23125a05f47a20121dd23591f24a60f92d3b146607f511dc0372dac93c7c07365aaaf3f0a3ee4a410e0fe4e17ee980dce14a885475e074b79fcd669e3b5ddf101bf2310bed3a5e20516e7a2c4afc73157c5088efb1caa5f1c0f23d6da19c76b707685d6f2e5971998046e987ed1f675d6792324df69f9ce66a4240f6c18c395c4d16ba479917615efd29010eccc712dfefe8803cd6e3f9a2696762ab398d746d0fad27de5e8f1899dd6b45246fccb5baea750d1e257ecc1b22922fdc95ddc7cdaac90176882900edab098900bb5fb0043829a56e8f28e2f9768e002a95b52c3947cbb121684050ed6775160d1dc76a6b5d719c09faa869c4b58085980aa092af798dfb8bf1b679ce06a45a44f6633dbdcca84bafe3ebaf50328034ac2953079b6308852159849a44378d68e4acc9a0993cf7ec800ce9501728137311fc2ba8dadb6e84b0ad7023ee21ade5b8db9e0e5f38fb87e0fa480d05233a20b392c4449686cf6d7067d768bc6b610fd981d65479bfb84a6b26f1697686e45ee818ec3f463669b19b992c4f3ee1bc0edbe6fb79a61c545d9928490573fefccb11e054b91a3b498b276aa79be4238de060bc06a537662bcbbbbcbb81f9529b39cb5b6ececb7f9abd7bf5fbe7e7e9c1d652baa4a16506cc37b2797fed120edafaeb753bd8832cd69d5f93e38d348b3cf3e9fefbb6b5886af486d5d55dc1fc8d8b9239c6b146ed6303feba647c0e53f906a233d97855c968db274863b1df081fa62e27c5e20fdb29e173db9e08657e8d8b05d6df31b68009ada14be4e6a9a1b4eab09459c9f3915748b2305c6c71fbfa6ddf62aae4f8bde00eab291b1052f6df8d4d2baa90625bfc1f024d17eacfd5f8f41c3fdd9f67ff78d462b31570ee5deab8e8891cd2fd8a301768e793468b5724911aad5f1d1512cc6c16eda3acfd1da455dc2966b21e8ae1ca0a414ea5ceb52e47ed6ec830d6464b7f4a15df34fbf33b870a13c9bed3ecfcfdaaff2b3a0590d71485d879d7fa3451e9de1f6fae51e58cde52d2f4501f333b0b55b384659b4a7af9793be2e90402a8285aae5de5ee27e24aa8a4e196d5c14fb4557b74a9a7514e2f67857629b3ab9617adf52a7c8ec6a7ab0b8d7b768d6b41272d98af15ad58d7e77e4e513a191bc3c5379d0b2f563eda8ce70993def3600c946298abf7fa80b0d9efaac711570db7528e3f764d4686d3b7d5f68f3cd26ff6c8b4a7ff43020638b6d4d397cc363ea209036eedb9a1d4f86b08ffbb6d9daf417833be8887a707ff01fc75ffcaac2230000",
               ],
               {
                 "accept-ranges": "bytes",
@@ -613,27 +613,27 @@ describe(`OpenAPI Parameter Types`, function () {
                 "cache-control": "max-age=300",
                 connection: "keep-alive",
                 "content-encoding": "gzip",
-                "content-length": "1485",
+                "content-length": "1488",
                 "content-security-policy":
                   "default-src 'none'; style-src 'unsafe-inline'; sandbox",
                 "content-type": "text/plain; charset=utf-8",
                 "cross-origin-resource-policy": "cross-origin",
-                date: "Thu, 15 Jan 2026 15:44:01 GMT",
-                etag: 'W/"1b08fec182e0eab291dc8f4e08951f7a619e9fc86335ae68977287a0829d2a81"',
-                expires: "Thu, 15 Jan 2026 15:49:01 GMT",
-                "source-age": "0",
+                date: "Thu, 15 Jan 2026 21:03:02 GMT",
+                etag: 'W/"a361b13dab003dd486dcc78141060be2ab031f668505afb3452f4b9a38fe9d8e"',
+                expires: "Thu, 15 Jan 2026 21:08:02 GMT",
+                "source-age": "28",
                 "strict-transport-security": "max-age=31536000",
                 vary: "Authorization,Accept-Encoding",
                 via: "1.1 varnish",
-                "x-cache": "MISS",
-                "x-cache-hits": "0",
+                "x-cache": "HIT",
+                "x-cache-hits": "1",
                 "x-content-type-options": "nosniff",
                 "x-fastly-request-id":
-                  "35d6c89d9258fe459ffac7674a1a01c2933f403c",
+                  "712106aa8a547ddafb6e114bda11012e366a73c2",
                 "x-frame-options": "deny",
-                "x-github-request-id": "93A6:29CFA9:BB260:130DB9:69690B37",
-                "x-served-by": "cache-lhr-egll1980035-LHR",
-                "x-timer": "S1768491841.050839,VS0,VE134",
+                "x-github-request-id": "8D17:11E85F:12D07E:1FCC68:69694683",
+                "x-served-by": "cache-lhr-egll1980092-LHR",
+                "x-timer": "S1768510982.286644,VS0,VE3",
                 "x-xss-protection": "1; mode=block",
               },
             );
@@ -847,8 +847,8 @@ describe(`OpenAPI Parameter Types`, function () {
         });
       });
 
-      xdescribe(`primitive`, function () {
-        xit(`handle when pathParam of label is exploded`, async function () {
+      describe(`primitive`, function () {
+        it(`handle when pathParam of label is exploded`, async function () {
           nock("https://raw.githubusercontent.com:443", {
             encodedQueryParams: true,
           })
@@ -871,22 +871,22 @@ describe(`OpenAPI Parameter Types`, function () {
                   "default-src 'none'; style-src 'unsafe-inline'; sandbox",
                 "content-type": "text/plain; charset=utf-8",
                 "cross-origin-resource-policy": "cross-origin",
-                date: "Thu, 15 Jan 2026 20:07:29 GMT",
+                date: "Thu, 15 Jan 2026 21:05:02 GMT",
                 etag: 'W/"c71a3370c10f464d6ecffa6d43504fb71292208b69a00a981347c53ddfa263ed"',
-                expires: "Thu, 15 Jan 2026 20:12:29 GMT",
+                expires: "Thu, 15 Jan 2026 21:10:02 GMT",
                 "source-age": "0",
                 "strict-transport-security": "max-age=31536000",
                 vary: "Authorization,Accept-Encoding",
                 via: "1.1 varnish",
-                "x-cache": "MISS",
+                "x-cache": "HIT",
                 "x-cache-hits": "0",
                 "x-content-type-options": "nosniff",
                 "x-fastly-request-id":
-                  "d953db1e078a30e215ae24aef9f78b87c4ddabdc",
+                  "f7d5bd62a2cc80e194ab90eb87a443fc88faa559",
                 "x-frame-options": "deny",
                 "x-github-request-id": "4CA7:C2B59:135FDE:209814:69694901",
-                "x-served-by": "cache-lhr-egll1980055-LHR",
-                "x-timer": "S1768507650.670719,VS0,VE124",
+                "x-served-by": "cache-lhr-egll1980043-LHR",
+                "x-timer": "S1768511103.813424,VS0,VE116",
                 "x-xss-protection": "1; mode=block",
               },
             );
@@ -932,7 +932,7 @@ describe(`OpenAPI Parameter Types`, function () {
           }
         });
 
-        xit(`handle when pathParam of label is unexploded`, async function () {
+        it(`handle when pathParam of label is unexploded`, async function () {
           nock("https://raw.githubusercontent.com:443", {
             encodedQueryParams: true,
           })
@@ -942,7 +942,7 @@ describe(`OpenAPI Parameter Types`, function () {
             .reply(
               200,
               [
-                "1f8b0800000000000013ed59cf6fdb3614bee7af786077588154ced262879c96350d606c5883a63d0c59b032d2b3cd5622399272e215f9df0752b24d51a4e424dea1407cb224f2fdfcdefb1ea56f07004448e454327202e4757694bd2687f66e2e2a293872a3c9097c3b0000203a5f6045b737ec3285d4e0051aef2600312b8956a0b8f982b97112db27520989ca30d49d1d56143538176a15dc1f92362cd13d6545e4ae2793718373548150b7642654454dbbe8e7372458711f6e219c5638ac4d1bc5f8bc27a9731dc82577551973ac5546deaec3d615e25d7504c68d0c0d0c4cc03b5ac9d22d28c47cce9024c5cb8530e2932afbc9d8e8a04ad155a88219aca2091c0add0343b5b6ad976c72aba89468a162548d3b46d2d0f9debd8c427c0ce46998ef04f471a847c03e04f751c087908f15533c975e363fd2fd1692a121ee1f0b0c6da8a907a0112fb20275ae98344c70075634d00802c6c12c10b4110a7ba5c9eb8a9cc015a14bca4a7a532239b49b79e15400d1a22cc8b56febe6bf673551f84fcd94f3f4aa09c9a15fccd7ded27e1c3731b44470102adaa869d9a2d80b5d44103f82f51eca83c70a69f19e97ab7eb2ef077cfafe9ce960f59975a3729f59f799759f59b7aff69975e1bb63dd0b34a7ae2ca23415564cb45a862a65a84ae215325a1d23e436486f7d042629eeb9033ca603c4a96fac0d248c1eaece3112ecab4913e108490cd0c4f824f1f020264971b8fb8d45394a8e7bf13c5120e3253254243b96c92e85122d95e162d9a15cfa05132fc954be8789732fe51823d0a7812841a43b14eba3c8f451743a3408ec4eaa89f8c68975f418782e54f5f4a3e0634e0a41dc3fc9c21eb3c18a0231739197812bfb1f9dd65adb8c27f40e84f0932c052db03867253e3d8eb92806e2b8cba1faf5713a62ad9ce178257757a8359d3f4cc068e0d2f0eba5cff3f38671bae5f2adcc1e933c72600c3de95b2fd14c8bb8aa7e965244b0154725fbfb2b2686ddae358d2ded56a231af1533ab4bfb95a38327725a9b8550ec5fda623d1615c97ec34e58d64da4bbd98f9b2b9b05d2025560d2416b16617c26b61f600c33cd2874794be773547081c66fa961497e5c300d4c0305eda628d0a896deb6f63a03f853d490530e33c60b10b581ca3ea637f6ef5a193570b530469e4c26bab9953171fd63efd64b100a04872ba6f26ca610b92830e3680ee145bb2ab26bc2543e7999019c0b05c61aded87c08abd6b65aa36b295432f88a2bf8ac25e68c96afbee2ea33180106b56956f82187192b0d2a9dfdb58e3e59a2d26d887eca8eb2a3f57d83aad2ef6797a8962c7781ee9be9d64cd63b72c10dcdfd37809bbc6f524db0a2ac6c41629056bf6cc5910e044b9623d71893762a69be4038de180b406a557a36dedede66d4adca849a4f5a597af2fbf4edbb3f2edfbd3ace8eb285a94a12406c8d7b4b97ee5112f657d79bad8e4489a466e17d1f9c4834936fae9eef7d1fe6e12b525d5715750732726e016707859b154ccffcf208b0fc014dadb8c332e3f3b261166fb9e50167a86b2656e7059a5f57d3a2431754d10a2d1a36de36bfc400d0f4a6f0755233dc50b31861c4e9996541eb9c11a09cfdfdd7b49b59c5ce69e124e63eb8c626b11f14ceac8a1793ed87da49fb7d76d258bddbb49470fcee55fc4d9adfb2f6e4caff762a4b0760f3df7fc1d232de954d7ae7cd4baf40a2914b14cb9046855a0a5ba321791e1f1df56783005cbace73d47a5697b0817e9812db9d909b58d4a99425cbddaec9171db0dad6f554d6601484c1ec1cc621761d1e441a9cb9e8a4a7fd373bc46aca97b464054ccf40d7d671ec15f58ebade8ceaba40035c1898899aefaca53f1ef59ab4256addefd15d0e902db1671e612d8fb71dbf69db6ba47725793d6f4b318173ef96a85666c1f8bc9d0d56a26ec6098fedee0c2a4ecb3391071364d7568f04d35dffdc9f47a2735bcffeee19331478eaaac636e4cd102494cbc9a0d05a7b0d2f94f97e5d7fba8d4a77753a2043ceb6a26c7cc353733290ba3f4636198f9ab08bfa76f65b8f3bc90c5aa01edc1ffc07a937df2351240000",
+                "1f8b0800000000000013ed59c16edc3610bdfb2b064c0f0de0685d27e8c1a7ba710c2c5a34469d1c0ad768686976978944b2e4c8ce36f0bf17a4b4bb1249491bc79700ded34a2267868f6fe60da52f07004c69945c0b7602ec657694bd6487ee6eae2aad244ab2ec04be1c0000309bafb0e2bb1b6e98414e7881d4b909c068add11954371f31276fb17da28dd26848a0edcd70a638e1529975707fccdab845ff541489bb1d9b42122ed10446fd90853215a776d0cfaf5830e23e9cc224af70dc9b2523e432b2d4bb0eecb2cf55995a58eb8cbddec0d637d2b9ea194c0719061884809f79a54b3fa050cba54036685eaf14a9f7a68c3763eb831bc3d7a10b41582537700cbaaf846a135bb4d9ecce70add151854c8d7b22497cf9e8ab4c527c8ae4c334df8be8d3544f907d8cee93840f299f4aa6f45e7676f31d7fdc44221ef2fea1c4b0c4a91ea1463ac90ab4b9119a84929eac48d01802218156089694c12835655db113b862fc968b92df94c80edd64597817c0ac2a0b76dd8d75fbbf133533f86f2d8c5fe95503c9613799af3b43631cb7183a2138081d6dddb46a513c8a5c24183fc1f588e5c16383bc782bcb75bcd9f7236bfafe16d3e3ea93ea26ed3ea9ee93ea3ea96eecf64975e1bb53dd0ba4539f1649990a3326992d6399329625e90c99cc8e09711b95b798818312f754011e5201d2d237550606821ecfce29118cdd0c0be184488cc8c47427f1f5200e8ae278f59b4239298e8fb2f28104994e91b124d9334df6499464aa8c27cb1ee912274c3a2587f67b5c381f251d5302fa6d241a10d23d92f54162fa20391d6b04f617d5017cd3c23a790c3c57a6faf6a3e0434e0a01eeef75e18ed9e04c815a78e475b094c76f9d365edb1d1ff03b02e17b5d2a5e60712e4afc761c73558ce0b8cfa1fae5f13062ad9d71bc066757682d5f7e9d8149e086e9176d5f679d3742f29d96ef6c464af2c086315c491cbd469a176957f12e0d09c1ce1cd7e29f4f38d0ecf6a3696269a7328b796d04ad2fdd578e1e9fd8694d2b65c47fbce57a0a152d7ec31e2c9b22d29fdcc5cda7cd0a79812608e9a00d8b09b950bb0f3024a869852eeff87289062e90ba25354cc9772b614158e0607d170516cd6d675a7b9d01fca56ac8b984859005a89aa0728ff98dfbbb71c609ae5644fa6436b3cdad4ca8eb1fa35bcf41195012ae84c9b3854194aac04c221dc2b3765462d64c987cf63c03385706c805dec47c08eb36b6daa22f295c0bf8846bf86035e682972f3ee1fa039002424bcd882ee4b01025a1b1d9df1bf4d92d1adb42f45376941d6dee139acabe5d5ca2b915b9073a0ed38f996d66e44a12cfbb6f00b7fbbedd6a861517654b12425efdb233c77a142c458ed262cadaa9e6f90ae1781b2c00ab4dd989f1eeee2ee37e54a6cc72d6dab2b3dfe7afdffc71f9e6c5717694ada82a5940b10def9d5cfa4783b4bfbade4ef522ca34a755e7fbe04c23cdbef87cbeefae6119be22b57555717f2063e78e70ae51b859c3fcac9b1e0197ff44aa8df45c16725936cad219ee74c007ea8b89f37981f4eb7a5ef4e4821b5ea163c376b5cd6fa001686a53f83aa9696e38ad2614717ee654d02d8e14181f7ffc9a76dbabb83e2d7a03a8cb46c616bcb4e1534beba61a94fc06c39344fbb136d5c5fd6070e1a63d9bed3ef2ceda6fbbb366c5c39dd6f67ff7dd442b16570eafde4b8b885b49b4077836e6d1a0d5cad13bd49de3a3a35856837db1759ea3b58bba842d6b42f85c62a3a4147e5ceb52e47ed6eca30d04611affe93d08dace1087d475d8c337aae2d1196e945fed81d55cdef25214303f035bbb8563940f7bfa7a35e9eb0209a42258a85aeeed25ee2ca2fae634cec6e5ad5f3e75ab8959a7d6df1eef8a6553f1364cef5bea948b5d750e16f7e616cd9a56422e5b595dabba51e28e507c26349297672a0f9aaf7eac1dfd182e98e75d294fb63c51fcfde35968f0d4678dab65dbfe4119bf27a3466bdbe9e0429b6f37f9675b54faa38701195b6c6bcae11b1e380781b47107d6ec7832847ddcb76dd3a65318dc4147d483fb83ff013cd9297c8c230000",
               ],
               {
                 "accept-ranges": "bytes",
@@ -950,27 +950,27 @@ describe(`OpenAPI Parameter Types`, function () {
                 "cache-control": "max-age=300",
                 connection: "keep-alive",
                 "content-encoding": "gzip",
-                "content-length": "1491",
+                "content-length": "1488",
                 "content-security-policy":
                   "default-src 'none'; style-src 'unsafe-inline'; sandbox",
                 "content-type": "text/plain; charset=utf-8",
                 "cross-origin-resource-policy": "cross-origin",
-                date: "Thu, 15 Jan 2026 13:57:26 GMT",
-                etag: 'W/"c70499052dadc2bfa0db9974bef60ba6bee6c55a1a65976b39609e5799a2a9fc"',
-                expires: "Thu, 15 Jan 2026 14:02:26 GMT",
+                date: "Thu, 15 Jan 2026 21:06:01 GMT",
+                etag: 'W/"e1d09c527cb9ccdd0f0cc4cba32b8399a0c51cc52b16a325188817c82996a2a6"',
+                expires: "Thu, 15 Jan 2026 21:11:01 GMT",
                 "source-age": "0",
                 "strict-transport-security": "max-age=31536000",
                 vary: "Authorization,Accept-Encoding",
                 via: "1.1 varnish",
-                "x-cache": "MISS",
+                "x-cache": "HIT",
                 "x-cache-hits": "0",
                 "x-content-type-options": "nosniff",
                 "x-fastly-request-id":
-                  "e3214974c6e5c4399167d7bcbf3cfb4a81b682a5",
+                  "713e7a5ab2b97bc0f18395bdab109cb17c62af8a",
                 "x-frame-options": "deny",
-                "x-github-request-id": "E767:93F2B:7BB2D:CB92F:6968F246",
-                "x-served-by": "cache-lhr-egll1980038-LHR",
-                "x-timer": "S1768485447.800110,VS0,VE129",
+                "x-github-request-id": "F847:64EB4:13BD46:210DD3:69694A00",
+                "x-served-by": "cache-lhr-egll1980090-LHR",
+                "x-timer": "S1768511162.538982,VS0,VE115",
                 "x-xss-protection": "1; mode=block",
               },
             );
@@ -1348,7 +1348,8 @@ describe(`OpenAPI Parameter Types`, function () {
       });
 
       xdescribe(`primitive`, function () {
-        it(`handle when pathParam of matrix is exploded`, async function () {
+        xit(`handle when pathParam of matrix is exploded`, async function () {
+          nock.recorder.rec();
           nock("https://raw.githubusercontent.com:443", {
             encodedQueryParams: true,
           })
@@ -1430,7 +1431,7 @@ describe(`OpenAPI Parameter Types`, function () {
           }
         });
 
-        it(`handle when pathParam of matrix is unexploded`, async function () {
+        xit(`handle when pathParam of matrix is unexploded`, async function () {
           nock("https://raw.githubusercontent.com:443", {
             encodedQueryParams: true,
           })
@@ -1514,8 +1515,8 @@ describe(`OpenAPI Parameter Types`, function () {
     });
 
     describe(`simple`, function () {
-      xdescribe(`array`, function () {
-        xit(`handle when pathParam of simple is exploded`, async function () {
+      describe(`array`, function () {
+        it(`handle when pathParam of simple is exploded`, async function () {
           nock("https://raw.githubusercontent.com:443", {
             encodedQueryParams: true,
           })
@@ -1525,7 +1526,7 @@ describe(`OpenAPI Parameter Types`, function () {
             .reply(
               200,
               [
-                "1f8b0800000000000013ed59cf6fdb3614bee7af786077588154ced262879c96350d606c5883a63d0c59b032d2b3cd5622399272e215f9df0752b24d51a4e424dea1407cb224f2fdfcdefb1ea56f07004448e454327202e4757694bd2687f66e2e2a293872a3c9097c3b0000203a5f6045b737ec3285d4e0051aef2600312b8956a0b8f982b97112db27520989ca30d49d1d56143538176a15dc1f92362cd13d6545e4ae2793718373548150b7642654454dbbe8e7372458711f6e219c5638ac4d1bc5f8bc27a9731dc82577551973ac5546deaec3d615e25d7504c68d0c0d0c4cc03b5ac9d22d28c47cce9024c5cb8530e2932afbc9d8e8a04ad155a88219aca2091c0add0343b5b6ad976c72aba89468a162548d3b46d2d0f9debd8c427c0ce46998ef04f471a847c03e04f751c087908f15533c975e363fd2fd1692a121ee1f0b0c6da8a907a0112fb20275ae98344c70075634d00802c6c12c10b4110a7ba5c9eb8a9cc015a14bca4a7a532239b49b79e15400d1a22cc8b56febe6bf673551f84fcd94f3f4aa09c9a15fccd7ded27e1c3731b44470102adaa869d9a2d80b5d44103f82f51eca83c70a69f19e97ab7eb2ef077cfafe9ce960f59975a3729f59f799759f59b7aff69975e1bb63dd0b34a7ae2ca23415564cb45a862a65a84ae215325a1d23e436486f7d042629eeb9033ca603c4a96fac0d248c1eaece3112ecab4913e108490cd0c4f824f1f020264971b8fb8d45394a8e7bf13c5120e3253254243b96c92e85122d95e162d9a15cfa05132fc954be8789732fe51823d0a7812841a43b14eba3c8f451743a3408ec4eaa89f8c68975f418782e54f5f4a3e0634e0a41dc3fc9c21eb3c18a0231739197812bfb1f9dd65adb8c27f40e84f0932c052db03867253e3d8eb92806e2b8cba1faf5713a62ad9ce178257757a8359d3f4cc068e0d2f0eba5cff3f38671bae5f2adcc1e933c72600c3de95b2fd14c8bb8aa7e965244b0154725fbfb2b2686ddae358d2ded56a231af1533ab4bfb95a38327725a9b8550ec5fda623d1615c97ec34e58d64da4bbd98f9b2b9b05d2025560d2416b16617c26b61f600c33cd2874794be773547081c66fa961497e5c300d4c0305eda628d0a896deb6f63a03f853d490530e33c60b10b581ca3ea637f6ef5a193570b530469e4c26bab9953171fd63efd64b100a04872ba6f26ca610b92830e3680ee145bb2ab26bc2543e7999019c0b05c61aded87c08abd6b65aa36b295432f88a2bf8ac25e68c96afbee2ea33180106b56956f82187192b0d2a9dfdb58e3e59a2d26d887eca8eb2a3f57d83aad2ef6797a8962c7781ee9be9d64cd63b72c10dcdfd37809bbc6f524db0a2ac6c41629056bf6cc5910e044b9623d71893762a69be4038de180b406a557a36dedede66d4adca849a4f5a597af2fbf4edbb3f2edfbd3ace8eb285a94a12406c8d7b4b97ee5112f657d79bad8e4489a466e17d1f9c4834936fae9eef7d1fe6e12b525d5715750732726e016707859b154ccffcf208b0fc014dadb8c332e3f3b261166fb9e50167a86b2656e7059a5f57d3a2431754d10a2d1a36de36bfc400d0f4a6f0755233dc50b31861c4e9996541eb9c11a09cfdfdd7b49b59c5ce69e124e63eb8c626b11f14ceac8a1793ed87da49fb7d76d258bddbb49470fcee55fc4d9adfb2f6e4caff762a4b0760f3df7fc1d232de954d7ae7cd4baf40a2914b14cb9046855a0a5ba321791e1f1df56783005cbace73d47a5697b0817e9812db9d909b58d4a99425cbddaec9171db0dad6f554d6601484c1ec1cc621761d1e441a9cb9e8a4a7fd373bc46aca97b464054ccf40d7d671ec15f58ebade8ceaba40035c1898899aefaca53f1ef59ab4256addefd15d0e902db1671e612d8fb71dbf69db6ba47725793d6f4b318173ef96a85666c1f8bc9d0d56a26ec6098fedee0c2a4ecb3391071364d7568f04d35dffdc9f47a2735bcffeee19331478eaaac636e4cd102494cbc9a0d05a7b0d2f94f97e5d7fba8d4a77753a2043ceb6a26c7cc353733290ba3f4636198f9ab08bfa76f65b8f3bc90c5aa01edc1ffc07a937df2351240000",
+                "1f8b0800000000000013ed59df6fdb36107ecf5f7160f7b001a99ca5c51ef2b4ac690063c31a2cedc390052b239d6db612c991a7a45e91ff7d2025db1249496e1a0c28103f5912793fbfbbef287d3e00604aa3e45ab013602fb2a3ec053b74777355692551926527f0f9000080d97c8515dfdd70cb0c72c20ba4ce4d00466b8d4ea0baf980397989ed136d944643026d6f8713c50997caac83fb63d2c625faa7a248dcedc8149270892610ea972c94a938b58b7e7ac98215f7e116267985e3da2c19219791a4de7520977daaca9463ad32f66a13b6be90ce554f60dac8d0c0c004fcc42b5dfa05855a2e05b241f17aa548bd33659c8cad0e6e0c5f872a0461954ce058e8be30541bdba264b33bc3b54607153235ee1949e2cb47f73209f129900fc37c2fa04f433d01f631b84f023e847caa98d2b9ec64f32d7fdc42221ee2fea1c0b0c4a91e8146bac80ab4b9119a84921eac48d00802218156089694c1a834655db113b862fc968b92df94c80edd66597815c0ac2a0b76ddb575fbbf633533f84f2d8cf7f4aa09c961b798af3b4be3386e63e888e02054b455d3b245f128749140fc04d62394078f0df2e28d2cd771b2ef477cfaf69ce961f5897593729f58f789759f583756fbc4baf0cdb1ee05d2a92f8b244d851593ac96b14a19ab9274854c56c704b98dd25b8cc0418a7bea000fe90069ea9b6a0303468f57e71409c66a86897082244668627a92f8f2200e92e278f79b8a72921c1fc5f38102992e91b122d9b34cf6299464a98c17cb1ee512174cba2487f23d4e9c8f528e2902fd3a100d10e91ec5fa20327d109d8e0d02fb93ea407cd3c43a790c3c57a6fafaa3e0434e0a41dcdfe9c21db3c18902b5f091d7812b8f3f3a6db4b6191fd03b12c277ba54bcc0e25c94f8f571cc553112c77d0ed52f8e8723d6ca198fd7e0ee0aade5cb2f133019b861f845e9ebf8792324df71f94e66c4240f1c18434f62eb35d2bc48ab8ab33444043b715c8bbf3fe2c0b0dbb7a6b1a5ddca2ce6b511b4be745f397a7862a735ad9411fff216eba9a868f12bf6c2b26922fdcdddb8f9b259212fd004261db4663121176af701860435a3d0e51d5f2ed1c00552b7a58625f976252c080b1cac9fa2c0a2b9ed6c6baf33803f550d3997b010b200551354ee31bf717f37ca38c1d58a489fcc66b6b9950975fd7d74eb07500694842b61f26c6110a52a30934887f0ac5d95d83513269ffd90019c2b03e40c6f6c3e84756b5b6dd1b714ae057cc435bcb71a73c1cbe71f71fd1e4801a1a5664537e4b01025a1b1d95f9be8b35b34b60dd18fd95176b4b94f682afb667189e656e43ed0b1997ecd6cb323579278de7d03b8cdfb36d50c2b2eca162484bcfa79278ef520588a1ca5c594b453cdf315c2f1d65800569bb263e3dddd5dc6fdaa4c99e5ac956567bfcd5fbdfefdf2f5f3e3ec285b5155b200621bdc3bbaf48f06617f75bdddea4994694eabcef7c199469a7df6f57cdff56119be22b57555717f2063e70e706e50b859c3fcac5b1e0196ff40aa8df45816725936ccd259ee78c01bea9b89d37981f4cb7a5ef4e8821b5ea143c3d6dbe637300034bd297c9dd40c379c56138c383f732ce89c2305c6db1fbfa6ddce2a6e4e8bde00eab2a1b1c4c3e66becff7ace191ec0b6ffbbaf2c5a0eb97261ecbdcb8820d7fc82240cc06f4ca341ab95437d4847c7474731db06e9b2759ea3b58bba842d98c27cb97a4749a9a873ad4b91fb5db30f36e0899deb4359f34fbf33b870a63c9bedbebfcfdacfeeb3601a0de390ba0e47fb866c7c7486e7e7977bc46a2e6f79290a989f81ad9de31895c99eba5e4eeaba4002a90816aa967b6b89078ea8ed39eab371d7eb7755dd5265d6a180dbe35d0f6d1ae106e97d499d2eb26bda8173af6fd1ac6925e4b265dbb5aa1b82eef0c72742237979a6f26026ebdbdaa195e13e7ade65f8e42414d9df3fb585024f7dd5b816b71d2b94f13919155adbce6017ca7cb3a93fdb46a5bf7a382063ceb6a25c7cc373e860206d3c9835194f9ab08ffa769ada0c10831974403db83ff80f5452494ca3230000",
               ],
               {
                 "accept-ranges": "bytes",
@@ -1533,14 +1534,14 @@ describe(`OpenAPI Parameter Types`, function () {
                 "cache-control": "max-age=300",
                 connection: "keep-alive",
                 "content-encoding": "gzip",
-                "content-length": "1491",
+                "content-length": "1475",
                 "content-security-policy":
                   "default-src 'none'; style-src 'unsafe-inline'; sandbox",
                 "content-type": "text/plain; charset=utf-8",
                 "cross-origin-resource-policy": "cross-origin",
-                date: "Thu, 15 Jan 2026 13:57:26 GMT",
-                etag: 'W/"c70499052dadc2bfa0db9974bef60ba6bee6c55a1a65976b39609e5799a2a9fc"',
-                expires: "Thu, 15 Jan 2026 14:02:26 GMT",
+                date: "Thu, 15 Jan 2026 21:12:02 GMT",
+                etag: 'W/"adc83d0f8cb1945709cc79ac0f1c905c55d0f6b0f5bfc070e796cdf153ad54e8"',
+                expires: "Thu, 15 Jan 2026 21:17:02 GMT",
                 "source-age": "0",
                 "strict-transport-security": "max-age=31536000",
                 vary: "Authorization,Accept-Encoding",
@@ -1549,17 +1550,17 @@ describe(`OpenAPI Parameter Types`, function () {
                 "x-cache-hits": "0",
                 "x-content-type-options": "nosniff",
                 "x-fastly-request-id":
-                  "e3214974c6e5c4399167d7bcbf3cfb4a81b682a5",
+                  "b966c72b9b363e903cebcec40eb73faa58e99159",
                 "x-frame-options": "deny",
-                "x-github-request-id": "E767:93F2B:7BB2D:CB92F:6968F246",
-                "x-served-by": "cache-lhr-egll1980038-LHR",
-                "x-timer": "S1768485447.800110,VS0,VE129",
+                "x-github-request-id": "5585:333C92:147005:231905:69695822",
+                "x-served-by": "cache-lhr-egll1980073-LHR",
+                "x-timer": "S1768511522.435487,VS0,VE150",
                 "x-xss-protection": "1; mode=block",
               },
             );
 
           nock("http://petstore.swagger.io:80", { encodedQueryParams: true })
-            .get("/v2/pet/1")
+            .get("/v2/pet/blue,black,brown")
             .reply(
               200,
               { id: 1 },
@@ -1582,7 +1583,7 @@ describe(`OpenAPI Parameter Types`, function () {
           );
 
           const arazzo = new Arazzo(
-            "./test/mocks/arazzo/openapi-parameter-tests/path/singple/array-exploded.json",
+            "./test/mocks/arazzo/openapi-parameter-tests/path/simple/array-exploded.json",
             "arazzo",
             { logger: logger },
             docFactory,
@@ -1680,8 +1681,8 @@ describe(`OpenAPI Parameter Types`, function () {
         });
       });
 
-      xdescribe(`object`, function () {
-        xit(`handle when pathParam of simple is exploded`, async function () {
+      describe(`object`, function () {
+        it(`handle when pathParam of simple is exploded`, async function () {
           nock("https://raw.githubusercontent.com:443", {
             encodedQueryParams: true,
           })
@@ -1691,7 +1692,7 @@ describe(`OpenAPI Parameter Types`, function () {
             .reply(
               200,
               [
-                "1f8b0800000000000013ed5a516fdb36107ecfaf38b07b588154cad2620f795ada3483b1610d9af661c8829591ce325b89e448caa957e4bf0fa4645b2229c975bd8702f1932d9177c7e3f7dd7794fce5088008899c4a46ce803c4f4e92e7e4d85ecd442505476e3439832f47000044670bace8f6821da6901abc42d3b90840cc4aa23528ee3e62669cc5f68e5442a2320c756f8635450d1642adbceb63d6c62dbabb2c8f5cedd864dc6081ca33ea86cc85aaa86907fdfc8278231efc2984d30ac7bd69a3182f024bbddf9e5df2b92a630b6b9d9157ebb4f58d747ef50cc683f403f442c0cfb492a51b908ba2604806cdcb8530e2bd2ac3cdd8f8a04ad195ef8219aca21b3896baaf4cd53ab660b3c9bda252a2858a5135ee9849438b83af320af129900fc37c27a04f433d02f631b84f02de877c8c4cf1bdecece63b7a582219eae37e5f6068434d3d028d38c972d49962d230c11d58d14063081807b340d046280ca8c9eb8a9cc10da14bca4a7a572239b69379ee5c00d1a2ccc96d37d6cdf74ed444e13f35536ea5374d4a8ebb64beed0c0df3b8c9a1158223dfd1c64dab16f941e42282f809ac0728f76e2ba4f91b5eaec2cd7e1859d3f7b7981e561f55376af751751f55f7517543b78faa0bdf9dea5ea13977b488ca94cf98285bc69832c692384326d931216ea3f216227050e21e2bc03e15202e7d53656020e871764e8960e86658082744624426a63b89af4fe2a0288e57bfa92c47c5f1202b1f20c83445c648b2234d76214a942ae364d9812e2161e2941cdaef71e13c081d6302fa6d201a10d21dc8ba9798ee25a7638dc0eea23a90dfb8b04e1e032f85aabefd28b8cf49c1cbfb7b99db6336585320e62ef3d25bcae15ba7b5d776c707fc8ea4f0bd2c05cd31bf64257e7b1e33918fe4719743f5f3d3e18cb576c6f33538bb42ad69f175062613370cbf60fb3aebbc639c6eb57c6b3350923d1b467f2561f412cd2c8fbb0a77694808b6e6a8647f7fc28166b71f4d134b3b9568cc6ac5cceadabee5e8e1899cd7662114fb97b6588f6545b2dfb097967511e94feee6cdd166813447e58574d48645189f8bed0b18c34cd30a5ddfd3a240055768ba25d5a7e4bb05d3c03450d0ae8b028d6ad999d6fe4e00fe14356494c39cf11c446da0b2b7e99dfdba76460ddc2c8c916769aa9b4b0913b73f06979e82502038dc3095257385c8458e0947730c4fda519159295359fa3401b8140a8c0dbc89f918566d6cb5465752a864f00957f0414bcc182d9f7dc2d50730020c6ad38ce8a61ce6ac34a874f2d73afb64894ab729fa2939494ed6d70daa4abf995fa35ab2cc253a0cd38d49d73332c10dcdba4f0037fbbed96a821565650b1283b4fa656b8ef42058b20cb9c698b57349b305c2e926580052abb213e3fdfd7d42dda844a8226d6de9f4f7d9abd77f5cbf7e769a9c240b5395c483d81af7562eddad41d8dfdc6ea63a1125929a45e7fd602ad1a45f1c9f1fba6b28fc47a4baae2aea0e64e4d202ce360a772b985d74e9e161f92d9a5a718765c68bb25196ce70ab032e50574caccf2b342f57b3bc271754d10a2d1a36ab6d3e030d40539bfcc7494d7343cd62421167175605ede28c00e5e20f1fd36e7a15dba7054f0065d9c8d89c96dabfdbbc8efd3f4eb56fa78e97bcaeeeb6456bfb89f5c6bf1ed2d8cbbd8d8db7c051a5ed3e7e69f5f0c642a2f75c26a04ff3f1003540a5318f0ab51496c1beb49e9e9c849d83073d5d67196a3daf4bd810c3c79ead5dc84d0c4054ca92656e56fa517b9ab75dfa1000dddd1f14ce6d284fd2ed7f09d2f62f04a9d759fb7988fdf68f298d70baec0c9f055eec90ab195fd292e530bb005ddb856340f91d7dbd98f4758506b830301735dfd94bd83c0525dccab80e2b785f21642bfb4947ce96a75b3d688afa1ae97d4b9d8ab815206f71af97a85666c178d1760e2b5137cd46470b3f1b549c961722f3facb7eac1d891cd684cb6eb712edea82f8fb2750dfe0b9638d2dd79b164928b727a3466bdd69527d9b6fd6fcd36d56faa3871332b6d8d694cdaf7fa61e4ca40e9bcc66c7a321ece2beed0cd7cdd0e00e5aa01e3d1cfd07d79a7a6b6f240000",
+                "1f8b0800000000000013ed5a516fdb36107ecfaf38b07b588154cad2620f795ada3483b1610d9af661c8829591ce325b89e448caa957e4bf0fa4645b2229c975bd8702f1932d9177c7e3f7dd7794fce5088008899c4a46ce803c4f4e92e7e4d85ecd442505476e3439832f47000044670bace8f6821da6901abc42d3b90840cc4aa23528ee3e62669cc5f68e5442a2320c756f8635450d1642adbceb63d6c62dbabb2c8f5cedd864dc6081ca33ea86cc85aaa86907fdfc8278231efc2984d30ac7bd69a3182f024bbddf9e5df2b92a630b6b9d9157ebb4f58d747ef50cc683f403f442c0cfb492a51b908ba2604806cdcb8530e2bd2ac3cdd8f8a04ad195ef8219aca21b3896baaf4cd53ab660b3c9bda252a2858a5135ee9849438b83af320af129900fc37c27a04f433d02f631b84f02de877c8c4cf1bdecece63b7a582219eae37e5f6068434d3d028d38c972d49962d230c11d58d14063081807b340d046280ca8c9eb8a9cc10da14bca4a7a572239b69379ee5c00d1a2ccc96d37d6cdf74ed444e13f35536ea5374d4a8ebb64beed0c0df3b8c9a1158223dfd1c64dab16f941e42282f809ac0728f76e2ba4f91b5eaec2cd7e1859d3f7b7981e561f55376af751751f55f7517543b78faa0bdf9dea5ea13977b488ca94cf98285bc69832c692384326d931216ea3f216227050e21e2bc03e15202e7d53656020e871764e8960e86658082744624426a63b89af4fe2a0288e57bfa92c47c5f1202b1f20c83445c648b2234d76214a942ae364d9812e2161e2941cdaef71e13c081d6302fa6d201a10d21dc8ba9798ee25a7638dc0eea23a90dfb8b04e1e032f85aabefd28b8cf49c1cbfb7b99db6336585320e62ef3d25bcae15ba7b5d776c707fc8ea4f0bd2c05cd31bf64257e7b1e33918fe4719743f5f3d3e18cb576c6f33538bb42ad69f175062613370cbf60fb3aebbc639c6eb57c6b3350923d1b467f2561f412cd2c8fbb0a77694808b6e6a8647f7fc28166b71f4d134b3b9568cc6ac5cceadabee5e8e1899cd7662114fb97b6588f6545b2dfb097967511e94feee6cdd166813447e58574d48645189f8bed0b18c34cd30a5ddfd3a240055768ba25d5a7e4bb05d3c03450d0ae8b028d6ad999d6fe4e00fe14356494c39cf11c446da0b2b7e99dfdba76460ddc2c8c916769aa9b4b0913b73f06979e82502038dc3095257385c8458e0947730c4fda519159295359fa3401b8140a8c0dbc89f918566d6cb5465752a864f00957f0414bcc182d9f7dc2d50730020c6ad38ce8a61ce6ac34a874f2d73afb64894ab729fa2939494ed6d70daa4abf995fa35ab2cc253a0cd38d49d73332c10dcdba4f0037fbbed96a821565650b1283b4fa656b8ef42058b20cb9c698b57349b305c2e926580052abb213e3fdfd7d42dda844a8226d6de9f4f7d9abd77f5cbf7e769a9c240b5395c483d81af7562eddad41d8dfdc6ea63a1125929a45e7fd602ad1a45f1c9f1fba6b28fc47a4baae2aea0e64e4d202ce360a772b985d74e9e161f92d9a5a718765c68bb25196ce70ab032e50574caccf2b342f57b3bc271754d10a2d1a36ab6d3e030d40539bfcc7494d7343cd62421167175605ede28c00e5e20f1fd36e7a15dba7054f0065d9c858e466f336f6ff38d4be9d3a5df2babadbd6aced27d61aff7a48632ff73636de014785b6fbf4a595c31b8b88de6399803dcdc7c3d30093c63c2ad4525802fbca7a7a7212360e1ef2749d65a8f5bc2e61c30b1f7ab6742137310051294b96b959e947ed49de76e9430074777f5038b7a13c49b77f2548db7f10a45e63ede721f6db3fa534bae9b2337c1478b143ae667c494b96c3ec02746d178e01e377f4f562d2d7151ae0c2c05cd47c672f61ef145470abe23a2ce07d8190adea271d355b9e6ee5a0a9e96ba4f72d750ae2567fbcc5bd5ea25a9905e345db38ac44ddf41a1d29fc6c50715a5e88cc6b2ffbb176147258122ebbcd4ab4a90be2ef1f407d83e78e35b65a6f3a24a1dc9e8c1aad75a747f56dbe59f34fb759e98f1e4ec8d8625b5336bffe917a30913aec319b1d8f86b08bfbb6315cf742833b68817af470f41fd3ecc7726e240000",
               ],
               {
                 "accept-ranges": "bytes",
@@ -1699,27 +1700,27 @@ describe(`OpenAPI Parameter Types`, function () {
                 "cache-control": "max-age=300",
                 connection: "keep-alive",
                 "content-encoding": "gzip",
-                "content-length": "1503",
+                "content-length": "1500",
                 "content-security-policy":
                   "default-src 'none'; style-src 'unsafe-inline'; sandbox",
                 "content-type": "text/plain; charset=utf-8",
                 "cross-origin-resource-policy": "cross-origin",
-                date: "Thu, 15 Jan 2026 15:48:30 GMT",
-                etag: 'W/"618b9fd906d1956cc9c30428155559fad8d1e24959257b2092875185d5900ad4"',
-                expires: "Thu, 15 Jan 2026 15:53:30 GMT",
+                date: "Thu, 15 Jan 2026 21:14:13 GMT",
+                etag: 'W/"70cda31283632dcfd61ac982c2b1707db2ae4070d79046c59adfae2cfb6c519d"',
+                expires: "Thu, 15 Jan 2026 21:19:13 GMT",
                 "source-age": "0",
                 "strict-transport-security": "max-age=31536000",
                 vary: "Authorization,Accept-Encoding",
                 via: "1.1 varnish",
-                "x-cache": "MISS",
+                "x-cache": "HIT",
                 "x-cache-hits": "0",
                 "x-content-type-options": "nosniff",
                 "x-fastly-request-id":
-                  "ba31ea955c1e2aec6214b05763ce591eb40e9694",
+                  "f3a1d3b9eff1b27041d451cbb55dad50cadf64d4",
                 "x-frame-options": "deny",
-                "x-github-request-id": "9F44:9E366:C62A0:13D80B:69690C4E",
-                "x-served-by": "cache-lhr-egll1980070-LHR",
-                "x-timer": "S1768492110.401447,VS0,VE120",
+                "x-github-request-id": "B8B7:521EA:1443BA:2226E0:69694FFF",
+                "x-served-by": "cache-lhr-egll1980071-LHR",
+                "x-timer": "S1768511654.806312,VS0,VE124",
                 "x-xss-protection": "1; mode=block",
               },
             );
@@ -1849,7 +1850,7 @@ describe(`OpenAPI Parameter Types`, function () {
       });
 
       describe(`primitive`, function () {
-        xit(`handle when pathParam of simple is exploded`, async function () {
+        it(`handle when pathParam of simple is exploded`, async function () {
           nock("https://raw.githubusercontent.com:443", {
             encodedQueryParams: true,
           })
