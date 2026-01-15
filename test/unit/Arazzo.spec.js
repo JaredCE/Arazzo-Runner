@@ -807,6 +807,7 @@ describe(`Arazzo Document`, function () {
                   describe(`onFailure with criteria`, function () {
                     describe(`end`, function () {
                       it(`resolves when onFailure is set to end and matches the criteria`, async function () {
+                        // nock.recorder.rec();
                         nock("https://raw.githubusercontent.com:443", {
                           encodedQueryParams: true,
                         })
@@ -829,23 +830,23 @@ describe(`Arazzo Document`, function () {
                                 "default-src 'none'; style-src 'unsafe-inline'; sandbox",
                               "content-type": "text/plain; charset=utf-8",
                               "cross-origin-resource-policy": "cross-origin",
-                              date: "Tue, 06 Jan 2026 19:19:56 GMT",
+                              date: "Thu, 15 Jan 2026 09:18:17 GMT",
                               etag: 'W/"d38379461bc9571f3e57ed61b7c4f2b6d189a3b3cf79f0449c1fde6e9379637e"',
-                              expires: "Tue, 06 Jan 2026 19:24:56 GMT",
+                              expires: "Thu, 15 Jan 2026 09:23:17 GMT",
                               "source-age": "0",
                               "strict-transport-security": "max-age=31536000",
                               vary: "Authorization,Accept-Encoding",
                               via: "1.1 varnish",
-                              "x-cache": "HIT",
+                              "x-cache": "MISS",
                               "x-cache-hits": "0",
                               "x-content-type-options": "nosniff",
                               "x-fastly-request-id":
-                                "6345964a5ff2dfaf90e7f710c781377e2f0b2a7e",
+                                "5c0305ab0ded0b1475704970da1a1ac3d50e8e19",
                               "x-frame-options": "deny",
                               "x-github-request-id":
-                                "8DCE:156854:683A3:BD766:695D41E9",
-                              "x-served-by": "cache-lhr-egll1980052-LHR",
-                              "x-timer": "S1767727197.761065,VS0,VE107",
+                                "1771:348BAD:1A8F63:33306F:6968B0D8",
+                              "x-served-by": "cache-lhr-egll1980033-LHR",
+                              "x-timer": "S1768468697.336139,VS0,VE147",
                               "x-xss-protection": "1; mode=block",
                             },
                           );
@@ -5841,31 +5842,6 @@ describe(`Arazzo Document`, function () {
       }
     });
 
-    xit(`should throw an error when a workflow does not have steps`, async function () {
-      const inputFile = new Input(
-        "./test/mocks/inputs/validInput.json",
-        "inputs",
-      );
-
-      const arazzo = new Arazzo(
-        "./test/mocks/arazzoMockMissingSteps.json",
-        "arazzo",
-        { logger: logger, parser },
-        docFactory,
-      );
-      arazzo.setMainArazzo();
-
-      try {
-        await arazzo.runWorkflows(inputFile);
-        throw new Error("Expected promise to reject but it resolved");
-      } catch (err) {
-        expect(err).to.be.instanceOf(Error);
-        expect(err.message).to.be.equal(
-          `Cannot read properties of undefined (reading '0')`,
-        );
-      }
-    });
-
     it(`should throw an error when an invalid input file is attached and does not conform to the workflow schema`, async function () {
       const inputFile = new Input(
         "./test/mocks/inputs/invalidInput.json",
@@ -5924,6 +5900,31 @@ describe(`Arazzo Document`, function () {
       } catch (err) {
         expect(err).to.be.instanceOf(Error);
         expect(err.message).to.be.equal("Missing Source Descriptions");
+      }
+    });
+
+    xit(`should throw an error when a workflow does not have steps`, async function () {
+      const inputFile = new Input(
+        "./test/mocks/inputs/validInput.json",
+        "inputs",
+      );
+
+      const arazzo = new Arazzo(
+        "./test/mocks/arazzoMockMissingSteps.json",
+        "arazzo",
+        { logger: logger, parser },
+        docFactory,
+      );
+      arazzo.setMainArazzo();
+
+      try {
+        await arazzo.runWorkflows(inputFile);
+        throw new Error("Expected promise to reject but it resolved");
+      } catch (err) {
+        expect(err).to.be.instanceOf(Error);
+        expect(err.message).to.be.equal(
+          `Cannot read properties of undefined (reading '0')`,
+        );
       }
     });
   });
