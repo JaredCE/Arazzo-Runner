@@ -1,0 +1,59 @@
+{
+  "FindpetbyID-HeaderArrayExploded": {
+    "petId": 1,
+    "xArray": ["blue", "black", "brown"]
+  },
+  "FindpetbyID-HeaderArray": {
+    "petId": 1,
+    "xArray": ["blue", "black", "brown"]
+  },
+  "FindpetbyID-HeaderObjectExploded": {
+    "petId": 1,
+    "xObject": { "R": 100, "G": 200, "B": 150 }
+  },
+  "FindpetbyID-HeaderObject": {
+    "petId": 1,
+    "xObject": { "R": 100, "G": 200, "B": 150 }
+  },
+  "FindpetbyID-HeaderPrimitiveExploded": {
+    "petId": 1,
+    "xSimple": "blue"
+  },
+  "FindpetbyID-HeaderPrimitive": {
+    "petId": 1,
+    "xSimple": "blue"
+  },
+  "FindpetbyID-PathArrayExploded": {
+    "petId": ["blue", "black", "brown"]
+  },
+  "FindpetbyID-PathArray": {
+    "petId": ["blue", "black", "brown"]
+  },
+  "FindpetbyID-PathObjectExploded": {
+    "petId": { "R": 100, "G": 200, "B": 150 }
+  },
+  "FindpetbyID-PathPrimitiveExploded": {
+    "petId": "blue"
+  },
+  "FindpetbyID-PathPrimitive": {
+    "petId": "blue"
+  },
+  "findPetsByTags-QueryObject": {
+    "tags": { "R": 100, "G": 200, "B": 150 }
+  },
+  "findPetsByTags-QueryArrayExploded": {
+    "tags": ["blue", "black", "brown"]
+  },
+  "findPetsByTags-QueryArray": {
+    "tags": ["blue", "black", "brown"]
+  },
+  "findPetsByTags-QueryObjectExploded": {
+    "tags": { "R": 100, "G": 200, "B": 150 }
+  },
+  "findPetsByTags-QueryPrimitiveExploded": {
+    "tags": "blue"
+  },
+  "findPetsByTags-QueryPrimitive": {
+    "tags": "blue"
+  }
+}
