@@ -63,6 +63,12 @@ jq --arg password "$secret_password" '.workflowId1.password = $password' input.j
 
 Obviously, if you have a lot of secret variables that need adding as inputs, then you might need to write a script that can alter the `input.json` file for you within your CI/CD runner.
 
+## OpenAPI Parameters
+
+OpenAPI Documents allow you to specify [`header`, `path` and `query` parameters](https://spec.openapis.org/oas/latest.html#parameter-object) in myriad of styles. This Arazzo Runner will respect your styling and send the format to the server as specified by your OpenAPI document.
+
+It currently does not follow the `allowEmptyValue`, `allowReserved` or the `content` keywords currently.
+
 ## Logging And Reporting
 
 ### Logging
@@ -93,13 +99,17 @@ Work on Reporting still needs completeing.
 
 ## Still unsupported
 
-### OpenAPI Params
+### PathOperation
 
-OpenAPI parameter types with style and explode are not quite supported yet
+Accessing an OpenAPI operation by Operation Path `'{$sourceDescriptions.petstoreDescription.url}#/paths/~1pet~1findByStatus/get'` does not work currently
 
 ### OpenAPI Servers on various levels
 
 This pulls from the top level servers object of an OpenAPI Document. Server variables do not work either.
+
+### OpenAPI server variables
+
+OpenAPI server variables currently do not work
 
 ### JSONPath and XPath criteria objects
 
