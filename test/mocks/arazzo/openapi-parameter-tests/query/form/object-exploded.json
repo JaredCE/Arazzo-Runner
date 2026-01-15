@@ -1,0 +1,57 @@
+{
+  "$schema": "https://spec.openapis.org/arazzo/1.0/schema/2025-10-15",
+  "arazzo": "1.0.1",
+  "info": {
+    "title": "Pets",
+    "description": "The Arazzo Workflow for a Pet Store Pet",
+    "summary": "Araazo Workflow for Pet Store Pet",
+    "version": "1.0.0"
+  },
+  "sourceDescriptions": [
+    {
+      "name": "pets-openAPI",
+      "url": "https://raw.githubusercontent.com/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/parameter-styles/query/form/simple-array-exploded.json",
+      "type": "openapi"
+    }
+  ],
+  "workflows": [
+    {
+      "workflowId": "findPetsByTags-QueryObjectExploded",
+      "summary": "Find a pet by Tags",
+      "description": "A Workflow to Find a pet by their Tags",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "tags": {
+            "type": "object",
+            "properties": {
+              "R": {
+                "type": "integer"
+              },
+              "G": {
+                "type": "integer"
+              },
+              "B": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepId": "findPetsByTags",
+          "operationId": "findPetsByTags",
+          "parameters": [
+            {
+              "name": "tags",
+              "in": "query",
+              "value": "$inputs.tags"
+            }
+          ],
+          "outputs": { "id": "$response.body#/id" }
+        }
+      ]
+    }
+  ]
+}
