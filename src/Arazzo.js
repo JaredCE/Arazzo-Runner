@@ -112,15 +112,17 @@ class Arazzo extends Document {
 
       this.expression.addToContext("inputs", this.inputs);
 
-      this.workflow.rules = rules;
-
       if (this.workflow.onSuccess) {
-        this.workflow.rules.setWorkflowSuccess(this.workflow.onSuccess);
+        // this.workflow.rules.set(this.workflow.onSuccess);
+        rules.setSuccessRules(this.workflow.onSuccess);
       }
 
       if (this.workflow.onFailure) {
-        this.workflow.rules.setWorkflowFailures(this.workflow.onFailure);
+        // this.workflow.rules.setWorkflowFailures(this.workflow.onFailure);
+        rules.setFailureRules(this.workflow.onFailure);
       }
+
+      this.workflow.rules = rules;
 
       await this.runSteps();
 
@@ -203,6 +205,7 @@ class Arazzo extends Document {
 
     if (step) {
       this.step = step;
+      const rules = new Rules(this.expression, { logger: this.logger });
       // if (!this.stepContext[step.stepId])
       //   Object.assign(this.stepContext, { [step.stepId]: {} });
 
@@ -211,12 +214,18 @@ class Arazzo extends Document {
       // need to deal with reloading the rules when in a retry state or a goto state
       // if (this.stepContext?.[step.stepId]?.hasLoadedRules === false) {
       if (this.step.onSuccess) {
-        this.workflow.rules.setStepSuccesses(this.step.onSuccess);
+        rules.setSuccessRules(this.step.onSuccess);
+        // this.workflow.rules.setStepSuccesses(this.step.onSuccess);
       }
 
       if (this.step.onFailure) {
-        this.workflow.rules.setStepFailures(this.step.onFailure);
+        rules.setFailureRules(this.step.onFailure);
+        // this.workflow.rules.setStepFailures(this.step.onFailure);
       }
+
+      rules.combineRules(this.workflow.rules);
+      this.step.rules = rules;
+      // this.step.rules.combineRules(this.workflow.rules);
 
       //   this.stepContext[step.stepId].hasLoadedRules = true;
       // }
@@ -434,7 +443,7 @@ class Arazzo extends Document {
       await this.dealWithStepOutputs(response);
     }
 
-    const whatNext = this.workflow.rules.runRules(true);
+    const whatNext = this.step.rules.runRules(true);
 
     if (whatNext.endWorkflow) {
       this.workflowIndex += 1;
@@ -496,7 +505,7 @@ class Arazzo extends Document {
     //   await this.dealWithStepOutputs(response);
     // }
 
-    const whatNext = this.workflow.rules.runRules();
+    const whatNext = this.step.rules.runRules();
     if (whatNext.endWorkflow) {
       this.workflowIndex += 1;
       this.logger.notice(
