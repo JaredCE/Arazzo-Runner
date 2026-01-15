@@ -311,7 +311,9 @@ class Arazzo extends Document {
     for (const operation of this.operations) {
       let url = operation.url;
 
-      if (operation.queryParams.size) {
+      // console.log(operation.queryParams.toString().length);
+      // if (operation.queryParams.size) {
+      if (operation.queryParams.toString().length) {
         url += `?${operation.queryParams}`;
       }
 
@@ -730,7 +732,7 @@ class Arazzo extends Document {
 
     for (const operation of this.operations) {
       this.addParamsToContext(operation.headers, "headers", "request");
-      this.addParamsToContext(operation.queryParams, "query", "request");
+      // this.addParamsToContext(operation.queryParams, "query", "request");
     }
   }
 
@@ -739,12 +741,13 @@ class Arazzo extends Document {
    */
   mapParameters() {
     const headers = new Headers();
-    const queryParams = new URLSearchParams();
+    // const queryParams = new URLSearchParams();
+    const queryParams = new URLParams();
     const pathParams = {};
 
     for (const param of this.step?.parameters || []) {
       const operationDetailParam =
-        this.sourceDescription.operationDetails?.parameters
+        this.sourceDescriptionFile.operationDetails?.parameters
           .filter((obj) => obj.name === param.name && obj.in === param.in)
           .at(0);
 
@@ -752,6 +755,9 @@ class Arazzo extends Document {
 
       switch (param.in) {
         case "header":
+          // const style = operationDetailParam?.style || "simple";
+          // const explode = operationDetailParam?.explode || false;
+          // headers.append(param.name, value, { style: style, explode: explode });
           headers.append(param.name, value);
 
           break;
@@ -764,7 +770,21 @@ class Arazzo extends Document {
           break;
 
         case "query":
-          queryParams.append(param.name, value);
+          // queryParams.append(param.name, value);
+          const style = operationDetailParam?.style || "form";
+          let explode = false;
+          if (Object.hasOwn(operationDetailParam, "explode")) {
+            explode = operationDetailParam.explode;
+          } else {
+            if (style === "form") {
+              explode = true;
+            }
+          }
+          // const explode = operationDetailParam?.explode || false;
+          queryParams.append(param.name, value, {
+            style: style,
+            explode: explode,
+          });
           break;
       }
     }
