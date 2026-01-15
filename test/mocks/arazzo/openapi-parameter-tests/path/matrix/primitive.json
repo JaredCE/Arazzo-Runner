@@ -23,7 +23,7 @@
         "type": "object",
         "properties": {
           "petId": {
-            "type": "integer"
+            "type": "string"
           }
         }
       },
