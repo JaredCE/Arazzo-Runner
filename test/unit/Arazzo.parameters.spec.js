@@ -20,11 +20,10 @@ const Arazzo = require("../../src/Arazzo.js");
 
 describe(`OpenAPI Parameter Types`, function () {
   const logger = new Logger();
-  // nock.recorder.rec();
 
-  xdescribe(`headers`, function () {
+  describe(`headers`, function () {
     describe(`array`, function () {
-      xit(`should behave asynchronously...`, async function () {
+      it(`handle when header is styled as simple and is exploded`, async function () {
         nock("https://raw.githubusercontent.com:443", {
           encodedQueryParams: true,
         })
@@ -104,8 +103,7 @@ describe(`OpenAPI Parameter Types`, function () {
         }
       });
 
-      it(`should behave asynchronously...`, async function () {
-        nock.recorder.rec();
+      it(`handle when header is styled as simple and is unexploded`, async function () {
         nock("https://raw.githubusercontent.com:443", {
           encodedQueryParams: true,
         })
@@ -187,8 +185,7 @@ describe(`OpenAPI Parameter Types`, function () {
     });
 
     describe(`object`, function () {
-      xit(`should behave asynchronously...`, async function () {
-        nock.recorder.rec();
+      it(`handle when header is styled as simple and is exploded`, async function () {
         nock("https://raw.githubusercontent.com:443", {
           encodedQueryParams: true,
         })
@@ -268,7 +265,7 @@ describe(`OpenAPI Parameter Types`, function () {
         }
       });
 
-      it(`should behave asynchronously...`, async function () {
+      it(`handle when header is styled as simple and is unexploded`, async function () {
         nock("https://raw.githubusercontent.com:443", {
           encodedQueryParams: true,
         })
@@ -350,7 +347,7 @@ describe(`OpenAPI Parameter Types`, function () {
     });
 
     describe(`primitive`, function () {
-      xit(`should behave asynchronously...`, async function () {
+      it(`handle when header is styled as simple and is exploded`, async function () {
         nock("https://raw.githubusercontent.com:443", {
           encodedQueryParams: true,
         })
@@ -430,7 +427,7 @@ describe(`OpenAPI Parameter Types`, function () {
         }
       });
 
-      it(`should behave asynchronously...`, async function () {
+      it(`handle when header is styled as simple and is unexploded`, async function () {
         nock("https://raw.githubusercontent.com:443", {
           encodedQueryParams: true,
         })
@@ -512,10 +509,10 @@ describe(`OpenAPI Parameter Types`, function () {
     });
   });
 
-  xdescribe(`path`, function () {
+  describe(`path`, function () {
     describe(`label`, function () {
       describe(`array`, function () {
-        it(`should behave asynchronously...`, async function () {
+        it(`handle when pathParam of label is exploded`, async function () {
           nock("https://raw.githubusercontent.com:443", {
             encodedQueryParams: true,
           })
@@ -559,10 +556,12 @@ describe(`OpenAPI Parameter Types`, function () {
             );
 
           nock("http://petstore.swagger.io:80", { encodedQueryParams: true })
-            .get("/v2/pet/1")
+            .get("/v2/pet/.blue.black.brown")
             .reply(
               200,
-              { id: 1 },
+              {
+                id: 1,
+              },
               {
                 "access-control-allow-headers":
                   "Content-Type, api_key, Authorization",
@@ -570,7 +569,7 @@ describe(`OpenAPI Parameter Types`, function () {
                 "access-control-allow-origin": "*",
                 connection: "keep-alive",
                 "content-type": "application/json",
-                date: "Thu, 15 Jan 2026 13:58:27 GMT",
+                date: "Thu, 15 Jan 2026 19:54:05 GMT",
                 server: "Jetty(9.2.9.v20150224)",
                 "transfer-encoding": "chunked",
               },
@@ -596,8 +595,7 @@ describe(`OpenAPI Parameter Types`, function () {
           }
         });
 
-        it(`should behave asynchronously...`, async function () {
-          nock.recorder.rec();
+        xit(`handle when pathParam of label is unexploded`, async function () {
           nock("https://raw.githubusercontent.com:443", {
             encodedQueryParams: true,
           })
@@ -641,10 +639,12 @@ describe(`OpenAPI Parameter Types`, function () {
             );
 
           nock("http://petstore.swagger.io:80", { encodedQueryParams: true })
-            .get("/v2/pet/1")
+            .get("/v2/pet/.blue,black,brown")
             .reply(
               200,
-              { id: 1 },
+              {
+                id: 1,
+              },
               {
                 "access-control-allow-headers":
                   "Content-Type, api_key, Authorization",
@@ -652,7 +652,7 @@ describe(`OpenAPI Parameter Types`, function () {
                 "access-control-allow-origin": "*",
                 connection: "keep-alive",
                 "content-type": "application/json",
-                date: "Thu, 15 Jan 2026 13:58:27 GMT",
+                date: "Thu, 15 Jan 2026 19:56:52 GMT",
                 server: "Jetty(9.2.9.v20150224)",
                 "transfer-encoding": "chunked",
               },
@@ -680,7 +680,7 @@ describe(`OpenAPI Parameter Types`, function () {
       });
 
       describe(`object`, function () {
-        it(`should behave asynchronously...`, async function () {
+        it(`handle when pathParam of label is exploded`, async function () {
           nock("https://raw.githubusercontent.com:443", {
             encodedQueryParams: true,
           })
@@ -724,10 +724,12 @@ describe(`OpenAPI Parameter Types`, function () {
             );
 
           nock("http://petstore.swagger.io:80", { encodedQueryParams: true })
-            .get("/v2/pet/1")
+            .get("/v2/pet/.R=100.G=200.B=150")
             .reply(
               200,
-              { id: 1 },
+              {
+                id: 1,
+              },
               {
                 "access-control-allow-headers":
                   "Content-Type, api_key, Authorization",
@@ -735,7 +737,7 @@ describe(`OpenAPI Parameter Types`, function () {
                 "access-control-allow-origin": "*",
                 connection: "keep-alive",
                 "content-type": "application/json",
-                date: "Thu, 15 Jan 2026 13:58:27 GMT",
+                date: "Thu, 15 Jan 2026 19:58:37 GMT",
                 server: "Jetty(9.2.9.v20150224)",
                 "transfer-encoding": "chunked",
               },
@@ -761,7 +763,7 @@ describe(`OpenAPI Parameter Types`, function () {
           }
         });
 
-        it(`should behave asynchronously...`, async function () {
+        it(`handle when pathParam of label is unexploded`, async function () {
           nock("https://raw.githubusercontent.com:443", {
             encodedQueryParams: true,
           })
@@ -805,10 +807,12 @@ describe(`OpenAPI Parameter Types`, function () {
             );
 
           nock("http://petstore.swagger.io:80", { encodedQueryParams: true })
-            .get("/v2/pet/1")
+            .get("/v2/pet/.R,100,G,200,B,150")
             .reply(
               200,
-              { id: 1 },
+              {
+                id: 1,
+              },
               {
                 "access-control-allow-headers":
                   "Content-Type, api_key, Authorization",
@@ -816,7 +820,7 @@ describe(`OpenAPI Parameter Types`, function () {
                 "access-control-allow-origin": "*",
                 connection: "keep-alive",
                 "content-type": "application/json",
-                date: "Thu, 15 Jan 2026 13:58:27 GMT",
+                date: "Thu, 15 Jan 2026 20:02:02 GMT",
                 server: "Jetty(9.2.9.v20150224)",
                 "transfer-encoding": "chunked",
               },
@@ -843,18 +847,18 @@ describe(`OpenAPI Parameter Types`, function () {
         });
       });
 
-      describe(`primitive`, function () {
-        it(`should behave asynchronously...`, async function () {
+      xdescribe(`primitive`, function () {
+        xit(`handle when pathParam of label is exploded`, async function () {
           nock("https://raw.githubusercontent.com:443", {
             encodedQueryParams: true,
           })
             .get(
-              "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/parameter-styles/header/simple-array-exploded.json",
+              "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/parameter-styles/path/label/primitive-exploded.json",
             )
             .reply(
               200,
               [
-                "1f8b0800000000000013ed59cf6fdb3614bee7af786077588154ced262879c96350d606c5883a63d0c59b032d2b3cd5622399272e215f9df0752b24d51a4e424dea1407cb224f2fdfcdefb1ea56f07004448e454327202e4757694bd2687f66e2e2a293872a3c9097c3b0000203a5f6045b737ec3285d4e0051aef2600312b8956a0b8f982b97112db27520989ca30d49d1d56143538176a15dc1f92362cd13d6545e4ae2793718373548150b7642654454dbbe8e7372458711f6e219c5638ac4d1bc5f8bc27a9731dc82577551973ac5546deaec3d615e25d7504c68d0c0d0c4cc03b5ac9d22d28c47cce9024c5cb8530e2932afbc9d8e8a04ad155a88219aca2091c0add0343b5b6ad976c72aba89468a162548d3b46d2d0f9debd8c427c0ce46998ef04f471a847c03e04f751c087908f15533c975e363fd2fd1692a121ee1f0b0c6da8a907a0112fb20275ae98344c70075634d00802c6c12c10b4110a7ba5c9eb8a9cc015a14bca4a7a532239b49b79e15400d1a22cc8b56febe6bf673551f84fcd94f3f4aa09c9a15fccd7ded27e1c3731b44470102adaa869d9a2d80b5d44103f82f51eca83c70a69f19e97ab7eb2ef077cfafe9ce960f59975a3729f59f799759f59b7aff69975e1bb63dd0b34a7ae2ca23415564cb45a862a65a84ae215325a1d23e436486f7d042629eeb9033ca603c4a96fac0d248c1eaece3112ecab4913e108490cd0c4f824f1f020264971b8fb8d45394a8e7bf13c5120e3253254243b96c92e85122d95e162d9a15cfa05132fc954be8789732fe51823d0a7812841a43b14eba3c8f451743a3408ec4eaa89f8c68975f418782e54f5f4a3e0634e0a41dc3fc9c21eb3c18a0231739197812bfb1f9dd65adb8c27f40e84f0932c052db03867253e3d8eb92806e2b8cba1faf5713a62ad9ce178257757a8359d3f4cc068e0d2f0eba5cff3f38671bae5f2adcc1e933c72600c3de95b2fd14c8bb8aa7e965244b0154725fbfb2b2686ddae358d2ded56a231af1533ab4bfb95a38327725a9b8550ec5fda623d1615c97ec34e58d64da4bbd98f9b2b9b05d2025560d2416b16617c26b61f600c33cd2874794be773547081c66fa961497e5c300d4c0305eda628d0a896deb6f63a03f853d490530e33c60b10b581ca3ea637f6ef5a193570b530469e4c26bab9953171fd63efd64b100a04872ba6f26ca610b92830e3680ee145bb2ab26bc2543e7999019c0b05c61aded87c08abd6b65aa36b295432f88a2bf8ac25e68c96afbee2ea33180106b56956f82187192b0d2a9dfdb58e3e59a2d26d887eca8eb2a3f57d83aad2ef6797a8962c7781ee9be9d64cd63b72c10dcdfd37809bbc6f524db0a2ac6c41629056bf6cc5910e044b9623d71893762a69be4038de180b406a557a36dedede66d4adca849a4f5a597af2fbf4edbb3f2edfbd3ace8eb285a94a12406c8d7b4b97ee5112f657d79bad8e4489a466e17d1f9c4834936fae9eef7d1fe6e12b525d5715750732726e016707859b154ccffcf208b0fc014dadb8c332e3f3b261166fb9e50167a86b2656e7059a5f57d3a2431754d10a2d1a36de36bfc400d0f4a6f0755233dc50b31861c4e9996541eb9c11a09cfdfdd7b49b59c5ce69e124e63eb8c626b11f14ceac8a1793ed87da49fb7d76d258bddbb49470fcee55fc4d9adfb2f6e4caff762a4b0760f3df7fc1d232de954d7ae7cd4baf40a2914b14cb9046855a0a5ba321791e1f1df56783005cbace73d47a5697b0817e9812db9d909b58d4a99425cbddaec9171db0dad6f554d6601484c1ec1cc621761d1e441a9cb9e8a4a7fd373bc46aca97b464054ccf40d7d671ec15f58ebade8ceaba40035c1898899aefaca53f1ef59ab4256addefd15d0e902db1671e612d8fb71dbf69db6ba47725793d6f4b318173ef96a85666c1f8bc9d0d56a26ec6098fedee0c2a4ecb3391071364d7568f04d35dffdc9f47a2735bcffeee19331478eaaac636e4cd102494cbc9a0d05a7b0d2f94f97e5d7fba8d4a77753a2043ceb6a26c7cc353733290ba3f4636198f9ab08bfa76f65b8f3bc90c5aa01edc1ffc07a937df2351240000",
+                "1f8b0800000000000013ed59c16edc3610bdfb2b064c0f0de0685d27e8c1a7ba710c2c5a34469d1c0ad768686976978944b2e4c8ce36f0bf17a4b4bb1249491bc79700ded34a2267868f6fe60da52f07004c69945c0b7602ec657694bd6487ee6eae2aad244ab2ec04be1c0000309bafb0e2bb1b6e98414e7881d4b909c068add11954371f31276fb17da28dd26848a0edcd70a638e1529975707fccdab845ff541489bb1d9b42122ed10446fd90853215a776d0cfaf5830e23e9cc224af70dc9b2523e432b2d4bb0eecb2cf55995a58eb8cbddec0d637d2b9ea194c0719061884809f79a54b3fa050cba54036685eaf14a9f7a68c3763eb831bc3d7a10b41582537700cbaaf846a135bb4d9ecce70add151854c8d7b22497cf9e8ab4c527c8ae4c334df8be8d3544f907d8cee93840f299f4aa6f45e7676f31d7fdc44221ef2fea1c4b0c4a91ea1463ac90ab4b9119a84929eac48d01802218156089694c12835655db113b862fc968b92df94c80edd64597817c0ac2a0b76dd8d75fbbf133533f86f2d8c5fe95503c9613799af3b43631cb7183a2138081d6dddb46a513c8a5c24183fc1f588e5c16383bc782bcb75bcd9f7236bfafe16d3e3ea93ea26ed3ea9ee93ea3ea96eecf64975e1bb53dd0ba4539f1649990a3326992d6399329625e90c99cc8e09711b95b798818312f754011e5201d2d237550606821ecfce29118cdd0c0be184488cc8c47427f1f5200e8ae278f59b4239298e8fb2f28104994e91b124d9334df6499464aa8c27cb1ee912274c3a2587f67b5c381f251d5302fa6d241a10d23d92f54162fa20391d6b04f617d5017cd3c23a790c3c57a6faf6a3e0434e0a01eeef75e18ed9e04c815a78e475b094c76f9d365edb1d1ff03b02e17b5d2a5e60712e4afc761c73558ce0b8cfa1fae5f13062ad9d71bc066757682d5f7e9d8149e086e9176d5f679d3742f29d96ef6c464af2c086315c491cbd469a176957f12e0d09c1ce1cd7e29f4f38d0ecf6a3696269a7328b796d04ad2fdd578e1e9fd8694d2b65c47fbce57a0a152d7ec31e2c9b22d29fdcc5cda7cd0a79812608e9a00d8b09b950bb0f3024a869852eeff87289062e90ba25354cc9772b614158e0607d170516cd6d675a7b9d01fca56ac8b984859005a89aa0728ff98dfbbb71c609ae5644fa6436b3cdad4ca8eb1fa35bcf41195012ae84c9b3854194aac04c221dc2b3765462d64c987cf63c03385706c805dec47c08eb36b6daa22f295c0bf8846bf86035e682972f3ee1fa039002424bcd882ee4b01025a1b1d9df1bf4d92d1adb42f45376941d6dee139acabe5d5ca2b915b9073a0ed38f996d66e44a12cfbb6f00b7fbbedd6a861517654b12425efdb233c77a142c458ed262cadaa9e6f90ae1781b2c00ab4dd989f1eeee2ee37e54a6cc72d6dab2b3dfe7afdffc71f9e6c5717694ada82a5940b10def9d5cfa4783b4bfbade4ef522ca34a755e7fbe04c23cdbef87cbeefae6119be22b57555717f2063e78e70ae51b859c3fcac9b1e0197ff44aa8df45c16725936cad219ee74c007ea8b89f37981f4eb7a5ef4e4821b5ea163c376b5cd6fa001686a53f83aa9696e38ad2614717ee654d02d8e14181f7ffc9a76dbabb83e2d7a03a8cb46c6120f2dad9b6250f21b0c0f12edb7da5413f783c1859bf66cb6fbc63b6b3fedce9a050f375adbffdd5713ad565c39b87aef2c226a25c11ea0d9984783562bc7ee50768e8f8e62550db6c5d6798ed62eea12b6a409e173798d9252f871ad4b91fb59b38f36d08369fca7f720e83a431c52d7610bdf888a4767b84f7eb507567379cb4b51c0fc0c6ced168e513aece9ebd5a4af0b24908a60a16ab9b797b8b188ca9b93381b57b77ef5d4ad24669d527f7bbcab954dc1db30bd6fa9532d76c53958dc9b5b346b5a09b96c5575adea46883b3af199d0485e9ea93ce8bdfab176e463b85e9e77953cd9f144f1f74f67a1c1539f35ae946ddb0765fc9e8c1aad6da7810b6dbedde49f6d51e98f1e06646cb1ad29876f78de1c04d2c60d58b3e3c910f671df764d9b466170071d510fee0ffe079224a9758b230000",
               ],
               {
                 "accept-ranges": "bytes",
@@ -862,14 +866,14 @@ describe(`OpenAPI Parameter Types`, function () {
                 "cache-control": "max-age=300",
                 connection: "keep-alive",
                 "content-encoding": "gzip",
-                "content-length": "1491",
+                "content-length": "1485",
                 "content-security-policy":
                   "default-src 'none'; style-src 'unsafe-inline'; sandbox",
                 "content-type": "text/plain; charset=utf-8",
                 "cross-origin-resource-policy": "cross-origin",
-                date: "Thu, 15 Jan 2026 13:57:26 GMT",
-                etag: 'W/"c70499052dadc2bfa0db9974bef60ba6bee6c55a1a65976b39609e5799a2a9fc"',
-                expires: "Thu, 15 Jan 2026 14:02:26 GMT",
+                date: "Thu, 15 Jan 2026 20:07:29 GMT",
+                etag: 'W/"c71a3370c10f464d6ecffa6d43504fb71292208b69a00a981347c53ddfa263ed"',
+                expires: "Thu, 15 Jan 2026 20:12:29 GMT",
                 "source-age": "0",
                 "strict-transport-security": "max-age=31536000",
                 vary: "Authorization,Accept-Encoding",
@@ -878,20 +882,22 @@ describe(`OpenAPI Parameter Types`, function () {
                 "x-cache-hits": "0",
                 "x-content-type-options": "nosniff",
                 "x-fastly-request-id":
-                  "e3214974c6e5c4399167d7bcbf3cfb4a81b682a5",
+                  "d953db1e078a30e215ae24aef9f78b87c4ddabdc",
                 "x-frame-options": "deny",
-                "x-github-request-id": "E767:93F2B:7BB2D:CB92F:6968F246",
-                "x-served-by": "cache-lhr-egll1980038-LHR",
-                "x-timer": "S1768485447.800110,VS0,VE129",
+                "x-github-request-id": "4CA7:C2B59:135FDE:209814:69694901",
+                "x-served-by": "cache-lhr-egll1980055-LHR",
+                "x-timer": "S1768507650.670719,VS0,VE124",
                 "x-xss-protection": "1; mode=block",
               },
             );
 
           nock("http://petstore.swagger.io:80", { encodedQueryParams: true })
-            .get("/v2/pet/1")
+            .get("/v2/pet/.blue")
             .reply(
               200,
-              { id: 1 },
+              {
+                id: 1,
+              },
               {
                 "access-control-allow-headers":
                   "Content-Type, api_key, Authorization",
@@ -899,7 +905,7 @@ describe(`OpenAPI Parameter Types`, function () {
                 "access-control-allow-origin": "*",
                 connection: "keep-alive",
                 "content-type": "application/json",
-                date: "Thu, 15 Jan 2026 13:58:27 GMT",
+                date: "Thu, 15 Jan 2026 20:07:30 GMT",
                 server: "Jetty(9.2.9.v20150224)",
                 "transfer-encoding": "chunked",
               },
@@ -921,16 +927,17 @@ describe(`OpenAPI Parameter Types`, function () {
           try {
             await arazzo.runWorkflows(inputFile);
           } catch (err) {
+            console.error(err);
             expect(err).to.not.be.instanceOf(Error);
           }
         });
 
-        it(`should behave asynchronously...`, async function () {
+        xit(`handle when pathParam of label is unexploded`, async function () {
           nock("https://raw.githubusercontent.com:443", {
             encodedQueryParams: true,
           })
             .get(
-              "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/parameter-styles/header/simple-array-exploded.json",
+              "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/parameter-styles/path/label/primitive.json",
             )
             .reply(
               200,
@@ -969,10 +976,12 @@ describe(`OpenAPI Parameter Types`, function () {
             );
 
           nock("http://petstore.swagger.io:80", { encodedQueryParams: true })
-            .get("/v2/pet/1")
+            .get("/v2/pet/.blue")
             .reply(
               200,
-              { id: 1 },
+              {
+                id: 404,
+              },
               {
                 "access-control-allow-headers":
                   "Content-Type, api_key, Authorization",
@@ -980,7 +989,7 @@ describe(`OpenAPI Parameter Types`, function () {
                 "access-control-allow-origin": "*",
                 connection: "keep-alive",
                 "content-type": "application/json",
-                date: "Thu, 15 Jan 2026 13:58:27 GMT",
+                date: "Thu, 15 Jan 2026 20:11:46 GMT",
                 server: "Jetty(9.2.9.v20150224)",
                 "transfer-encoding": "chunked",
               },
@@ -992,7 +1001,7 @@ describe(`OpenAPI Parameter Types`, function () {
           );
 
           const arazzo = new Arazzo(
-            "./test/mocks/arazzo/openapi-parameter-tests/path/label/primitve.json",
+            "./test/mocks/arazzo/openapi-parameter-tests/path/label/primitive.json",
             "arazzo",
             { logger: logger },
             docFactory,
@@ -1002,6 +1011,7 @@ describe(`OpenAPI Parameter Types`, function () {
           try {
             await arazzo.runWorkflows(inputFile);
           } catch (err) {
+            console.error(err);
             expect(err).to.not.be.instanceOf(Error);
           }
         });
@@ -1010,7 +1020,7 @@ describe(`OpenAPI Parameter Types`, function () {
 
     describe(`matrix`, function () {
       describe(`array`, function () {
-        it(`should behave asynchronously...`, async function () {
+        it(`handle when pathParam of matrix is exploded`, async function () {
           nock("https://raw.githubusercontent.com:443", {
             encodedQueryParams: true,
           })
@@ -1054,7 +1064,7 @@ describe(`OpenAPI Parameter Types`, function () {
             );
 
           nock("http://petstore.swagger.io:80", { encodedQueryParams: true })
-            .get("/v2/pet/1")
+            .get("/v2/pet/;petId=blue;petId=black;petId=brown")
             .reply(
               200,
               { id: 1 },
@@ -1064,10 +1074,10 @@ describe(`OpenAPI Parameter Types`, function () {
                 "access-control-allow-methods": "GET, POST, DELETE, PUT",
                 "access-control-allow-origin": "*",
                 connection: "keep-alive",
+                "content-length": "102",
                 "content-type": "application/json",
-                date: "Thu, 15 Jan 2026 13:58:27 GMT",
+                date: "Thu, 15 Jan 2026 20:22:52 GMT",
                 server: "Jetty(9.2.9.v20150224)",
-                "transfer-encoding": "chunked",
               },
             );
 
@@ -1091,7 +1101,7 @@ describe(`OpenAPI Parameter Types`, function () {
           }
         });
 
-        it(`should behave asynchronously...`, async function () {
+        it(`handle when pathParam of matrix is unexploded`, async function () {
           nock("https://raw.githubusercontent.com:443", {
             encodedQueryParams: true,
           })
@@ -1135,7 +1145,7 @@ describe(`OpenAPI Parameter Types`, function () {
             );
 
           nock("http://petstore.swagger.io:80", { encodedQueryParams: true })
-            .get("/v2/pet/1")
+            .get("/v2/pet/;petId=blue,black,brown")
             .reply(
               200,
               { id: 1 },
@@ -1145,10 +1155,10 @@ describe(`OpenAPI Parameter Types`, function () {
                 "access-control-allow-methods": "GET, POST, DELETE, PUT",
                 "access-control-allow-origin": "*",
                 connection: "keep-alive",
+                "content-length": "102",
                 "content-type": "application/json",
-                date: "Thu, 15 Jan 2026 13:58:27 GMT",
+                date: "Thu, 15 Jan 2026 20:24:08 GMT",
                 server: "Jetty(9.2.9.v20150224)",
-                "transfer-encoding": "chunked",
               },
             );
 
@@ -1174,7 +1184,7 @@ describe(`OpenAPI Parameter Types`, function () {
       });
 
       describe(`object`, function () {
-        it(`should behave asynchronously...`, async function () {
+        it(`handle when pathParam of matrix is exploded`, async function () {
           nock("https://raw.githubusercontent.com:443", {
             encodedQueryParams: true,
           })
@@ -1218,7 +1228,7 @@ describe(`OpenAPI Parameter Types`, function () {
             );
 
           nock("http://petstore.swagger.io:80", { encodedQueryParams: true })
-            .get("/v2/pet/1")
+            .get("/v2/pet/;R=100;G=200;B=150")
             .reply(
               200,
               { id: 1 },
@@ -1228,10 +1238,10 @@ describe(`OpenAPI Parameter Types`, function () {
                 "access-control-allow-methods": "GET, POST, DELETE, PUT",
                 "access-control-allow-origin": "*",
                 connection: "keep-alive",
+                "content-length": "102",
                 "content-type": "application/json",
-                date: "Thu, 15 Jan 2026 13:58:27 GMT",
+                date: "Thu, 15 Jan 2026 20:25:34 GMT",
                 server: "Jetty(9.2.9.v20150224)",
-                "transfer-encoding": "chunked",
               },
             );
 
@@ -1255,7 +1265,7 @@ describe(`OpenAPI Parameter Types`, function () {
           }
         });
 
-        it(`should behave asynchronously...`, async function () {
+        it(`handle when pathParam of matrix is unexploded`, async function () {
           nock("https://raw.githubusercontent.com:443", {
             encodedQueryParams: true,
           })
@@ -1299,7 +1309,7 @@ describe(`OpenAPI Parameter Types`, function () {
             );
 
           nock("http://petstore.swagger.io:80", { encodedQueryParams: true })
-            .get("/v2/pet/1")
+            .get("/v2/pet/;petId=R,100,G,200,B,150")
             .reply(
               200,
               { id: 1 },
@@ -1309,10 +1319,10 @@ describe(`OpenAPI Parameter Types`, function () {
                 "access-control-allow-methods": "GET, POST, DELETE, PUT",
                 "access-control-allow-origin": "*",
                 connection: "keep-alive",
-                "content-type": "application/json",
-                date: "Thu, 15 Jan 2026 13:58:27 GMT",
+                "content-length": "102",
+                "content-type": "application/xml",
+                date: "Thu, 15 Jan 2026 20:26:31 GMT",
                 server: "Jetty(9.2.9.v20150224)",
-                "transfer-encoding": "chunked",
               },
             );
 
@@ -1337,13 +1347,13 @@ describe(`OpenAPI Parameter Types`, function () {
         });
       });
 
-      describe(`primitive`, function () {
-        it(`should behave asynchronously...`, async function () {
+      xdescribe(`primitive`, function () {
+        it(`handle when pathParam of matrix is exploded`, async function () {
           nock("https://raw.githubusercontent.com:443", {
             encodedQueryParams: true,
           })
             .get(
-              "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/parameter-styles/header/simple-array-exploded.json",
+              "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/parameter-styles/path/matrix/primitive-exploded.json",
             )
             .reply(
               200,
@@ -1415,16 +1425,17 @@ describe(`OpenAPI Parameter Types`, function () {
           try {
             await arazzo.runWorkflows(inputFile);
           } catch (err) {
+            console.error(err);
             expect(err).to.not.be.instanceOf(Error);
           }
         });
 
-        it(`should behave asynchronously...`, async function () {
+        it(`handle when pathParam of matrix is unexploded`, async function () {
           nock("https://raw.githubusercontent.com:443", {
             encodedQueryParams: true,
           })
             .get(
-              "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/parameter-styles/header/simple-array-exploded.json",
+              "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/parameter-styles/path/matrix/primitive.json",
             )
             .reply(
               200,
@@ -1503,13 +1514,13 @@ describe(`OpenAPI Parameter Types`, function () {
     });
 
     describe(`simple`, function () {
-      describe(`array`, function () {
-        it(`should behave asynchronously...`, async function () {
+      xdescribe(`array`, function () {
+        xit(`handle when pathParam of simple is exploded`, async function () {
           nock("https://raw.githubusercontent.com:443", {
             encodedQueryParams: true,
           })
             .get(
-              "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/parameter-styles/header/simple-array-exploded.json",
+              "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/parameter-styles/path/simple/array-exploded.json",
             )
             .reply(
               200,
@@ -1585,7 +1596,7 @@ describe(`OpenAPI Parameter Types`, function () {
           }
         });
 
-        it(`should behave asynchronously...`, async function () {
+        it(`handle when pathParam of simple is unexploded`, async function () {
           nock("https://raw.githubusercontent.com:443", {
             encodedQueryParams: true,
           })
@@ -1629,10 +1640,12 @@ describe(`OpenAPI Parameter Types`, function () {
             );
 
           nock("http://petstore.swagger.io:80", { encodedQueryParams: true })
-            .get("/v2/pet/1")
+            .get("/v2/pet/blue,black,brown")
             .reply(
               200,
-              { id: 1 },
+              {
+                id: 404,
+              },
               {
                 "access-control-allow-headers":
                   "Content-Type, api_key, Authorization",
@@ -1640,7 +1653,7 @@ describe(`OpenAPI Parameter Types`, function () {
                 "access-control-allow-origin": "*",
                 connection: "keep-alive",
                 "content-type": "application/json",
-                date: "Thu, 15 Jan 2026 13:58:27 GMT",
+                date: "Thu, 15 Jan 2026 20:35:59 GMT",
                 server: "Jetty(9.2.9.v20150224)",
                 "transfer-encoding": "chunked",
               },
@@ -1667,13 +1680,13 @@ describe(`OpenAPI Parameter Types`, function () {
         });
       });
 
-      describe(`object`, function () {
-        it(`should behave asynchronously...`, async function () {
+      xdescribe(`object`, function () {
+        xit(`handle when pathParam of simple is exploded`, async function () {
           nock("https://raw.githubusercontent.com:443", {
             encodedQueryParams: true,
           })
             .get(
-              "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/parameter-styles/path/simple/object.json",
+              "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/parameter-styles/path/simple/object-exploded.json",
             )
             .reply(
               200,
@@ -1712,10 +1725,12 @@ describe(`OpenAPI Parameter Types`, function () {
             );
 
           nock("http://petstore.swagger.io:80", { encodedQueryParams: true })
-            .get("/v2/pet/1")
+            .get("/v2/pet/R=100,G=200,B=150")
             .reply(
               200,
-              { id: 1 },
+              {
+                id: 404,
+              },
               {
                 "access-control-allow-headers":
                   "Content-Type, api_key, Authorization",
@@ -1723,7 +1738,7 @@ describe(`OpenAPI Parameter Types`, function () {
                 "access-control-allow-origin": "*",
                 connection: "keep-alive",
                 "content-type": "application/json",
-                date: "Thu, 15 Jan 2026 13:58:27 GMT",
+                date: "Thu, 15 Jan 2026 20:41:04 GMT",
                 server: "Jetty(9.2.9.v20150224)",
                 "transfer-encoding": "chunked",
               },
@@ -1749,7 +1764,7 @@ describe(`OpenAPI Parameter Types`, function () {
           }
         });
 
-        it(`should behave asynchronously...`, async function () {
+        it(`handle when pathParam of simple is unexploded`, async function () {
           nock("https://raw.githubusercontent.com:443", {
             encodedQueryParams: true,
           })
@@ -1793,10 +1808,12 @@ describe(`OpenAPI Parameter Types`, function () {
             );
 
           nock("http://petstore.swagger.io:80", { encodedQueryParams: true })
-            .get("/v2/pet/1")
+            .get("/v2/pet/R,100,G,200,B,150")
             .reply(
               200,
-              { id: 1 },
+              {
+                id: 404,
+              },
               {
                 "access-control-allow-headers":
                   "Content-Type, api_key, Authorization",
@@ -1804,7 +1821,7 @@ describe(`OpenAPI Parameter Types`, function () {
                 "access-control-allow-origin": "*",
                 connection: "keep-alive",
                 "content-type": "application/json",
-                date: "Thu, 15 Jan 2026 13:58:27 GMT",
+                date: "Thu, 15 Jan 2026 20:39:30 GMT",
                 server: "Jetty(9.2.9.v20150224)",
                 "transfer-encoding": "chunked",
               },
@@ -1832,12 +1849,12 @@ describe(`OpenAPI Parameter Types`, function () {
       });
 
       describe(`primitive`, function () {
-        it(`should behave asynchronously...`, async function () {
+        xit(`handle when pathParam of simple is exploded`, async function () {
           nock("https://raw.githubusercontent.com:443", {
             encodedQueryParams: true,
           })
             .get(
-              "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/parameter-styles/header/simple-array-exploded.json",
+              "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/parameter-styles/path/simple/primitive-exploded.json",
             )
             .reply(
               200,
@@ -1876,10 +1893,12 @@ describe(`OpenAPI Parameter Types`, function () {
             );
 
           nock("http://petstore.swagger.io:80", { encodedQueryParams: true })
-            .get("/v2/pet/1")
+            .get("/v2/pet/blue")
             .reply(
               200,
-              { id: 1 },
+              {
+                id: 404,
+              },
               {
                 "access-control-allow-headers":
                   "Content-Type, api_key, Authorization",
@@ -1887,7 +1906,7 @@ describe(`OpenAPI Parameter Types`, function () {
                 "access-control-allow-origin": "*",
                 connection: "keep-alive",
                 "content-type": "application/json",
-                date: "Thu, 15 Jan 2026 13:58:27 GMT",
+                date: "Thu, 15 Jan 2026 20:43:02 GMT",
                 server: "Jetty(9.2.9.v20150224)",
                 "transfer-encoding": "chunked",
               },
@@ -1913,17 +1932,17 @@ describe(`OpenAPI Parameter Types`, function () {
           }
         });
 
-        it(`should behave asynchronously...`, async function () {
+        it(`handle when pathParam of simple is unexploded`, async function () {
           nock("https://raw.githubusercontent.com:443", {
             encodedQueryParams: true,
           })
             .get(
-              "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/parameter-styles/header/simple-array-exploded.json",
+              "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/parameter-styles/path/simple/primitive.json",
             )
             .reply(
               200,
               [
-                "1f8b0800000000000013ed59cf6fdb3614bee7af786077588154ced262879c96350d606c5883a63d0c59b032d2b3cd5622399272e215f9df0752b24d51a4e424dea1407cb224f2fdfcdefb1ea56f07004448e454327202e4757694bd2687f66e2e2a293872a3c9097c3b0000203a5f6045b737ec3285d4e0051aef2600312b8956a0b8f982b97112db27520989ca30d49d1d56143538176a15dc1f92362cd13d6545e4ae2793718373548150b7642654454dbbe8e7372458711f6e219c5638ac4d1bc5f8bc27a9731dc82577551973ac5546deaec3d615e25d7504c68d0c0d0c4cc03b5ac9d22d28c47cce9024c5cb8530e2932afbc9d8e8a04ad155a88219aca2091c0add0343b5b6ad976c72aba89468a162548d3b46d2d0f9debd8c427c0ce46998ef04f471a847c03e04f751c087908f15533c975e363fd2fd1692a121ee1f0b0c6da8a907a0112fb20275ae98344c70075634d00802c6c12c10b4110a7ba5c9eb8a9cc015a14bca4a7a532239b49b79e15400d1a22cc8b56febe6bf673551f84fcd94f3f4aa09c9a15fccd7ded27e1c3731b44470102adaa869d9a2d80b5d44103f82f51eca83c70a69f19e97ab7eb2ef077cfafe9ce960f59975a3729f59f799759f59b7aff69975e1bb63dd0b34a7ae2ca23415564cb45a862a65a84ae215325a1d23e436486f7d042629eeb9033ca603c4a96fac0d248c1eaece3112ecab4913e108490cd0c4f824f1f020264971b8fb8d45394a8e7bf13c5120e3253254243b96c92e85122d95e162d9a15cfa05132fc954be8789732fe51823d0a7812841a43b14eba3c8f451743a3408ec4eaa89f8c68975f418782e54f5f4a3e0634e0a41dc3fc9c21eb3c18a0231739197812bfb1f9dd65adb8c27f40e84f0932c052db03867253e3d8eb92806e2b8cba1faf5713a62ad9ce178257757a8359d3f4cc068e0d2f0eba5cff3f38671bae5f2adcc1e933c72600c3de95b2fd14c8bb8aa7e965244b0154725fbfb2b2686ddae358d2ded56a231af1533ab4bfb95a38327725a9b8550ec5fda623d1615c97ec34e58d64da4bbd98f9b2b9b05d2025560d2416b16617c26b61f600c33cd2874794be773547081c66fa961497e5c300d4c0305eda628d0a896deb6f63a03f853d490530e33c60b10b581ca3ea637f6ef5a193570b530469e4c26bab9953171fd63efd64b100a04872ba6f26ca610b92830e3680ee145bb2ab26bc2543e7999019c0b05c61aded87c08abd6b65aa36b295432f88a2bf8ac25e68c96afbee2ea33180106b56956f82187192b0d2a9dfdb58e3e59a2d26d887eca8eb2a3f57d83aad2ef6797a8962c7781ee9be9d64cd63b72c10dcdfd37809bbc6f524db0a2ac6c41629056bf6cc5910e044b9623d71893762a69be4038de180b406a557a36dedede66d4adca849a4f5a597af2fbf4edbb3f2edfbd3ace8eb285a94a12406c8d7b4b97ee5112f657d79bad8e4489a466e17d1f9c4834936fae9eef7d1fe6e12b525d5715750732726e016707859b154ccffcf208b0fc014dadb8c332e3f3b261166fb9e50167a86b2656e7059a5f57d3a2431754d10a2d1a36de36bfc400d0f4a6f0755233dc50b31861c4e9996541eb9c11a09cfdfdd7b49b59c5ce69e124e63eb8c626b11f14ceac8a1793ed87da49fb7d76d258bddbb49470fcee55fc4d9adfb2f6e4caff762a4b0760f3df7fc1d232de954d7ae7cd4baf40a2914b14cb9046855a0a5ba321791e1f1df56783005cbace73d47a5697b0817e9812db9d909b58d4a99425cbddaec9171db0dad6f554d6601484c1ec1cc621761d1e441a9cb9e8a4a7fd373bc46aca97b464054ccf40d7d671ec15f58ebade8ceaba40035c1898899aefaca53f1ef59ab4256addefd15d0e902db1671e612d8fb71dbf69db6ba47725793d6f4b318173ef96a85666c1f8bc9d0d56a26ec6098fedee0c2a4ecb3391071364d7568f04d35dffdc9f47a2735bcffeee19331478eaaac636e4cd102494cbc9a0d05a7b0d2f94f97e5d7fba8d4a77753a2043ceb6a26c7cc353733290ba3f4636198f9ab08bfa76f65b8f3bc90c5aa01edc1ffc07a937df2351240000",
+                "1f8b0800000000000013ed59c16edc3610bdfb2b064c0f0de0685d27e8c1a7ba710c2c5a34469d1c0ad768686976978944b2e4c8ce36f0bf17a4b4bb1249491bc79700ded34a2267868f6fe60da52f07004c69945c0b7602ec657694bd6487ee6eae2aad244ab2ec04be1c0000309bafb0e2bb1b6e98414e7881d4b909c068add11954371f31276fb17da28dd26848a0edcd70a638e1529975707fccdab845ff541489bb1d9b42122ed10446fd90853215a776d0cfaf5830e23e9cc224af70dc9b2523e432b2d4bb0eecb2cf55995a58eb8cbddec0d637d2b9ea194c0719061884809f79a54b3fa050cba54036685eaf14a9f7a68c3763eb831bc3d7a10b41582537700cbaaf846a135bb4d9ecce70add151854c8d7b22497cf9e8ab4c527c8ae4c334df8be8d3544f907d8cee93840f299f4aa6f45e7676f31d7fdc44221ef2fea1c4b0c4a91ea1463ac90ab4b9119a84929eac48d01802218156089694c12835655db113b862fc968b92df94c80edd64597817c0ac2a0b76dd8d75fbbf133533f86f2d8c5fe95503c9613799af3b43631cb7183a2138081d6dddb46a513c8a5c24183fc1f588e5c16383bc782bcb75bcd9f7236bfafe16d3e3ea93ea26ed3ea9ee93ea3ea96eecf64975e1bb53dd0ba4539f1649990a3326992d6399329625e90c99cc8e09711b95b798818312f754011e5201d2d237550606821ecfce29118cdd0c0be184488cc8c47427f1f5200e8ae278f59b4239298e8fb2f28104994e91b124d9334df6499464aa8c27cb1ee912274c3a2587f67b5c381f251d5302fa6d241a10d23d92f54162fa20391d6b04f617d5017cd3c23a790c3c57a6faf6a3e0434e0a01eeef75e18ed9e04c815a78e475b094c76f9d365edb1d1ff03b02e17b5d2a5e60712e4afc761c73558ce0b8cfa1fae5f13062ad9d71bc066757682d5f7e9d8149e086e9176d5f679d3742f29d96ef6c464af2c086315c491cbd469a176957f12e0d09c1ce1cd7e29f4f38d0ecf6a3696269a7328b796d04ad2fdd578e1e9fd8694d2b65c47fbce57a0a152d7ec31e2c9b22d29fdcc5cda7cd0a79812608e9a00d8b09b950bb0f3024a869852eeff87289062e90ba25354cc9772b614158e0607d170516cd6d675a7b9d01fca56ac8b984859005a89aa0728ff98dfbbb71c609ae5644fa6436b3cdad4ca8eb1fa35bcf41195012ae84c9b3854194aac04c221dc2b3765462d64c987cf63c03385706c805dec47c08eb36b6daa22f295c0bf8846bf86035e682972f3ee1fa039002424bcd882ee4b01025a1b1d9df1bf4d92d1adb42f45376941d6dee139acabe5d5ca2b915b9073a0ed38f996d66e44a12cfbb6f00b7fbbedd6a861517654b12425efdb233c77a142c458ed262cadaa9e6f90ae1781b2c00ab4dd989f1eeee2ee37e54a6cc72d6dab2b3dfe7afdffc71f9e6c5717694ada82a5940b10def9d5cfa4783b4bfbade4ef522ca34a755e7fbe04c23cdbef87cbeefae6119be22b57555717f2063e78e70ae51b859c3fcac9b1e0197ff44aa8df45c16725936cad219ee74c007ea8b89f37981f4eb7a5ef4e4821b5ea163c376b5cd6fa001686a53f83aa9696e38ad2614717ee654d02d8e14181f7ffc9a76dbabb83e2d7a03a8cb46c616bcb4e1d3e6736caa4ffbc1e0c205f06cb6fb8c3b6bbfdece9a350df752dbffddb70fad1c5c39447aaf2522f624f11c60d2984783562b47e050598e8f8e62e10c90b7759ea3b58bba842d2f42e85deaa2a4147e5ceb52e47ed6eca30d4afe34fed37b103496210ea9ebb04b6f74c3a333dc0abfda03abb9bce5a528607e06b6760bc788f17bfa7a35e9eb0209a42258a85aeeed25ee1da20ae654ccc605ac5f2075ab7a59a79adf1eefca6153d3364cef5bea14845dfd0d16f7e616cd9a56422e5be15cabbad1da8e147c26349297672a0fdaab7eac1d85182e89e75db14e363551fcfd035868f0d4678dab56db0e4119bf27a3466bdbe9d1429b6f37f9675b54faa38701195b6c6bcae11b1e290781b4718fd5ec7832847ddcb78dd1a61718dc4147d483fb83ff012fe13f3f6e230000",
               ],
               {
                 "accept-ranges": "bytes",
@@ -1931,14 +1950,14 @@ describe(`OpenAPI Parameter Types`, function () {
                 "cache-control": "max-age=300",
                 connection: "keep-alive",
                 "content-encoding": "gzip",
-                "content-length": "1491",
+                "content-length": "1477",
                 "content-security-policy":
                   "default-src 'none'; style-src 'unsafe-inline'; sandbox",
                 "content-type": "text/plain; charset=utf-8",
                 "cross-origin-resource-policy": "cross-origin",
-                date: "Thu, 15 Jan 2026 13:57:26 GMT",
-                etag: 'W/"c70499052dadc2bfa0db9974bef60ba6bee6c55a1a65976b39609e5799a2a9fc"',
-                expires: "Thu, 15 Jan 2026 14:02:26 GMT",
+                date: "Thu, 15 Jan 2026 20:44:36 GMT",
+                etag: 'W/"1422fa48d6726aaf62e6e6e6d31e64546b6439f3dfcca6b446461c92b5e336fd"',
+                expires: "Thu, 15 Jan 2026 20:49:36 GMT",
                 "source-age": "0",
                 "strict-transport-security": "max-age=31536000",
                 vary: "Authorization,Accept-Encoding",
@@ -1947,20 +1966,22 @@ describe(`OpenAPI Parameter Types`, function () {
                 "x-cache-hits": "0",
                 "x-content-type-options": "nosniff",
                 "x-fastly-request-id":
-                  "e3214974c6e5c4399167d7bcbf3cfb4a81b682a5",
+                  "a59e0f7bcf527d7da1654ab25080e0014f23346d",
                 "x-frame-options": "deny",
-                "x-github-request-id": "E767:93F2B:7BB2D:CB92F:6968F246",
-                "x-served-by": "cache-lhr-egll1980038-LHR",
-                "x-timer": "S1768485447.800110,VS0,VE129",
+                "x-github-request-id": "F461:38B922:13AA24:21B26E:696951B4",
+                "x-served-by": "cache-lhr-egll1980050-LHR",
+                "x-timer": "S1768509877.703382,VS0,VE118",
                 "x-xss-protection": "1; mode=block",
               },
             );
 
           nock("http://petstore.swagger.io:80", { encodedQueryParams: true })
-            .get("/v2/pet/1")
+            .get("/v2/pet/blue")
             .reply(
               200,
-              { id: 1 },
+              {
+                id: 404,
+              },
               {
                 "access-control-allow-headers":
                   "Content-Type, api_key, Authorization",
@@ -1968,7 +1989,7 @@ describe(`OpenAPI Parameter Types`, function () {
                 "access-control-allow-origin": "*",
                 connection: "keep-alive",
                 "content-type": "application/json",
-                date: "Thu, 15 Jan 2026 13:58:27 GMT",
+                date: "Thu, 15 Jan 2026 20:44:37 GMT",
                 server: "Jetty(9.2.9.v20150224)",
                 "transfer-encoding": "chunked",
               },
