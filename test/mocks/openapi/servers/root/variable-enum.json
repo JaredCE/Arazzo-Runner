@@ -343,7 +343,7 @@
   },
   "servers": [
     {
-      "url": "http://petstore.swagger.io{port}/{basePath}",
+      "url": "http://petstore.swagger.io:{port}/{basePath}",
       "variables": {
         "basePath": {
           "default": "v2"
