@@ -740,8 +740,26 @@ class Arazzo extends Document {
 
       switch (param.in) {
         case "header":
-          const headerStyle = operationDetailParam?.style || "simple";
-          const headerExplode = operationDetailParam?.explode || false;
+          let headerStyle = "simple";
+          let headerExplode = false;
+          if (
+            operationDetailParam?.style &&
+            ["accept", "authorization", "content-type"].includes(
+              operationDetailParam.name.toLowerCase() === false,
+            )
+          ) {
+            headerStyle = operationDetailParam.style;
+          }
+
+          if (
+            operationDetailParam?.explode &&
+            ["accept", "authorization", "content-type"].includes(
+              operationDetailParam.name.toLowerCase() === false,
+            )
+          ) {
+            headerExplode = operationDetailParam.explode;
+          }
+
           headers.append(param.name, value, {
             style: headerStyle,
             explode: headerExplode,
