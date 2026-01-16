@@ -58,5 +58,20 @@
   },
   "findPetsByTags-QueryPrimitive": {
     "tags": "blue"
+  },
+  "FindpetbyID-ignoreAccept": {
+    "petId": 1,
+    "xSimple": "blue",
+    "Accept": ["blue", "black", "brown"]
+  },
+  "FindpetbyID-ignoreAuthorization": {
+    "petId": 1,
+    "xSimple": "blue",
+    "Authorization": ["blue", "black", "brown"]
+  },
+  "FindpetbyID-ignoreContent-Type": {
+    "petId": 1,
+    "xSimple": "blue",
+    "Content-Type": ["blue", "black", "brown"]
   }
 }
