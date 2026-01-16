@@ -1,5 +1,7 @@
 "use strict";
 
+const { substitute, parse } = require("openapi-server-url-templating");
+
 const Document = require("./Document");
 
 class OpenAPI extends Document {
@@ -17,8 +19,9 @@ class OpenAPI extends Document {
         for (let operation in value[key]) {
           if (value[key][operation]?.operationId === operationId) {
             this.path = key;
-            this.operation = operation;
+            this.method = operation;
             this.operationDetails = value[key][operation];
+            this.pathServers = value[key]?.["servers"] || [];
           }
         }
       }
@@ -30,11 +33,19 @@ class OpenAPI extends Document {
   }
 
   async buildOperation(inputs, step) {
-    await this.getServers();
+    if (!this.pathServers.length && !this.operationDetails?.servers?.length) {
+      await this.getServers();
+    } else {
+      if (this.operationDetails.servers) {
+        this.servers = this.operationDetails.servers;
+      } else {
+        this.servers = this.pathServers;
+      }
+    }
 
     this.buildOperations();
 
-    return this.operations;
+    return this.operation;
   }
 
   async getServers() {
@@ -65,15 +76,42 @@ class OpenAPI extends Document {
     }
   }
 
-  buildOperations() {
-    this.operations = [];
+  parseServer() {
+    const server = this.servers.at(0);
 
-    for (const server of this.servers) {
-      this.operations.push({
-        url: `${server.url}${this.path}`,
-        operation: this.operation,
-      });
+    if (server.variables) {
+      const parseResult = parse(server.url);
+      const parts = [];
+
+      parseResult.ast.translate(parts);
+
+      for (const partType of parts) {
+        const [type, value] = partType;
+
+        if (type === "server-variable-name") {
+          const replacementValueData = server.variables[value];
+          if (replacementValueData.default) {
+            server.url = server.url.replace(
+              `{${value}}`,
+              replacementValueData.default,
+            );
+          }
+        }
+      }
     }
+
+    return server;
+  }
+
+  buildOperations() {
+    this.operation = {};
+
+    const server = this.parseServer();
+
+    Object.assign(this.operation, {
+      url: `${server.url}${this.path}`,
+      method: this.method,
+    });
   }
 }
 
