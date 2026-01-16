@@ -182,6 +182,272 @@ describe(`OpenAPI Parameter Types`, function () {
           expect(err).to.not.be.instanceOf(Error);
         }
       });
+
+      describe(`ignores`, function () {
+        xdescribe(`Accept`, function () {
+          it(`ignores the styling for this header`, async function () {
+            nock("https://raw.githubusercontent.com:443", {
+              encodedQueryParams: true,
+            })
+              .get(
+                "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/parameter-styles/header/ignore-Accept.json",
+              )
+              .reply(
+                200,
+                [
+                  "1f8b0800000000000013ed594d6fdc3610bdfb570c981e5ac0d1ba4ed0834f75e31858b4688c3a3914aed1d0d2ec2e138964c991ed6de0ff5e90d2ee4a14f561677b08e03dad24723e1edff00da52f07004c69945c0b7602ec557294bc6287ee6eaa0aad244ab2ec04be1c0000309baeb0e0bb1b6e98414e7881d4b809c068add11954379f30256fb17ea28dd26848a06dcd70a638e1529975707fc8dab045ff546491bb0d9b42122ed10446fd90853205a77ad04faf5930e2219cc2242f70d89b2523e4b263a9751dd865f7451e4bac76c6de6c606b1b695cb50cc6830c030c42c07b5ee8dc0fc8d4722990f59ad72b45ea83c9bb8bb1f5c18de1ebd085202ca20b3804dd23a1dac4d6596c7667b8d6e8a842a6c48948125fee3dcb28c5c748de4ff349441fa77a84ec43741f257c48f95831c5d7b2b19aeff97e0b8978c8fba712c312a772801af122cbd0a64668124a7ab22241650884045a215852063ba529cb829dc015e3b75ce4fc264776e826cbccbb0066559eb1eb66acdbff8da899c17f4a617ca657152487cd62be6e0cede2b8c5d009c141e868eba6568b6c2f721161fc08d73b2c0f1e1be4d93b99afbb8bfd3090d3b7974c8babcfaa1bb5fbacbacfaafbacba5db7cfaa0bdf9cea5e209dfab288ca545831d16a19aa94a12a8957c868758c88dba0bc7519d82b71cf3bc0537680b8f48d6d033d410f57e7980876ddf40be188480cc8c47827f178107b457178f71b43392a8e7bc9bca740c64b64a8482696c994428996ca70b14c28976ec1c44bb26fbd8785732fe51813d0af23518f904e28d62789e993e474a811982eaa3df8c68575f41878ae4cf1f547c1a79c1402dc3fe8cc1db3c19902b5f0c8eb2095fdb74e1baff58af7f81d80f083ce15cf303b17397e3d8ea9ca06709c72a87e75dc8f586d6718afded9055acb978f33300a5c3ffd3acbd7c8f34648bed3f29dcd8e923cb1610c33e946af91e659dc557795fa8460678e6bf1f767ec6976dbd154b1d45399c5b43482d697ee2b478b4fecb4a49532e25f5e733d868a16bf620b96cd26d29edcc4cd97cd0a79862608e9a00e8b09b950bb0f3024a86a852eeff87289062e909a5b6a5892ef57c282b0c0c1fa2e0a2c9adbc6b4fa3a01f853959072090b2133502541e11ef31bf777e38c135cad88f4c96c66ab5b8950d7df776efd00ca809270254c9a2c0ca254192612e9105ed4a322b366c2a4b31f12807365805ce055cc87b0ae632b2dfa2d856b019f710d1fadc654f0fce5675c7f04524068a91ad1841c1622273436f96b833ebb45636b887e4c8e92a3cd7d4253d8778b4b34b722f54077c3f463669b19a992c4d3e61bc0edba6f979a61c1455e938490173fefccb116057391a2b418b376aa79ba4238de060bc04a933762bcbbbb4bb81f9528b39cd5b6ececb7f99bb7bf5fbe7d799c1c252b2a7216506cc37b2797fe512fedafaeb753bd8832cd69d5f83e38d348b32fbe9e1f9a392cc357a4b62c0aee0f64ecdc11ce350a376b989f35cb23e0f21f48a5919ecb422ef34a591ac39d0ef840fd66e27c5e20fdb29e672db9e08617e8d8b0cdb6faf53400d5de14be4eaa9a1b4eab11459c9f391574c99102e3e3efbea6ddf62aae4f0b3b31ffc135d6897d6770e15cbc98ed3ed4ceeaefb3b32aea69dd524fe2f72fadf0e7ae68eef59ef5a85cf05ee795242f786ea7673af826f291599da629eaceabecff2d275a57bb75c1c988fbd0f41e52defe6fbe28aa95fbca91b7f506a953e851ac7a8a7ec8a341ab95db6bc226e0f8e8a8dbe3044562cb34456b17650edb120ea172bb2c4a8a61c5b5ce45ea67cd3ed9409dc7b186d1620ace00210eb1ebf0405551cba3d37f6a793d01abb9bce5b9c8607e06b674896367739ae8ebf5a8af0b24908a60a14a39d94bb7cdeb888d6b386c576bda5aa6eb06256908efedf14eb92af9d930bd6da9b177efa43248eeed2d9a35ad845cd63dce5a95555bd450ed7b4223797ea6d2a0136ec7da10f37ef53a6ff655d1feb3137ffbac1c1a3cf555e38465dbcc29e3d764d068691b7b5c68f3dda6fe6c8d4a7b743f2043c9d6a61cbee1e9bf1748db6d87ab158f8630c57dddc36edab6de1574443d7838f80f03345b4619250000",
+                ],
+                {
+                  "accept-ranges": "bytes",
+                  "access-control-allow-origin": "*",
+                  "cache-control": "max-age=300",
+                  connection: "keep-alive",
+                  "content-encoding": "gzip",
+                  "content-length": "1526",
+                  "content-security-policy":
+                    "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+                  "content-type": "text/plain; charset=utf-8",
+                  "cross-origin-resource-policy": "cross-origin",
+                  date: "Fri, 16 Jan 2026 12:54:01 GMT",
+                  etag: 'W/"a2a59a56775010a0f6d7b09bc701946ec5fc3ec4ac74e6e203d45d266dc7a59f"',
+                  expires: "Fri, 16 Jan 2026 12:59:01 GMT",
+                  "source-age": "0",
+                  "strict-transport-security": "max-age=31536000",
+                  vary: "Authorization,Accept-Encoding",
+                  via: "1.1 varnish",
+                  "x-cache": "MISS",
+                  "x-cache-hits": "0",
+                  "x-content-type-options": "nosniff",
+                  "x-fastly-request-id":
+                    "0b0aaa26c0c48c67ffe9c78a6eb595eae98a52dd",
+                  "x-frame-options": "deny",
+                  "x-github-request-id": "D987:3E4FC0:70639:BEE47:696A34E7",
+                  "x-served-by": "cache-lhr-egll1980069-LHR",
+                  "x-timer": "S1768568041.004713,VS0,VE122",
+                  "x-xss-protection": "1; mode=block",
+                },
+              );
+
+            nock("http://petstore.swagger.io:80", {
+              encodedQueryParams: true,
+              reqheaders: { "x-simple": "blue", accept: "blue,black,brown" },
+            })
+              .get("/v2/pet/1")
+              .reply(
+                200,
+                { id: 1 },
+                {
+                  "access-control-allow-headers":
+                    "Content-Type, api_key, Authorization",
+                  "access-control-allow-methods": "GET, POST, DELETE, PUT",
+                  "access-control-allow-origin": "*",
+                  connection: "keep-alive",
+                  "content-type": "application/json",
+                  date: "Thu, 15 Jan 2026 13:58:27 GMT",
+                  server: "Jetty(9.2.9.v20150224)",
+                  "transfer-encoding": "chunked",
+                },
+              );
+
+            const inputFile = new Input(
+              "./test/mocks/inputs/parameter-styles/input.json",
+              "inputs",
+            );
+
+            const arazzo = new Arazzo(
+              "./test/mocks/arazzo/openapi-parameter-tests/header/ignore-Accept.json",
+              "arazzo",
+              { logger: logger },
+              docFactory,
+            );
+            arazzo.setMainArazzo();
+
+            try {
+              await arazzo.runWorkflows(inputFile);
+            } catch (err) {
+              expect(err).to.not.be.instanceOf(Error);
+            }
+          });
+        });
+
+        xdescribe(`Authorization`, function () {
+          it(`ignores the styling for this header`, async function () {
+            nock("https://raw.githubusercontent.com:443", {
+              encodedQueryParams: true,
+            })
+              .get(
+                "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/parameter-styles/header/ignore-Authorization.json",
+              )
+              .reply(
+                200,
+                [
+                  "1f8b0800000000000013ed594d6fdc3610bdfb570c981e5ac0d1ba4ed0834f75e31858b4688c3a3914aed1d0d2ec2e138964c991ed6de0ff5e90d2ee4a14f561677b08e03dad2472bef81edf50fa7200c09446c9b56027c05e2547c92b76e8eea6aad04aa224cb4ee0cb010000b3e90a0bbebbe18619e48417488d9b008cd61a9d4175f30953f216eb27da288d8604dad60c678a132e955907f787ac0d5bf44f4516b9dbb02924e1124d60d40f59285370aa07fdf49a05231ec2294cf20287bd5932422e3b965ad7815d765fe4b1c46a67eccda66c6d238dab96c178906180410878cf0b9dfb01995a2e05b25ef37aa5487d30797731b63eb8317c1dba1084457401874af7c8526d62eb2c36bb335c6b74502153e2c44a125fee3dcb28c4c740de0ff349401f877a04ec43701f057c08f91899e26bd958cdf77cbf44221ee2fea9c0b0c4a91c80469c6419dad4084d42490f5624a80c8190402b044bca60879ab22cd8095c317ecb45ce6f7264876eb2ccbc0b6056e519bb6ec6bafddf889a19fca714c6677a5595e4b049e6ebc6d06e1db735744270103adabaa9d522db8b5c44103f82f50eca83c70679f64ee6ebee623f0ce4f4ed25d3c2eab3ea46ed3eabeeb3ea3eab6ed7edb3eac237a7ba1748a79e1651990a191365cb105386581267c8283b46c46d50deba08ec95b8e71de0293b405cfac6b6819ea087d93926825d37fd42382212033231de493cbe88bda238bcfb8d55392a8e7bc9bc8720e3141922c9449a4c214a942ac3649940972e61e294ec5bef61e1dc0b1d6302fa7520ea11d209647d92983e494e871a81e9a2da53dfb8b08e1e03cf9529befe28f894934250f70f3a73c76c70a6402d7ce57590cafe5ba78dd77ac57bfc0e94f083ce15cf303b17397e7d1d53950dd471caa1fad5717fc56a3bc3f5ea9d5da0b57cf93803a385eb875f67f91a79de08c9775abeb3d9519227368c6126dde835d23c8bbbeaae529f10eccc712dfefe8c3dcd6e3b9a2a967a2ab3989646d0fad27de568e1899d96b45246fccb6bacc7aaa2c5afd82acb6613694f6ed6cdd366853c431384745087c5845ca8dd07181254b54297777cb944031748cd2d35a4e4fb95b0202c70b0be8b028be6b631adbe4e00fe5425a45cc242c80c544950b8c7fcc6fddd38e304572b227d329bd9ea5622d4f5f79d5b3f8032a0245c0993260b8328558689443a8417f5a8c8ac9930e9ec8704e05c1920177815f321acebd84a8b7e4be15ac0675cc347ab31153c7ff919d71f8114105aaa46344b0e0b91131a9bfcb5a93ebb4563eb12fd981c25479bfb84a6b0ef1697686e45ea0bdd0dd38f996d66a44a124f9b6f00b7ebbe5d6a860517790d12425efcbc33c75a10cc458ad262ccdaa9e6e90ae1781b2c002b4dde88f1eeee2ee17e54a2cc7256dbb2b3dfe66fdefe7ef9f6e5717294aca8c85900b10dee9d5cfa47bdb0bfbade4ef522ca34a755e3fbe04c23cdbe783e3f34735886af486d5914dc1fc8d8b9039c6b146ed6303f6bd223c0f21f48a5911ecb422ef34a591ac39d0ef840fd66e27c5e20fdb29e672db9e08617e8d0b0cdb6faf53400d5de14be4eaa9a1b4eab11459c9f391574c99102e3e3efbea6ddf62aae4f0b3b31ffc135d6897d6770e15cbc98ed3ed4ceeaefb3b32aea69dd524fe2f72fadf0e7ae68eef59ef5a85cf05ee795242f786ea7673af826f29159f56dc5ff6f6ab4ae36ed829311f7a1e93d64befddf7c5f540bf895c370eb455287efd192f5707fc8a341ab95db72c25ee0f8e8a8dbea045cb1659aa2b58b32872d93c352b9cd1625c56ac5b5ce45ea67cd3ed940a4c76b0da39c0a8e02611d62d7e1b9aa8296af4effe1e5f5845acde52dcf4506f333b0a54b1c3b7bd4445faf477d5d208154040b55cac95ebadd5e47735cdf61bb92d396345df72949437f6f8f770256a9d006e96d4b8d2d7ca79841726f6fd1ac6925e4b26e75d6aaacbaa38678df131ac9f33395060d713bd686a6f78bd879b3bd8ab6a19df8db47e6d0e0a9678dd3976d4fa78c5f9341a3a56dec71a1cd771bfed9ba2aedd1fd05194ab636e5ea1bbe04e82da4ed76c5d58a474398e2be6e6537dd5bef0a3aa01e3c1cfc072723d08420250000",
+                ],
+                {
+                  "accept-ranges": "bytes",
+                  "access-control-allow-origin": "*",
+                  "cache-control": "max-age=300",
+                  connection: "keep-alive",
+                  "content-encoding": "gzip",
+                  "content-length": "1523",
+                  "content-security-policy":
+                    "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+                  "content-type": "text/plain; charset=utf-8",
+                  "cross-origin-resource-policy": "cross-origin",
+                  date: "Fri, 16 Jan 2026 13:12:58 GMT",
+                  etag: 'W/"590650ef8bd30fbd840b56b3c86c6f2f93075c1700dd4389ebe8179154c88734"',
+                  expires: "Fri, 16 Jan 2026 13:17:58 GMT",
+                  "source-age": "0",
+                  "strict-transport-security": "max-age=31536000",
+                  vary: "Authorization,Accept-Encoding",
+                  via: "1.1 varnish",
+                  "x-cache": "MISS",
+                  "x-cache-hits": "0",
+                  "x-content-type-options": "nosniff",
+                  "x-fastly-request-id":
+                    "c1bfa6febdb8c8898584334bf2a5dd7d7d7d2b77",
+                  "x-frame-options": "deny",
+                  "x-github-request-id": "9340:1057FA:79ABC:CED57:696A3959",
+                  "x-served-by": "cache-lhr-egll1980060-LHR",
+                  "x-timer": "S1768569178.967013,VS0,VE117",
+                  "x-xss-protection": "1; mode=block",
+                },
+              );
+
+            nock("http://petstore.swagger.io:80", {
+              encodedQueryParams: true,
+              reqheaders: {
+                "x-simple": "blue",
+                Authorization: "blue,black,brown",
+              },
+            })
+              .get("/v2/pet/1")
+              .reply(
+                200,
+                { id: 1 },
+                {
+                  "access-control-allow-headers":
+                    "Content-Type, api_key, Authorization",
+                  "access-control-allow-methods": "GET, POST, DELETE, PUT",
+                  "access-control-allow-origin": "*",
+                  connection: "keep-alive",
+                  "content-type": "application/json",
+                  date: "Thu, 15 Jan 2026 13:58:27 GMT",
+                  server: "Jetty(9.2.9.v20150224)",
+                  "transfer-encoding": "chunked",
+                },
+              );
+
+            const inputFile = new Input(
+              "./test/mocks/inputs/parameter-styles/input.json",
+              "inputs",
+            );
+
+            const arazzo = new Arazzo(
+              "./test/mocks/arazzo/openapi-parameter-tests/header/ignore-Authorization.json",
+              "arazzo",
+              { logger: logger },
+              docFactory,
+            );
+            arazzo.setMainArazzo();
+
+            try {
+              await arazzo.runWorkflows(inputFile);
+            } catch (err) {
+              expect(err).to.not.be.instanceOf(Error);
+            }
+          });
+        });
+
+        describe(`Content-Type`, function () {
+          it(`ignores the styling for this header`, async function () {
+            nock("https://raw.githubusercontent.com:443", {
+              encodedQueryParams: true,
+            })
+              .get(
+                "/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/parameter-styles/header/ignore-Content-Type.json",
+              )
+              .reply(
+                200,
+                [
+                  "1f8b0800000000000013ed595d6fdb36147dcfafb860f7b002899ca5c51ef2b4ac690063c31a34edc390052b235ddb6c259223af9c7845fefb404ab6258a929cd41850207eb224f27ef11c9e4be9eb0100531a25d7829d027b951c27afd8a1bb9baa422b89922c3b85af070000cca60b2cf8f6861b6690135e22356e02305a697406d5ed674cc95bac9f68a3341a12685b339c294e38576615dc1fb2366cd13f1559e46ec3a69084733481513f64a64cc1a91ef4f36b168c7808a730c90b1cf666c90839ef586a5d0776d97d91c712ab9db137ebb2b58d34ae5a06e34186010621e03d2f74ee07646a3e17c87acdeb8522f5d1e4ddc5d8f8e0c6f055e8421016d1051c2add234bb58eadb3d8ecce70add141854c893b5692f87cef5946213e06f27e98ef04f471a847c03e04f751c087908f9129be968dd5fcc0f74b24e221ee9f0a0c4b9cca0168c44996a14d8dd02494f4604582ca100809b440b0a40c76a829cb829dc235e34b2e727e9b233b749365e65d00b32acfd84d33d6cdff46d4cce03fa5303ed3ebaa24874d32df348676ebb8a9a1138283d0d1c64dad16d95ee42282f811ac77501e3c36c8b377325f7517fb6120a7ef2f9916569f55376af759759f55f75975bb6e9f5517be3bd5bd443af3b488ca54c898285b869832c492384346d931226e83f2d64560afc43def004fd901e2d237b60df4043dccce3111ecbae917c21191189089f14ee2f145ec15c5e1dd6facca5171dc4be63d0419a7c8104976a4c92e44895265982c3bd0a54b983825fbd67b5838f742c798807e1b887a847407b23e494c9f24a7438dc0eea2da53dfb8b08e1e032f9429befd28f894934250f78f3a73c76c70a640cd7ce57590cafe5ba7b5d77ac57bfc0e94f0a3ce15cf30bb10397e7b1d53950dd4719743f5ab93fe8ad57686ebd53bbb406bf9fc7106460bd70fbfcef235f2bc15926fb57c6bb3a3244f6c18c34cbad16ba4691677d55da53e21d89ae35afcfd057b9add7634552cf55466312d8da0d595fbcad1c2133b2b69a18cf897d7588f55458bdfb05596f526d29edcac9ba7cd0279862608e9a00e8b093953db0f3024a86a85aeeef87c8e062e919a5b6a48c90f0b614158e0607d170516cdb231adbe4e00fe5425a45cc24cc80c544950b8c7fcd6fd5d3be304d70b227d3a99d8ea5622d4cd8f9d5b2f41195012ae8549939941942ac344221dc28b7a5464d6449874f23201b85006c8055ec57c08ab3ab6d2a2df52b816f00557f0c96a4c05cf8fbee0ea139002424bd58866c9612672426393bfd6d5674b34b62ed14fc97172bcbe4f680afb6e76856629525fe86e987ecc643d23559278da7c03b859f7cd52332cb8c86b9010f2e297ad39d682602e52941663d6ce344f1708279b60015869f2468c77777709f7a31265e693da969dfc3e7df3f68fabb74727c971b2a0226701c4d6b87772e91ff5c2fefa6633d58b28d39c168def83138d34f9eaf9fcd0cc611ebe22b56551707f2063170e70ae51b85dc1f4bc498f00cbef914a233d96859ce795b234863b1df081facdc4f9bc44fa7535cd5a72c10d2fd0a161936df5eb6900aabd297c9d5435379c16238a383d772ae8922305c6c7df7d4dbbe9555c9f167662fe836bac13fbc1e0ccb97831d97ea89dd4df672755d4bb754b3d89df1f59e1cf5dd1dceb3deb51b9e0bdce2b499ef1dcee9ee9e09bc84766f546494249471f9ccdff2b335a557b76c1c988fbd0f41e12dffc6fbe2eaaf5fbda41b8f51ea943f768c57aa83fe4d1a0d5caed38612b70727cdced7402aad8324dd1da5999c386c861a9d26af562b5e25ae722f5b3269f6da0d1e3b586514a052781b00eb1ebf0585541cb57a7ffecf27a875a4de592e72283e939d8d2258e9d2d6a475faf477d5d228154043355ca9dbd749bbd8ee4b8b6c37615a7ad68ba6e539286fc2e4fb6fa5589d01ae96d4b8d1d7c2b9841726f976856b410725e773a2b5556cd5143bbef098de4f9b94a837eb81d6b43d2fb35eca2d95d45bbd04efced137368f0ccb3c6c9cba6a553c6afc9a0d1d236f6b8d0e6bb35ff6c5d95f6e8fe820c255b9b72f50ddf01f416d2769be26ac5a321ece2beee64d7cd5bef0a3aa01e3c1cfc072b668bf21f250000",
+                ],
+                {
+                  "accept-ranges": "bytes",
+                  "access-control-allow-origin": "*",
+                  "cache-control": "max-age=300",
+                  connection: "keep-alive",
+                  "content-encoding": "gzip",
+                  "content-length": "1527",
+                  "content-security-policy":
+                    "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+                  "content-type": "text/plain; charset=utf-8",
+                  "cross-origin-resource-policy": "cross-origin",
+                  date: "Fri, 16 Jan 2026 13:13:47 GMT",
+                  etag: 'W/"6d98f403af37d70194dba119110a55979a28a38e5060bafa653a98367db06155"',
+                  expires: "Fri, 16 Jan 2026 13:18:47 GMT",
+                  "source-age": "0",
+                  "strict-transport-security": "max-age=31536000",
+                  vary: "Authorization,Accept-Encoding",
+                  via: "1.1 varnish",
+                  "x-cache": "MISS",
+                  "x-cache-hits": "0",
+                  "x-content-type-options": "nosniff",
+                  "x-fastly-request-id":
+                    "d891bf94af72c1c700071903b98023ac67637bf7",
+                  "x-frame-options": "deny",
+                  "x-github-request-id": "EE32:3EB603:7F763:D502D:696A398A",
+                  "x-served-by": "cache-lhr-egll1980024-LHR",
+                  "x-timer": "S1768569227.321689,VS0,VE117",
+                  "x-xss-protection": "1; mode=block",
+                },
+              );
+
+            nock("http://petstore.swagger.io:80", {
+              encodedQueryParams: true,
+              reqheaders: {
+                "x-simple": "blue",
+                "Content-Type": "blue,black,brown",
+              },
+            })
+              .get("/v2/pet/1")
+              .reply(
+                200,
+                { id: 1 },
+                {
+                  "access-control-allow-headers":
+                    "Content-Type, api_key, Authorization",
+                  "access-control-allow-methods": "GET, POST, DELETE, PUT",
+                  "access-control-allow-origin": "*",
+                  connection: "keep-alive",
+                  "content-type": "application/json",
+                  date: "Thu, 15 Jan 2026 13:58:27 GMT",
+                  server: "Jetty(9.2.9.v20150224)",
+                  "transfer-encoding": "chunked",
+                },
+              );
+
+            const inputFile = new Input(
+              "./test/mocks/inputs/parameter-styles/input.json",
+              "inputs",
+            );
+
+            const arazzo = new Arazzo(
+              "./test/mocks/arazzo/openapi-parameter-tests/header/ignore-Content-Type.json",
+              "arazzo",
+              { logger: logger },
+              docFactory,
+            );
+            arazzo.setMainArazzo();
+
+            try {
+              await arazzo.runWorkflows(inputFile);
+            } catch (err) {
+              expect(err).to.not.be.instanceOf(Error);
+            }
+          });
+        });
+      });
     });
 
     describe(`object`, function () {
@@ -227,7 +493,10 @@ describe(`OpenAPI Parameter Types`, function () {
             },
           );
 
-        nock("http://petstore.swagger.io:80", { encodedQueryParams: true })
+        nock("http://petstore.swagger.io:80", {
+          encodedQueryParams: true,
+          reqheaders: { "x-object": "R,100,G,200,B,150" },
+        })
           .get("/v2/pet/1")
           .reply(
             200,
