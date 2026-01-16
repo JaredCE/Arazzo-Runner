@@ -210,8 +210,6 @@ class Arazzo extends Document {
 
       this.logger.notice(`Running Step: ${step.stepId}`);
 
-      // need to deal with reloading the rules when in a retry state or a goto state
-      // if (this.stepContext?.[step.stepId]?.hasLoadedRules === false) {
       if (this.step.onSuccess) {
         rules.setSuccessRules(this.step.onSuccess);
         // this.workflow.rules.setStepSuccesses(this.step.onSuccess);
@@ -224,10 +222,6 @@ class Arazzo extends Document {
 
       rules.combineRules(this.workflow.rules);
       this.step.rules = rules;
-      // this.step.rules.combineRules(this.workflow.rules);
-
-      //   this.stepContext[step.stepId].hasLoadedRules = true;
-      // }
 
       await this.loadOperationData();
 
@@ -253,7 +247,7 @@ class Arazzo extends Document {
    * @private
    */
   async runOpenAPIStep() {
-    this.operations = await this.sourceDescriptionFile.buildOperation(
+    this.operation = await this.sourceDescriptionFile.buildOperation(
       this.inputs,
       this.step,
     );
@@ -307,50 +301,48 @@ class Arazzo extends Document {
       }
     };
 
-    for (const operation of this.operations) {
-      let url = operation.url;
+    let url = this.operation.url;
 
-      if (operation.queryParams.size) {
-        url += `?${operation.queryParams}`;
-      }
-
-      const options = {
-        method: operation.operation,
-        headers: operation.headers,
-      };
-
-      if (operation.data) {
-        options.body = operation.data;
-      }
-
-      if (this.retryAfter) {
-        this.logger.notice(
-          `retryAfter was set: waiting ${this.retryAfter * 1000} seconds`,
-        );
-        await sleep(this.retryAfter * 1000);
-      }
-
-      this.expression.addToContext("url", url);
-      this.expression.addToContext("method", options.method);
-
-      this.logger.notice(`Making a ${options.method.toUpperCase()} to ${url}`);
-
-      const response = await fetch(url, options);
-
-      if (response.headers.has("retry-after")) {
-        const retryAfter = parseRetryAfter(response.headers.get("retry-after"));
-        if (retryAfter !== null) {
-          this.retryAfter = retryAfter;
-        }
-      }
-
-      this.addParamsToContext(response.headers, "header", "response");
-      this.expression.addToContext("statusCode", response.status);
-
-      this.logger.notice(`${url} responded with a: ${response.status}`);
-
-      await this.dealWithResponse(response);
+    if (this.operation.queryParams.size) {
+      url += `?${this.operation.queryParams}`;
     }
+
+    const options = {
+      method: this.operation.method,
+      headers: this.operation.headers,
+    };
+
+    if (this.operation.data) {
+      options.body = this.operation.data;
+    }
+
+    if (this.retryAfter) {
+      this.logger.notice(
+        `retryAfter was set: waiting ${this.retryAfter * 1000} seconds`,
+      );
+      await sleep(this.retryAfter * 1000);
+    }
+
+    this.expression.addToContext("url", url);
+    this.expression.addToContext("method", options.method);
+
+    this.logger.notice(`Making a ${options.method.toUpperCase()} to ${url}`);
+
+    const response = await fetch(url, options);
+
+    if (response.headers.has("retry-after")) {
+      const retryAfter = parseRetryAfter(response.headers.get("retry-after"));
+      if (retryAfter !== null) {
+        this.retryAfter = retryAfter;
+      }
+    }
+
+    this.addParamsToContext(response.headers, "header", "response");
+    this.expression.addToContext("statusCode", response.status);
+
+    this.logger.notice(`${url} responded with a: ${response.status}`);
+
+    await this.dealWithResponse(response);
   }
 
   /**
@@ -725,10 +717,8 @@ class Arazzo extends Document {
     this.mapParameters();
     this.mapRequestBody();
 
-    for (const operation of this.operations) {
-      this.addParamsToContext(operation.headers, "headers", "request");
-      this.addParamsToContext(operation.queryParams, "query", "request");
-    }
+    this.addParamsToContext(this.operation.headers, "headers", "request");
+    this.addParamsToContext(this.operation.queryParams, "query", "request");
   }
 
   /**
@@ -765,19 +755,18 @@ class Arazzo extends Document {
           break;
 
         case "path":
-          for (const operation of this.operations) {
-            const pathStyle = operationDetailParam?.style || "simple";
-            const pathExplode = operationDetailParam?.explode || false;
-            pathParams.append(param.name, value, {
-              style: pathStyle,
-              explode: pathExplode,
-            });
-            for (const [name, value] of pathParams.entries()) {
-              operation.url = operation.url.replace(`{${name}}`, value);
-            }
-            // operation.url = operation.url.replace(`{${param.name}}`, value);
-            // Object.assign(pathParams, { [param.name]: value });
+          const pathStyle = operationDetailParam?.style || "simple";
+          const pathExplode = operationDetailParam?.explode || false;
+
+          pathParams.append(param.name, value, {
+            style: pathStyle,
+            explode: pathExplode,
+          });
+
+          for (const [name, value] of pathParams.entries()) {
+            this.operation.url = this.operation.url.replace(`{${name}}`, value);
           }
+
           break;
 
         case "query":
@@ -801,12 +790,9 @@ class Arazzo extends Document {
     }
 
     this.addParamsToContext(pathParams, "path", "request");
-    // this.expression.addToContext("request.path", pathParams);
 
-    for (const operation of this.operations) {
-      operation.headers = headersObj;
-      operation.queryParams = queryParams;
-    }
+    this.operation.headers = headersObj;
+    this.operation.queryParams = queryParams;
   }
 
   /**
@@ -833,13 +819,14 @@ class Arazzo extends Document {
         this.step.requestBody.payload,
       );
 
-      for (const operation of this.operations) {
-        if (this.step.requestBody.contentType) {
-          operation.headers.append("accept", this.step.requestBody.contentType);
-        }
-
-        operation.data = payload;
+      if (this.step.requestBody.contentType) {
+        this.operation.headers.append(
+          "accept",
+          this.step.requestBody.contentType,
+        );
       }
+
+      this.operation.data = payload;
     }
   }
 
