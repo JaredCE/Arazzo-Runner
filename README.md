@@ -77,7 +77,7 @@ It will attempt to map to the [Server Variables](https://spec.openapis.org/oas/l
 
 ## OpenAPI Parameters
 
-OpenAPI Documents allow you to specify [`header`, `path` and `query` parameters](https://spec.openapis.org/oas/latest.html#parameter-object) in myriad of styles. This Arazzo Runner will respect your styling and send the format to the server as specified by your OpenAPI document.
+OpenAPI Documents allow you to specify [`header`, `path` and `query` parameters](https://spec.openapis.org/oas/latest.html#parameter-object) in myriad of styles. This Arazzo Runner will respect your styling (unless you specify stylings for `Accept`, `Authorization` or `Content-Type` headers, then it will ignore the stylings, as per the OpenAPI specification) and send the format to the server as specified by your OpenAPI document.
 
 It currently does not follow the `allowEmptyValue`, `allowReserved` or the `content` keywords currently.
 
