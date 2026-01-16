@@ -63,6 +63,18 @@ jq --arg password "$secret_password" '.workflowId1.password = $password' input.j
 
 Obviously, if you have a lot of secret variables that need adding as inputs, then you might need to write a script that can alter the `input.json` file for you within your CI/CD runner.
 
+## OpenAPI Servers
+
+OpenAPI Documents allow you to specify servers at the root, [path](https://spec.openapis.org/oas/latest.html#path-item-object) and [operation](https://spec.openapis.org/oas/latest.html#operation-object) level. They allow you to specify multiple servers, however the OpenAPI specification is opinionated that all servers specified in a Document should return the same thing.
+
+This Arazzo Runner will pick the first server it comes across in the array of servers and run the operation against that.
+
+- If the operation has servers specified, it will use the first server at the operation level, ignoring path and root servers.
+- If the operation does not have a server specified, and the path level does, it will use the path level server, ignoring the root level
+- If the operation only has servers specified at the root of the document, it will only use the first root level server.
+
+It will attempt to map to the [Server Variables](https://spec.openapis.org/oas/latest.html#server-variable-object), using the `default` that is set.
+
 ## OpenAPI Parameters
 
 OpenAPI Documents allow you to specify [`header`, `path` and `query` parameters](https://spec.openapis.org/oas/latest.html#parameter-object) in myriad of styles. This Arazzo Runner will respect your styling and send the format to the server as specified by your OpenAPI document.
@@ -99,17 +111,13 @@ Work on Reporting still needs completeing.
 
 ## Still unsupported
 
+### Security
+
+OpenAPI security is still not fully supported
+
 ### PathOperation
 
 Accessing an OpenAPI operation by Operation Path `'{$sourceDescriptions.petstoreDescription.url}#/paths/~1pet~1findByStatus/get'` does not work currently
-
-### OpenAPI Servers on various levels
-
-This pulls from the top level servers object of an OpenAPI Document. Server variables do not work either.
-
-### OpenAPI server variables
-
-OpenAPI server variables currently do not work
 
 ### JSONPath and XPath criteria objects
 
