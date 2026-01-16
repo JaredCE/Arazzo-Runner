@@ -1,0 +1,65 @@
+{
+  "$schema": "https://spec.openapis.org/arazzo/1.0/schema/2025-10-15",
+  "arazzo": "1.0.1",
+  "info": {
+    "title": "Pets",
+    "description": "The Arazzo Workflow for a Pet Store Pet",
+    "summary": "Araazo Workflow for Pet Store Pet",
+    "version": "1.0.0"
+  },
+  "sourceDescriptions": [
+    {
+      "name": "pets-openAPI",
+      "url": "https://raw.githubusercontent.com/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/parameter-styles/header/ignore-Content-Type.json",
+      "type": "openapi"
+    }
+  ],
+  "workflows": [
+    {
+      "workflowId": "FindpetbyID-ignoreContent-Type",
+      "summary": "Find a pet by ID",
+      "description": "A Workflow to Find a pet by their ID",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "petId": {
+            "type": "integer"
+          },
+          "xSimple": {
+            "type": "string"
+          },
+          "Content-Type": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepId": "FindpetbyID",
+          "operationId": "getPetById",
+          "parameters": [
+            {
+              "name": "petId",
+              "in": "path",
+              "value": "$inputs.petId"
+            },
+            {
+              "name": "x-simple",
+              "in": "header",
+              "value": "$inputs.xSimple"
+            },
+            {
+              "name": "Content-Type",
+              "in": "header",
+              "value": "$inputs.Content-Type"
+            }
+          ],
+          "outputs": { "id": "$response.body#/id" }
+        }
+      ]
+    }
+  ]
+}
