@@ -1,0 +1,14 @@
+{
+  "FindpetbyID-multiple": {
+    "petId": "1"
+  },
+  "FindpetbyID-single": {
+    "petId": "1"
+  },
+  "FindpetbyID-variable-default": {
+    "petId": "1"
+  },
+  "FindpetbyID-variable-enum": {
+    "petId": "1"
+  }
+}
