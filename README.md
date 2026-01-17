@@ -65,7 +65,7 @@ Obviously, if you have a lot of secret variables that need adding as inputs, the
 
 ## OpenAPI Servers
 
-OpenAPI Documents allow you to specify servers at the root, [path](https://spec.openapis.org/oas/latest.html#path-item-object) and [operation](https://spec.openapis.org/oas/latest.html#operation-object) level. They allow you to specify multiple servers, however the OpenAPI specification is opinionated that all servers specified in a Document should return the same thing.
+OpenAPI Documents allow you to specify servers at the root, [path](https://spec.openapis.org/oas/latest.html#path-item-object) and [operation](https://spec.openapis.org/oas/latest.html#operation-object) level. They allow you to specify multiple servers, however the OpenAPI specification is opinionated that all servers specified in a Document should return the same thing and this Arazzo Runner will follow this opinion and only attempt one of the specified servers.
 
 This Arazzo Runner will pick the first server it comes across in the array of servers and run the operation against that.
 
@@ -77,9 +77,109 @@ It will attempt to map to the [Server Variables](https://spec.openapis.org/oas/l
 
 ## OpenAPI Parameters
 
-OpenAPI Documents allow you to specify [`header`, `path` and `query` parameters](https://spec.openapis.org/oas/latest.html#parameter-object) in myriad of styles. This Arazzo Runner will respect your styling (unless you specify stylings for `Accept`, `Authorization` or `Content-Type` headers, then it will ignore the stylings, as per the OpenAPI specification) and send the format to the server as specified by your OpenAPI document.
+OpenAPI Documents allow you to specify [`header`, `path` and `query` parameters](https://spec.openapis.org/oas/latest.html#parameter-object) in myriad of styles. This Arazzo Runner will respect your styling (unless you specify stylings for `Accept`, `Authorization` or `Content-Type` headers, then it will ignore the stylings, as per the OpenAPI specification) and send the format to the server as specified by your OpenAPI Document.
 
 It currently does not follow the `allowEmptyValue`, `allowReserved` or the `content` keywords currently.
+
+## OpenAPI Security
+
+OpenAPI Document security is supported. There are a couple of ways that you will have to document your Arazzo Workflow for certain documentation types.
+
+### Basic
+
+For HTTP Basic authentication, you should document your Arazzo like:
+
+**arazzo.json**
+
+```json
+"steps": [
+  {
+    "stepId": "deleteUser",
+    "operationId": "deleteUser",
+    "parameters": [
+      {
+        "name": "Authorization",
+        "in": "header",
+        "value": "{$inputs.username}:{$inputs.password}"
+      },
+      { "name": "username", "in": "path", "value": "$inputs.username" }
+    ]
+  }
+]
+```
+
+The Runner will correctly encode and prepend `Basic` to the Authorization Header.
+
+### Bearer
+
+For HTTP Bearer authentication, you should document your Arazzo like:
+
+**arazzo.json**
+
+```json
+{
+  "stepId": "LoginExistingUser",
+  "operationId": "loginUser",
+  "requestBody": {
+    "contentType": "application/json",
+    "payload": {
+      "username": "$inputs.username",
+      "password": "$inputs.password"
+    }
+  },
+  "outputs": { "AccessToken": "$response.body#/AccessToken" }
+},
+{
+  "stepId": "deleteUser",
+  "operationId": "deleteUser",
+  "parameters": [
+    {
+      "name": "Authorization",
+      "in": "header",
+      "value": "$steps.LoginExistingUser.outputs.AccessToken"
+    },
+    { "name": "username", "in": "path", "value": "$inputs.username" }
+  ]
+}
+```
+
+The Runner will prepend `Bearer` for you.
+
+### mutualTLS
+
+You will need to provide inputs for your ClientKey and ClientCert as their path locations:
+
+**input.json**
+
+```json
+{
+  "deleteCurrentUser-mutualTLS": {
+    "username": "jack",
+    "key": "./client-key.pem",
+    "cert": "./client-cert.pem"
+  }
+}
+```
+
+`key` and `cert` are reserved names and will be used when mutualTLS is set as the authentication method. The Runner will error out if they are not found.
+
+### oauth/openId
+
+You will need to provide inputs for your clientId and clientSecret:
+
+**input.json**
+
+```json
+{
+  "deleteCurrentUser-mutualTLS": {
+    "username": "jack",
+    "clientId": "abc123",
+    "clientSecret": "123abc"
+  }
+}
+```
+
+`clientId` and `clientSecret` are reserved name and will be used when oauth or openId authentication is set.
 
 ## Logging And Reporting
 
@@ -110,10 +210,6 @@ Running onSuccess Rules
 Work on Reporting still needs completeing.
 
 ## Still unsupported
-
-### Security
-
-OpenAPI security is still not fully supported
 
 ### PathOperation
 
