@@ -7,6 +7,24 @@
     "key": "./test/mocks/client-key.pem",
     "cert": "./test/mocks/client-cert.pem"
   },
+  "deleteCurrentUser-mutualTLS-invalid-cert-path": {
+    "username": "jack",
+    "key": "./test/mocks/client-key.pem",
+    "cert": "./test/mocks/client-certt.pem"
+  },
+  "deleteCurrentUser-mutualTLS-misssing-cert": {
+    "username": "jack",
+    "key": "./test/mocks/client-key.pem"
+  },
+  "deleteCurrentUser-mutualTLS-invalid-key-path": {
+    "username": "jack",
+    "key": "./test/mocks/client-keyy.pem",
+    "cert": "./test/mocks/client-cert.pem"
+  },
+  "deleteCurrentUser-mutualTLS-missing-key": {
+    "username": "jack",
+    "cert": "./test/mocks/client-cert.pem"
+  },
   "deleteCurrentUser-oauth2": {
     "username": "jack",
     "clientId": "ArazzoRunner",
