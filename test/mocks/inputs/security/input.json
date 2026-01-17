@@ -1,0 +1,20 @@
+{
+  "deleteCurrentUser-apiKey": { "username": "jack", "password": "p4ssW0rd" },
+  "deleteCurrentUser-basic": { "username": "jack", "password": "p4ssW0rd" },
+  "deleteCurrentUser-bearer": { "username": "jack", "password": "p4ssW0rd" },
+  "deleteCurrentUser-mutualTLS": {
+    "username": "jack",
+    "key": "./test/mocks/client-key.pem",
+    "cert": "./test/mocks/client-cert.pem"
+  },
+  "deleteCurrentUser-oauth2": {
+    "username": "jack",
+    "clientId": "ArazzoRunner",
+    "clientSecret": "p4ssW0rd"
+  },
+  "deleteCurrentUser-openIdConnect": {
+    "username": "jack",
+    "clientId": "ArazzoRunner",
+    "clientSecret": "p4ssW0rd"
+  }
+}
