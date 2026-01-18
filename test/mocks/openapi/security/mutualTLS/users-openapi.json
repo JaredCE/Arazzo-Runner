@@ -158,6 +158,11 @@
     "securitySchemes": {
       "Authorization": {
         "type": "mutualTLS"
+      },
+      "apiKey": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header"
       }
     }
   },
@@ -477,7 +482,8 @@
         "tags": ["user"],
         "security": [
           {
-            "Authorization": []
+            "Authorization": [],
+            "apiKey": []
           }
         ],
         "responses": {
