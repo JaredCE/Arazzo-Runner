@@ -157,9 +157,6 @@
     },
     "securitySchemes": {
       "Authorization": {
-        "type": "mutualTLS"
-      },
-      "apiKey": {
         "type": "apiKey",
         "name": "Authorization",
         "in": "header"
@@ -230,11 +227,6 @@
         "operationId": "createUsersWithArrayInput",
         "parameters": [],
         "tags": ["user"],
-        "security": [
-          {
-            "Authorization": []
-          }
-        ],
         "requestBody": {
           "description": "List of user object",
           "required": true,
@@ -272,11 +264,6 @@
         "operationId": "createUsersWithListInput",
         "parameters": [],
         "tags": ["user"],
-        "security": [
-          {
-            "Authorization": []
-          }
-        ],
         "requestBody": {
           "description": "List of user object",
           "required": true,
@@ -364,11 +351,6 @@
         "operationId": "logout",
         "parameters": [],
         "tags": ["user"],
-        "security": [
-          {
-            "Authorization": []
-          }
-        ],
         "responses": {
           "200": {
             "description": "successful operation",
@@ -394,11 +376,6 @@
           }
         ],
         "tags": ["user"],
-        "security": [
-          {
-            "Authorization": {}
-          }
-        ],
         "responses": {
           "200": {
             "description": "successful operation",
@@ -437,11 +414,6 @@
           }
         ],
         "tags": ["user"],
-        "security": [
-          {
-            "Authorization": []
-          }
-        ],
         "requestBody": {
           "description": "Updated user objec",
           "required": false,
@@ -480,12 +452,6 @@
           }
         ],
         "tags": ["user"],
-        "security": [
-          {
-            "Authorization": [],
-            "apiKey": []
-          }
-        ],
         "responses": {
           "400": {
             "description": "Invalid username supplied",

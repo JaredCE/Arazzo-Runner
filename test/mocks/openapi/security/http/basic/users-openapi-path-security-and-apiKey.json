@@ -157,11 +157,12 @@
     },
     "securitySchemes": {
       "Authorization": {
-        "type": "mutualTLS"
+        "type": "http",
+        "scheme": "basic"
       },
-      "apiKey": {
+      "x-api-key": {
         "type": "apiKey",
-        "name": "Authorization",
+        "name": "x-api-key",
         "in": "header"
       }
     }
@@ -483,7 +484,7 @@
         "security": [
           {
             "Authorization": [],
-            "apiKey": []
+            "x-api-key": []
           }
         ],
         "responses": {
