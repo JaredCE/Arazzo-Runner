@@ -15,14 +15,40 @@ const fsp = require("node:fs/promises");
 const path = require("node:path");
 
 class Document {
-  constructor(url, name, { logger, reporter }) {
+  constructor(url, name, { logger, config }) {
     this.url = url;
     this.name = name;
     this.logger = logger;
+    this.config = config;
   }
 
   async loadDocument() {
-    const response = await fetch(this.url);
+    let headers = new Headers();
+    let fetchURL = new URL(this.url);
+
+    if (this.config) {
+      if (this.config?.documentKey) {
+        if (this.config.documentKey.in === "header") {
+          headers.append(
+            this.config.documentKey.name,
+            this.config.documentKey.key,
+          );
+        } else {
+          fetchURL.searchParams.append(
+            this.config.documentKey.name,
+            this.config.documentKey.key,
+          );
+        }
+      }
+    }
+
+    this.logger.verbose(`fetching ${this.type} document from: ${fetchURL}`);
+    this.logger.verbose("fetch headers:");
+    for (const [key, value] of headers.entries()) {
+      this.logger.verbose(`${key}: ${value}`);
+    }
+
+    const response = await fetch(fetchURL, { headers: headers });
 
     if (!response.ok) {
       throw new Error(`Error fetching document from ${this.url}`);

@@ -65,7 +65,6 @@ class OpenAPI extends Document {
 
     for await (const { value } of componentPipeline) {
       if (value.securitySchemes) {
-        console.log(value.securitySchemes);
         this.securitySchemes = value.securitySchemes;
       }
     }

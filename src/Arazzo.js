@@ -1067,7 +1067,7 @@ class Arazzo extends Document {
         this.sourceDescription.type,
         this.sourceDescription.url,
         this.sourceDescription.name,
-        { logger: this.logger },
+        { logger: this.logger, config: this.config },
       );
 
       Object.assign(this.loadedSourceDescriptions, {
