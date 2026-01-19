@@ -66,6 +66,24 @@ jq --arg password "$secret_password" '.workflowId1.password = $password' input.j
 
 Obviously, if you have a lot of secret variables that need adding as inputs, then you might need to write a script that can alter the `input.json` file for you within your CI/CD runner.
 
+### Config file
+
+Arazzo Runner allows for a config file to keep hold of secrets to get OpenAPI/Arazzo documents held on paths behind apikeys:
+
+```js
+"use strict";
+
+module.exports = {
+  documentKey: {
+    key: process.env.APIKey,
+    in: "header|query", // either in the header or the query params
+    name: "apiKey",
+  },
+};
+```
+
+When downloading OpenAPI/Arazzo documents, it will use the documentKey to access those files. This file should be stored in `./options/config.js`
+
 ## OpenAPI Servers
 
 OpenAPI Documents allow you to specify servers at the root, [path](https://spec.openapis.org/oas/latest.html#path-item-object) and [operation](https://spec.openapis.org/oas/latest.html#operation-object) level. They allow you to specify multiple servers, however the OpenAPI specification is opinionated that all servers specified in a Document should return the same thing and this Arazzo Runner will follow this opinion and only attempt one of the specified servers.
