@@ -549,6 +549,21 @@ describe(`Expression`, function () {
       expect(expected).to.be.eql("john");
     });
 
+    it(`can resolve a json pointer expression when the context is XML`, function () {
+      const expression = new Expression();
+
+      expression.addToContext(
+        "response.body",
+        `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><apiResponse><name>john</name></apiResponse>`,
+      );
+
+      const expected = expression.resolveExpression(
+        "$response.body#/apiResponse/name",
+      );
+
+      expect(expected).to.be.eql("john");
+    });
+
     it(`can resolve a templated expression to a json Pointer`, function () {
       const expression = new Expression();
 

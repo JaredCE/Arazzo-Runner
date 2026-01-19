@@ -1589,7 +1589,7 @@ describe(`OpenAPI Parameter Types`, function () {
                 "access-control-allow-origin": "*",
                 connection: "keep-alive",
                 "content-length": "102",
-                "content-type": "application/xml",
+                "content-type": "application/json",
                 date: "Thu, 15 Jan 2026 20:26:31 GMT",
                 server: "Jetty(9.2.9.v20150224)",
               },

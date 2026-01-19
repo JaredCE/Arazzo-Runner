@@ -348,9 +348,9 @@ class Arazzo extends Document {
     } else {
       this.logger.verbose("Using fetch call");
 
-      this.logger.verbose(`url: ${url}`);
-      this.logger.verbose(`method: ${options.method}`);
-      this.logger.verbose("headers:");
+      this.logger.verbose(`request url: ${url}`);
+      this.logger.verbose(`request method: ${options.method}`);
+      this.logger.verbose("request headers:");
       for (const [key, value] of options.headers.entries()) {
         this.logger.verbose(`${key}: ${value}`);
       }
@@ -358,6 +358,12 @@ class Arazzo extends Document {
       this.logger.verbose(`body: ${options.body}`);
 
       response = await fetch(url, options);
+    }
+
+    this.logger.verbose(`received StatusCode: ${response.status}`);
+    this.logger.verbose(`received headers:`);
+    for (const [key, value] of response.headers.entries()) {
+      this.logger.verbose(`${key}: ${value}`);
     }
 
     if (response.headers.has("retry-after")) {
@@ -504,32 +510,48 @@ class Arazzo extends Document {
    * @param {*} response
    */
   async dealWithResponse(response) {
+    if (
+      response.headers.has("Content-Type") &&
+      response.headers.get("Content-Type") === "application/json"
+    ) {
+      const json = await response?.json().catch((err) => {
+        this.logger.error(
+          `Error trying to resolve ${this.step.stepId} outputs`,
+        );
+        throw new Error(err);
+      });
+
+      this.expression.addToContext("response.body", json);
+    } else {
+      const body = await response.body;
+
+      this.expression.addToContext("response.body", body);
+    }
+
     this.doNotProcessStep = false;
     this.alreadyProcessingOnFailure = false;
 
     if (this.step.successCriteria) {
-      if (this.step.successCriteria) {
-        const passedSuccessCriteria = this.hasPassedSuccessCriteria();
+      const passedSuccessCriteria = this.hasPassedSuccessCriteria();
 
-        if (passedSuccessCriteria) {
-          this.logger.success("All criteria checks passed");
-          if (this.currentRetryRule) {
-            if (this.retryContext.doNotDeleteRetryLimits) {
-              this.retryLimits[this.currentRetryRule] = 0;
-              this.logger.notice("Retries stopped");
-            }
+      if (passedSuccessCriteria) {
+        this.logger.success("All criteria checks passed");
+        if (this.currentRetryRule) {
+          if (this.retryContext.doNotDeleteRetryLimits) {
+            this.retryLimits[this.currentRetryRule] = 0;
+            this.logger.notice("Retries stopped");
           }
+        }
 
-          await this.dealWithPassedRule(response);
+        await this.dealWithPassedRule(response);
+      } else {
+        this.logger.error("Not all criteria checks passed");
+        if (this.step.onFailure) {
+          await this.dealWithFailedRule();
         } else {
-          this.logger.error("Not all criteria checks passed");
-          if (this.step.onFailure) {
-            await this.dealWithFailedRule();
-          } else {
-            throw new Error(
-              `${this.step.stepId} step of the ${this.workflow.workflowId} workflow failed the successCriteria`,
-            );
-          }
+          throw new Error(
+            `${this.step.stepId} step of the ${this.workflow.workflowId} workflow failed the successCriteria`,
+          );
         }
       }
     } else {
@@ -843,14 +865,7 @@ class Arazzo extends Document {
    * @private
    * @param {*} response
    */
-  async dealWithStepOutputs(response) {
-    const json = await response?.json().catch((err) => {
-      this.logger.error(`Error trying to resolve ${this.step.stepId} outputs`);
-      throw new Error(err);
-    });
-
-    this.expression.addToContext("response.body", json);
-
+  async dealWithStepOutputs() {
     const outputs = {};
     for (const key in this.step.outputs) {
       const value = this.expression.resolveExpression(this.step.outputs[key]);

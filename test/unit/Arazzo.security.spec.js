@@ -880,7 +880,6 @@ describe(`OpenAPI Security`, function () {
 
   describe(`mutualTLS`, function () {
     it(`handles the security requirements`, async function () {
-      // nock.recorder.rec();
       const AccessToken =
         "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.NHVaYe26MbtOYhSKkoKYdFVomg4i8ZJd8_-RU8VNbftc4TSMb4bXP3l3YlNWACwyXPGffz5aXHc6lty1Y2t4SWRqGteragsVdZufDn5BlnJl9pdR_kdVFUsra2rWKEofkZeIC4yWytE58sMIihvo9H1ScmmVwBcQP6XETqYd0aSHp1gOa9RdUPDvoXQ5oqygTqVtxaDr6wUFKrKItgBMzWIdNZ6y7O9E0DhEPTbE9rfBo6KTFsHAZnMg4k68CDp2woYIaXbmYTWcvbzIuHO7_37GT79XdIwkm95QJ7hYC9RiwrV7mesbY4PAahERJawntho0my942XheVLmGwLMBkQ";
 
@@ -950,16 +949,20 @@ describe(`OpenAPI Security`, function () {
         reqheaders: { Authorization: AccessToken },
       })
         .delete("/v2/user/jack")
-        .reply(200, "", {
-          "access-control-allow-headers":
-            "Content-Type, api_key, Authorization",
-          "access-control-allow-methods": "GET, POST, DELETE, PUT",
-          "access-control-allow-origin": "*",
-          connection: "close",
-          "content-length": "0",
-          date: "Fri, 16 Jan 2026 23:49:12 GMT",
-          server: "Jetty(9.2.9.v20150224)",
-        });
+        .reply(
+          200,
+          {},
+          {
+            "access-control-allow-headers":
+              "Content-Type, api_key, Authorization",
+            "access-control-allow-methods": "GET, POST, DELETE, PUT",
+            "access-control-allow-origin": "*",
+            connection: "close",
+            "content-length": `${JSON.stringify({}).length}`,
+            date: "Fri, 16 Jan 2026 23:49:12 GMT",
+            server: "Jetty(9.2.9.v20150224)",
+          },
+        );
 
       const inputFile = new Input(
         "./test/mocks/inputs/security/input.json",
