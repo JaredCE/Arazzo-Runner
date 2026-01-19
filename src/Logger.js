@@ -1,7 +1,8 @@
 "use strict";
 
 class Logger {
-  constructor() {
+  constructor(verboseLogging) {
+    this.verboseLogging = verboseLogging || false;
     this.logOutput = {
       debug: (message) => console.debug(message),
       error: (message) => console.error(`❌ ${message}`),
@@ -50,7 +51,7 @@ class Logger {
   }
 
   verbose(str) {
-    this.log(str, this.logTypes.VERBOSE);
+    if (this.verboseLogging) this.log(str, this.logTypes.VERBOSE);
   }
 
   warning(str) {

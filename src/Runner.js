@@ -6,8 +6,9 @@ const Input = require("./Input");
 const Logger = require("./Logger");
 
 class Runner {
-  constructor(logger) {
-    this.logger = logger || new Logger();
+  constructor(options, logger) {
+    const verboseLogging = options?.verbose || false;
+    this.logger = logger || new Logger(verboseLogging);
   }
 
   /**

@@ -1,6 +1,7 @@
 "use strict";
 
 const expect = require("chai").expect;
+const sinon = require("sinon");
 
 const Logger = require("../../src/Logger");
 
@@ -46,10 +47,40 @@ describe(`Logger`, function () {
   });
 
   describe(`verbose`, function () {
-    it(`should output the expected string`, function () {
-      const logger = new Logger();
+    it(`should output the expected string when verboseLogging is true`, function () {
+      const logger = new Logger(true);
+
+      const spy = sinon.spy(logger, "log");
 
       logger.verbose("The expected string");
+
+      expect(spy.callCount).to.be.equal(1);
+
+      spy.restore();
+    });
+
+    it(`should output the expected string when verboseLogging is false`, function () {
+      const logger = new Logger(false);
+
+      const spy = sinon.spy(logger, "log");
+
+      logger.verbose("The expected string");
+
+      expect(spy.callCount).to.be.equal(0);
+
+      spy.restore();
+    });
+
+    it(`should output the expected string when verboseLogging is undefined`, function () {
+      const logger = new Logger();
+
+      const spy = sinon.spy(logger, "log");
+
+      logger.verbose("The expected string");
+
+      expect(spy.callCount).to.be.equal(0);
+
+      spy.restore();
     });
   });
 

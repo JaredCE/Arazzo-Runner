@@ -17,6 +17,9 @@ const options = {
     type: "string",
     short: "i",
   },
+  verbose: {
+    type: "boolean",
+  },
   help: {
     type: "boolean",
     short: "h",
@@ -40,6 +43,7 @@ OPTIONS:
   -i, --input <file>        Path to input JSON file (required)
   -h, --help                Show this help message
   -v, --version             Show version number
+  -vv, --verbose            Verbose Logging
 
 EXAMPLES:
   # Run with local files
@@ -139,7 +143,7 @@ async function main() {
   console.log("");
 
   try {
-    const runner = new Runner();
+    const runner = new Runner({ verbose: values?.verbose || false });
     await runner.runArazzo(arazzoPath, inputPath);
 
     console.log("");

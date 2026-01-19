@@ -7,6 +7,21 @@ class DocumentFactory {
   constructor() {}
 
   /**
+   * Tests whether a string is a URL or not
+   * @private
+   * @param {string} str
+   * @returns
+   */
+  isUrl(str) {
+    try {
+      new URL(str);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  /**
    * Document Factory to create Arazzo or OpenAPI documents
    * @function buildDocument
    * @param {('openapi'|'arazzo')} type Which document type to create
@@ -23,7 +38,9 @@ class DocumentFactory {
       document = new Arazzo(path, name, options, this);
     }
 
-    await document.loadDocument();
+    if (this.isUrl(path)) {
+      await document.loadDocument();
+    } else document.setMainArazzo();
 
     return document;
   }
