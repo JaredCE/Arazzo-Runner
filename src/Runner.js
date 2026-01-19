@@ -5,10 +5,23 @@ const Input = require("./Input");
 
 const Logger = require("./Logger");
 
+const path = require("node:path");
+
 class Runner {
   constructor(options, logger) {
     const verboseLogging = options?.verbose || false;
     this.logger = logger || new Logger(verboseLogging);
+
+    try {
+      this.logger.verbose(
+        `Loading config from ${path.resolve("./options", "config")}`,
+      );
+
+      this.config = require(path.resolve("./options", "config.js"));
+    } catch (err) {
+      this.logger.verbose("No config found");
+      this.config = {};
+    }
   }
 
   /**
@@ -23,7 +36,7 @@ class Runner {
       "arazzo",
       arazzoUrl,
       "arazzo",
-      { logger: this.logger },
+      { logger: this.logger, config: this.config },
     );
 
     if (!this.isUrl(arazzoUrl)) {
