@@ -19,7 +19,6 @@ const options = {
   },
   verbose: {
     type: "boolean",
-    short: "vv",
   },
   help: {
     type: "boolean",
