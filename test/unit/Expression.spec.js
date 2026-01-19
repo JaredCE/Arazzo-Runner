@@ -503,6 +503,39 @@ describe(`Expression`, function () {
       expect(expected).to.be.eql({ name: "john" });
     });
 
+    it(`can resolve a templated expression with more than one expression`, function () {
+      const expression = new Expression();
+
+      expression.addToContext("inputs", {
+        user: "Jack",
+        petName: "Jill",
+      });
+
+      const expected = expression.resolveExpression(
+        "{$inputs.user} has a pet called {$inputs.petName}",
+      );
+
+      expect(expected).to.be.eql("Jack has a pet called Jill");
+    });
+
+    it(`can resolve a templated expression with more than one expression`, function () {
+      const expression = new Expression();
+
+      expression.addToContext("inputs", {
+        pet_id: 1,
+        coupon_code: "abc-def",
+        quantity: 1,
+      });
+
+      const expected = expression.resolveExpression(
+        '{\n  "petOrder": {\n    "petId": "{$inputs.pet_id}",\n    "couponCode": "{$inputs.coupon_code}",\n    "quantity": "{$inputs.quantity}",\n    "status": "placed",\n    "complete": false\n  }\n}\n',
+      );
+
+      expect(expected).to.be.eql(
+        `{\n  "petOrder": {\n    "petId": "1",\n    "couponCode": "abc-def",\n    "quantity": "1",\n    "status": "placed",\n    "complete": false\n  }\n}\n`,
+      );
+    });
+
     it(`can resolve a json pointer expression`, function () {
       const expression = new Expression();
 

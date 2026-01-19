@@ -1,5 +1,6 @@
 "use strict";
 
+const { evaluate } = require("@swaggerexpert/json-pointer");
 const { substitute, parse } = require("openapi-server-url-templating");
 
 const Document = require("./Document");
@@ -43,7 +44,7 @@ class OpenAPI extends Document {
       }
     }
 
-    this.buildOperations();
+    await this.buildOperationDetails();
 
     return this.operation;
   }
@@ -56,23 +57,25 @@ class OpenAPI extends Document {
     }
   }
 
-  async getSecurity() {
+  async getSecuritySchemes() {
+    const componentPipeline = await this.JSONPicker(
+      "components",
+      this.filePath,
+    );
+
+    for await (const { value } of componentPipeline) {
+      if (value.securitySchemes) {
+        console.log(value.securitySchemes);
+        this.securitySchemes = value.securitySchemes;
+      }
+    }
+  }
+
+  async getGlobalSecurity() {
     const pipeline = await this.JSONPicker("security", this.filePath);
 
     for await (const { value } of pipeline) {
       if (value) this.security = value;
-    }
-
-    if (this.security) {
-      const componentPipeline = await this.JSONPicker(
-        "components",
-        this.filePath,
-      );
-      for await (const { value } of componentPipeline) {
-        if (value.securitySchemes) {
-          console.log(value.securitySchemes);
-        }
-      }
     }
   }
 
@@ -103,7 +106,27 @@ class OpenAPI extends Document {
     return server;
   }
 
-  buildOperations() {
+  async buildOperationSecurity() {
+    if (!this.securitySchemes) {
+      await this.getSecuritySchemes();
+    }
+
+    if (!this.security) {
+      await this.getGlobalSecurity();
+    }
+
+    if (this.security) {
+      this.globalSecurity = true;
+    }
+
+    if (this.operationDetails?.security) {
+      this.operation.security = [this.operationDetails.security.at(0)];
+    } else {
+      if (this.security) this.operation.security = [this.security.at(0)];
+    }
+  }
+
+  async buildOperationDetails() {
     this.operation = {};
 
     const server = this.parseServer();
@@ -112,6 +135,8 @@ class OpenAPI extends Document {
       url: `${server.url}${this.path}`,
       method: this.method,
     });
+
+    await this.buildOperationSecurity();
   }
 }
 

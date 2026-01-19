@@ -1,6 +1,12 @@
 "use strict";
 
 const {
+  extractAll,
+  extractAndResolve,
+  hasRuntimeExpressions,
+} = require("./runtime");
+
+const {
   parse,
   test,
   extract,
@@ -200,6 +206,49 @@ class Expression {
    * @returns {*} The resolved value
    * @throws {Error} If expression is invalid or context path doesn't exist
    */
+  // resolveExpression(expression) {
+  //   // Handle arrays recursively
+  //   if (Array.isArray(expression)) {
+  //     return expression.map((item) => this.resolveExpression(item));
+  //   }
+
+  //   // Handle objects recursively
+  //   if (typeof expression === "object" && expression !== null) {
+  //     const resolved = {};
+  //     for (const [key, value] of Object.entries(expression)) {
+  //       resolved[key] = this.resolveExpression(value);
+  //     }
+  //     return resolved;
+  //   }
+
+  //   // Handle strings (runtime expressions)
+  //   if (typeof expression !== "string") {
+  //     return expression;
+  //   }
+
+  //   this.expression = expression;
+
+  //   if (this.isARunTimeExpression()) {
+  //     return this.mapToContext();
+  //   }
+
+  //   const extractedExpression = extract(expression);
+
+  //   if (extractedExpression !== expression && test(extractedExpression)) {
+  //     this.expression = extractedExpression;
+  //     return this.mapToContext();
+  //   }
+
+  //   return expression;
+  // }
+
+  /**
+   * Resolves a runtime expression to its value in the context
+   * @public
+   * @param {string|Object|Array} expression - The runtime expression to resolve
+   * @returns {*} The resolved value
+   * @throws {Error} If expression is invalid or context path doesn't exist
+   */
   resolveExpression(expression) {
     // Handle arrays recursively
     if (Array.isArray(expression)) {
@@ -222,14 +271,42 @@ class Expression {
 
     this.expression = expression;
 
+    // Check if it's a runtime expression
     if (this.isARunTimeExpression()) {
       return this.mapToContext();
     }
 
-    const extractedExpression = extract(expression);
-    if (extractedExpression !== expression && test(extractedExpression)) {
-      this.expression = extractedExpression;
-      return this.mapToContext();
+    // NEW: Handle multiple templated expressions
+    const runtimeExprRegex = /{(\$[^}]+)}/g;
+    const matches = [...expression.matchAll(runtimeExprRegex)];
+
+    if (matches.length > 0) {
+      // If entire string is single expression, return resolved value
+      if (matches.length === 1 && matches[0][0] === expression) {
+        const extractedExpression = matches[0][1];
+        if (test(extractedExpression)) {
+          this.expression = extractedExpression;
+          return this.mapToContext();
+        }
+      }
+
+      // Multiple expressions - substitute each one
+      let result = expression;
+      for (const match of matches) {
+        const fullMatch = match[0];
+        const expr = match[1];
+
+        if (test(expr)) {
+          this.expression = expr;
+          const resolvedValue = this.mapToContext();
+          const stringValue =
+            typeof resolvedValue === "object"
+              ? JSON.stringify(resolvedValue)
+              : String(resolvedValue);
+          result = result.replace(fullMatch, stringValue);
+        }
+      }
+      return result;
     }
 
     return expression;
