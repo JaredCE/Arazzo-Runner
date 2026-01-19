@@ -165,7 +165,9 @@ You will need to provide inputs for your ClientKey and ClientCert as their path 
 
 `key` and `cert` are reserved names when used in an OpenAPI Document with `mutualTLS` as the authentication method. The Runner will error out if they are not found.
 
-### oauth/openId
+### UNSUPPORTED oauth/openId
+
+**CURRENTLY UNSUPPORTED**
 
 You will need to provide inputs for your clientId and clientSecret:
 
