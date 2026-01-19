@@ -144,7 +144,7 @@ describe(`Arazzo Document`, function () {
                 } catch (err) {
                   expect(err).to.be.instanceOf(Error);
                   expect(err.message).to.be.equal(
-                    `SyntaxError: Unexpected token '<', "<?xml vers"... is not valid JSON`,
+                    `Invalid JSON pointer '/id': Invalid object key "id" at position 0 in "/id": key not found in object`,
                   );
                 }
               });
@@ -2266,7 +2266,7 @@ describe(`Arazzo Document`, function () {
                 } catch (err) {
                   expect(err).to.be.instanceOf(Error);
                   expect(err.message).to.be.equal(
-                    `SyntaxError: Unexpected token '<', "<?xml vers"... is not valid JSON`,
+                    `Invalid JSON pointer '/id': Invalid object key "id" at position 0 in "/id": key not found in object`,
                   );
                 }
               });
