@@ -1,11 +1,13 @@
 "use strict";
 
 const URLParams = require("openapi-params");
+const client = require("openid-client");
 
+const fs = require("node:fs");
+const https = require("node:https");
 const path = require("node:path");
 
 const Document = require("./Document");
-// const docFactory = require("./DocFactory");
 const Expression = require("./Expression");
 const Rules = require("./Rules");
 
@@ -252,6 +254,17 @@ class Arazzo extends Document {
       this.step,
     );
 
+    // await this.sourceDescriptionFile.getSecurity();
+
+    if (Object.keys(this.sourceDescriptionFile.securitySchemes).length === 1) {
+      for (const [key, value] of Object.entries(
+        this.sourceDescriptionFile.securitySchemes,
+      )) {
+        if (value.type.toLowerCase() === "mutualtls")
+          this.operation.mutualTLS = true;
+      }
+    }
+
     this.mapInputs();
 
     await this.runOperation();
@@ -328,7 +341,12 @@ class Arazzo extends Document {
 
     this.logger.notice(`Making a ${options.method.toUpperCase()} to ${url}`);
 
-    const response = await fetch(url, options);
+    let response;
+    if (this.operation?.mutualTLS) {
+      response = await this.mutualTLS();
+    } else {
+      response = await fetch(url, options);
+    }
 
     if (response.headers.has("retry-after")) {
       const retryAfter = parseRetryAfter(response.headers.get("retry-after"));
@@ -343,6 +361,122 @@ class Arazzo extends Document {
     this.logger.notice(`${url} responded with a: ${response.status}`);
 
     await this.dealWithResponse(response);
+  }
+
+  async mutualTLS() {
+    let clientKeyPath;
+    try {
+      clientKeyPath = path.resolve(this.inputs.key);
+    } catch (err) {
+      this.logger.error(`could not resolve clientKey`);
+      throw err;
+    }
+
+    let clientCertPath;
+    try {
+      clientCertPath = path.resolve(this.inputs.cert);
+    } catch (err) {
+      this.logger.error(`could not resolve clientCert`);
+      throw err;
+    }
+
+    let url = this.operation.url;
+
+    if (this.operation.queryParams.size) {
+      url += `?${this.operation.queryParams}`;
+    }
+
+    const opUrl = new URL(url);
+
+    const headersObj = {};
+    for (const [key, value] of this.operation.headers.entries()) {
+      Object.assign(headersObj, { [key]: value });
+    }
+
+    return new Promise((resolve, reject) => {
+      const options = {
+        key: fs.readFileSync(clientKeyPath),
+        cert: fs.readFileSync(clientCertPath),
+        method: this.operation.method,
+        headers: headersObj,
+        rejectUnauthorized: true,
+        hostname: opUrl.hostname,
+        path: opUrl.pathname + opUrl.search,
+      };
+
+      if (this.operation.data) {
+        options.headers = options.headers || {};
+        if (!options.headers["content-length"]) {
+          const bodyBuffer = Buffer.from(
+            typeof this.operation.data === "string"
+              ? this.operation.data
+              : JSON.stringify(this.operation.data),
+          );
+          options.headers["content-length"] = bodyBuffer.length;
+        }
+      }
+
+      const headers = new Headers();
+      const chunks = [];
+
+      const req = https.request(options, (res) => {
+        for (const [name, value] of Object.entries(res.headers)) {
+          headers.append(name, value);
+        }
+
+        // Collect data chunks as buffers for proper encoding
+        res.on("data", (chunk) => chunks.push(chunk));
+
+        res.on("end", () => {
+          // Concatenate buffers and decode based on content-type
+          const buffer = Buffer.concat(chunks);
+          let body;
+
+          const contentType = res.headers["content-type"] || "";
+
+          if (contentType.includes("application/json")) {
+            try {
+              body = JSON.parse(buffer.toString("utf8"));
+            } catch (err) {
+              body = buffer.toString("utf8");
+            }
+          } else {
+            body = buffer.toString("utf8");
+          }
+
+          const response = new Response(buffer, {
+            status: res.status,
+            statusText: res.statusMessage,
+            headers,
+          });
+          // resolve({
+          //   headers: headers,
+          //   body: body,
+
+          //   status: res.statusCode,
+          //   statusText: res.statusMessage,
+          //   ok: res.statusCode >= 200 && res.statusCode < 300,
+          // });
+          resolve(response);
+        });
+      });
+
+      req.on("error", (err) => {
+        this.logger.error(`mTLS Error: ${err.message}`);
+        reject(new Error(`mTLS request failed: ${err.message}`));
+      });
+
+      // Write request body if present
+      if (this.operation.data) {
+        const body =
+          typeof this.operation.data === "string"
+            ? this.operation.data
+            : JSON.stringify(this.operation.data);
+        req.write(body);
+      }
+
+      req.end();
+    });
   }
 
   /**
@@ -691,7 +825,6 @@ class Arazzo extends Document {
    */
   async dealWithStepOutputs(response) {
     const json = await response?.json().catch((err) => {
-      console.error(err);
       this.logger.error(`Error trying to resolve ${this.step.stepId} outputs`);
       throw new Error(err);
     });
@@ -736,12 +869,13 @@ class Arazzo extends Document {
           .filter((obj) => obj.name === param.name && obj.in === param.in)
           .at(0);
 
-      const value = this.expression.resolveExpression(param.value);
+      let value = this.expression.resolveExpression(param.value);
 
       switch (param.in) {
         case "header":
           let headerStyle = "simple";
           let headerExplode = false;
+
           if (
             operationDetailParam?.style &&
             ["accept", "authorization", "content-type"].includes(
@@ -760,10 +894,58 @@ class Arazzo extends Document {
             headerExplode = operationDetailParam.explode;
           }
 
+          if (this.operation.security) {
+            // console.log(this.operation.security);
+            for (const key in this.sourceDescriptionFile.securitySchemes) {
+              if (
+                this.sourceDescriptionFile.securitySchemes[key].type ===
+                  "http" &&
+                param.name === key
+              ) {
+                if (
+                  this.sourceDescriptionFile.securitySchemes[
+                    key
+                  ].scheme.toLowerCase() === "bearer"
+                ) {
+                  value = `Bearer ${value}`;
+                } else {
+                  const basicPass = Buffer.from(
+                    this.expression.resolveExpression(value),
+                  ).toString("base64");
+                  value = `Basic ${basicPass}`;
+                }
+              }
+            }
+
+            // const authSchemaName = Object.keys(
+            //   this.operation.security.at(0),
+            // ).at(0);
+
+            // const securityScheme =
+            //   this.sourceDescriptionFile.securitySchemes[authSchemaName];
+            // console.log(securityScheme);
+
+            // if (
+            //   securityScheme.type === "http" &&
+            //   securityScheme?.scheme?.toLowerCase() === "bearer"
+            // ) {
+            //   value = `Bearer ${value}`;
+            // } else if (
+            //   securityScheme.type === "http" &&
+            //   securityScheme?.scheme?.toLowerCase() === "basic"
+            // ) {
+            //   const basicPass = Buffer.from(
+            //     this.expression.resolveExpression(value),
+            //   ).toString("base64");
+            //   value = `Basic ${basicPass}`;
+            // }
+          }
+
           headers.append(param.name, value, {
             style: headerStyle,
             explode: headerExplode,
           });
+
           for (const [header, value] of headers) {
             if (header === param.name) {
               headersObj.append(param.name, value);
@@ -812,6 +994,8 @@ class Arazzo extends Document {
     this.operation.headers = headersObj;
     this.operation.queryParams = queryParams;
   }
+
+  buildHeaderParams() {}
 
   /**
    * @private
