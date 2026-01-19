@@ -147,6 +147,8 @@ The Runner will prepend `Bearer` for you.
 
 ### mutualTLS
 
+> mutualTLS is quite a complex authorization topic. I have written a naive way of dealing with it that I am unsure will actually work in production. If you are using mutualTLS and this Arazzo Runner and find that you run into bugs/issues, please do feel free to opena. report. The more I know and understand mutualTLS the better I can support it.
+
 You will need to provide inputs for your ClientKey and ClientCert as their path locations:
 
 **input.json**
