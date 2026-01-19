@@ -22,7 +22,8 @@
         "type": "object",
         "properties": {
           "username": { "type": "string" },
-          "password": { "type": "string" }
+          "clientId": { "type": "string" },
+          "clientSecret": { "type": "string" }
         }
       },
       "steps": [

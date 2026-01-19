@@ -9,21 +9,20 @@
   "sourceDescriptions": [
     {
       "name": "users-openAPI",
-      "url": "https://raw.githubusercontent.com/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/security/openIdConnect/users-openapi.json",
+      "url": "https://raw.githubusercontent.com/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/security/api-key/users-openapi-global-security-optional-path.json",
       "type": "openapi"
     }
   ],
   "workflows": [
     {
-      "workflowId": "deleteCurrentUser-openIdConnect",
+      "workflowId": "deleteCurrentUser-apiKey",
       "summary": "Deletes the current user",
       "description": "Logs the user in and then deletes them",
       "inputs": {
         "type": "object",
         "properties": {
           "username": { "type": "string" },
-          "clientId": { "type": "string" },
-          "clientSecret": { "type": "string" }
+          "password": { "type": "string" }
         }
       },
       "steps": [

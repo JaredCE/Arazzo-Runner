@@ -28,9 +28,19 @@
       },
       "steps": [
         {
+          "stepId": "LoginExistingUser",
+          "operationId": "loginUser",
+          "outputs": { "AccessToken": "$response.body#/AccessToken" }
+        },
+        {
           "stepId": "deleteUser",
           "operationId": "deleteUser",
           "parameters": [
+            {
+              "name": "Authorization",
+              "in": "header",
+              "value": "$steps.LoginExistingUser.outputs.AccessToken"
+            },
             { "name": "username", "in": "path", "value": "$inputs.username" }
           ]
         }
