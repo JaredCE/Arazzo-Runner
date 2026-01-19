@@ -348,13 +348,14 @@ class Arazzo extends Document {
     } else {
       this.logger.verbose("Using fetch call");
 
-      this.logger.verbose("url:", options.url);
+      this.logger.verbose(`url: ${url}`);
+      this.logger.verbose(`method: ${options.method}`);
       this.logger.verbose("headers:");
       for (const [key, value] of options.headers.entries()) {
         this.logger.verbose(`${key}: ${value}`);
       }
 
-      this.logger.verbose("body:", options.body);
+      this.logger.verbose(`body: ${options.body}`);
 
       response = await fetch(url, options);
     }
@@ -378,7 +379,7 @@ class Arazzo extends Document {
     let clientKeyPath;
     try {
       clientKeyPath = path.resolve(this.inputs.key);
-      this.logger.verbose("clientKey Path:", clientKeyPath);
+      this.logger.verbose(`clientKey Path: ${clientKeyPath}`);
     } catch (err) {
       this.logger.error(`could not resolve clientKey`);
       throw err;
@@ -387,7 +388,7 @@ class Arazzo extends Document {
     let clientCertPath;
     try {
       clientCertPath = path.resolve(this.inputs.cert);
-      this.logger.verbose("clientCert Path:", clientCertPath);
+      this.logger.verbose(`clientCert Path: ${clientCertPath}`);
     } catch (err) {
       this.logger.error(`could not resolve clientCert`);
       throw err;
@@ -401,7 +402,8 @@ class Arazzo extends Document {
 
     const opUrl = new URL(url);
 
-    this.logger.verbose("url:", opUrl.pathname + opUrl.search);
+    this.logger.verbose(`url: ${opUrl.pathname + opUrl.search}`);
+    this.logger.verbose(`method: ${this.operation.method}`);
     this.logger.verbose("headers:");
     const headersObj = {};
     for (const [key, value] of this.operation.headers.entries()) {
@@ -409,7 +411,7 @@ class Arazzo extends Document {
       Object.assign(headersObj, { [key]: value });
     }
 
-    this.logger.verbose("body:", this.operation.data);
+    this.logger.verbose(`body: ${this.operation.data}`);
 
     return new Promise((resolve, reject) => {
       const options = {
