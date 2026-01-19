@@ -243,6 +243,18 @@ class Expression {
   // }
 
   /**
+   * @private
+   * @param {*} value
+   * @returns {boolean}
+   */
+  isXML(value) {
+    return (
+      typeof value === "string" &&
+      (value.trim().startsWith("<?xml") || value.trim().startsWith("<"))
+    );
+  }
+
+  /**
    * Resolves a runtime expression to its value in the context
    * @public
    * @param {string|Object|Array} expression - The runtime expression to resolve
@@ -470,6 +482,18 @@ class Expression {
         throw new Error(`Context path '${normalised}' not found`);
       }
 
+      // NEW: Check if contextData is XML
+      if (this.isXML(contextData)) {
+        const { XMLParser } = require("fast-xml-parser");
+        const parser = new XMLParser({
+          ignoreAttributes: false,
+          attributeNamePrefix: "@_",
+        });
+        const jsonData = parser.parse(contextData);
+        return evaluate(jsonData, pointer);
+      }
+
+      // Regular JSON pointer evaluation
       try {
         return evaluate(contextData, pointer);
       } catch (err) {
