@@ -34,6 +34,9 @@ arazzo-runner -a arazzo.json -i input.json
 # With URL
 arazzo-runner -a https://example.com/arazzo.json -i ./input.json
 
+# With Verbose Logging
+arazzo-runner -a https://example.com/arazzo.json -i ./input.json -vv
+
 # Show help
 arazzo-runner --help
 
