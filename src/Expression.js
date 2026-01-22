@@ -12,7 +12,7 @@ const {
   extract,
 } = require("@swaggerexpert/arazzo-runtime-expression");
 const { evaluate } = require("@swaggerexpert/json-pointer");
-const jp = require("jsonpath");
+const { evaluate: jsonPathEvaluate } = require("@swaggerexpert/jsonpath");
 
 /**
  * Handles resolution of Arazzo runtime expressions to context values.
@@ -94,8 +94,11 @@ class Expression {
   checkJSONPathExpression(expression, jsonPath) {
     try {
       const value = this.resolveExpression(expression);
-      return jp.query(value, jsonPath);
+      const result = jsonPathEvaluate(value, jsonPath);
+
+      return Array.isArray(result) && result.length > 0;
     } catch (e) {
+      console.error(e);
       return null;
     }
   }
