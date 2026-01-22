@@ -406,6 +406,351 @@ describe(`Expression`, function () {
     });
   });
 
+  describe(`checkXPathExpression`, function () {
+    describe(`basic boolean eval`, function () {
+      it(`returns true `, function () {
+        const expression = new Expression();
+
+        expression.addToContext(
+          "response.body",
+          `<?xml version="1.0" encoding="UTF-8"?>
+            <root>
+              <users>
+                <user active="true">
+                  <name>Alice</name>
+                  <age>30</age>
+                  <pets>
+                    <pet>dog</pet>
+                    <pet>cat</pet>
+                  </pets>
+                </user>
+                <user active="false">
+                  <name>Bob</name>
+                  <age>25</age>
+                </user>
+                <user active="true">
+                  <name>Charlie</name>
+                  <age>35</age>
+                  <pets>
+                    <pet>bird</pet>
+                  </pets>
+                </user>
+              </users>
+            </root>`,
+        );
+
+        const expected = expression.checkXPathExpression(
+          "$response.body",
+          `//user[@active="true"]`,
+        );
+
+        expect(expected).to.be.true;
+      });
+
+      it(`returns true `, function () {
+        const expression = new Expression();
+
+        expression.addToContext(
+          "response.body",
+          `<?xml version="1.0" encoding="UTF-8"?>
+            <root>
+              <users>
+                <user active="true">
+                  <name>Alice</name>
+                  <age>30</age>
+                  <pets>
+                    <pet>dog</pet>
+                    <pet>cat</pet>
+                  </pets>
+                </user>
+                <user active="false">
+                  <name>Bob</name>
+                  <age>25</age>
+                </user>
+                <user active="true">
+                  <name>Charlie</name>
+                  <age>35</age>
+                  <pets>
+                    <pet>bird</pet>
+                  </pets>
+                </user>
+              </users>
+            </root>`,
+        );
+
+        const expected = expression.checkXPathExpression(
+          "$response.body",
+          '//user[@active="false"]',
+        );
+
+        expect(expected).to.be.true;
+      });
+
+      it(`returns false `, function () {
+        const expression = new Expression();
+
+        expression.addToContext(
+          "response.body",
+          `<?xml version="1.0" encoding="UTF-8"?>
+            <root>
+              <users>
+                <user active="true">
+                  <name>Alice</name>
+                  <age>30</age>
+                  <pets>
+                    <pet>dog</pet>
+                    <pet>cat</pet>
+                  </pets>
+                </user>
+                <user active="false">
+                  <name>Bob</name>
+                  <age>25</age>
+                </user>
+                <user active="true">
+                  <name>Charlie</name>
+                  <age>35</age>
+                  <pets>
+                    <pet>bird</pet>
+                  </pets>
+                </user>
+              </users>
+            </root>`,
+        );
+
+        const expected = expression.checkXPathExpression(
+          "$response.body",
+          "//user[age > 40]",
+        );
+
+        expect(expected).to.be.false;
+      });
+    });
+
+    describe(`count based`, function () {
+      it(`returns true `, function () {
+        const expression = new Expression();
+
+        expression.addToContext(
+          "response.body",
+          `<?xml version="1.0" encoding="UTF-8"?>
+            <root>
+              <users>
+                <user active="true">
+                  <name>Alice</name>
+                  <age>30</age>
+                  <pets>
+                    <pet>dog</pet>
+                    <pet>cat</pet>
+                  </pets>
+                </user>
+                <user active="false">
+                  <name>Bob</name>
+                  <age>25</age>
+                </user>
+                <user active="true">
+                  <name>Charlie</name>
+                  <age>35</age>
+                  <pets>
+                    <pet>bird</pet>
+                  </pets>
+                </user>
+              </users>
+            </root>`,
+        );
+
+        const expected = expression.checkXPathExpression(
+          "$response.body",
+          "//user",
+        );
+
+        expect(expected).to.be.true;
+      });
+
+      it(`returns true `, function () {
+        const expression = new Expression();
+
+        expression.addToContext(
+          "response.body",
+          `<?xml version="1.0" encoding="UTF-8"?>
+            <root>
+              <users>
+                <user active="true">
+                  <name>Alice</name>
+                  <age>30</age>
+                  <pets>
+                    <pet>dog</pet>
+                    <pet>cat</pet>
+                  </pets>
+                </user>
+                <user active="false">
+                  <name>Bob</name>
+                  <age>25</age>
+                </user>
+                <user active="true">
+                  <name>Charlie</name>
+                  <age>35</age>
+                  <pets>
+                    <pet>bird</pet>
+                  </pets>
+                </user>
+              </users>
+            </root>`,
+        );
+
+        const expected = expression.checkXPathExpression(
+          "$response.body",
+          "//user[pets]",
+        );
+
+        expect(expected).to.be.true;
+      });
+    });
+
+    describe(`boolean`, function () {
+      it(`returns true `, function () {
+        const expression = new Expression();
+
+        expression.addToContext(
+          "response.body",
+          `<?xml version="1.0" encoding="UTF-8"?>
+            <root>
+              <users>
+                <user active="true">
+                  <name>Alice</name>
+                  <age>30</age>
+                  <pets>
+                    <pet>dog</pet>
+                    <pet>cat</pet>
+                  </pets>
+                </user>
+                <user active="false">
+                  <name>Bob</name>
+                  <age>25</age>
+                </user>
+                <user active="true">
+                  <name>Charlie</name>
+                  <age>35</age>
+                  <pets>
+                    <pet>bird</pet>
+                  </pets>
+                </user>
+              </users>
+            </root>`,
+        );
+
+        const expected = expression.checkXPathExpression(
+          "$response.body",
+          "count(//pet) > 2",
+        );
+
+        expect(expected).to.be.true;
+      });
+
+      it(`returns false `, function () {
+        const expression = new Expression();
+
+        expression.addToContext(
+          "response.body",
+          `<?xml version="1.0" encoding="UTF-8"?>
+            <root>
+              <users>
+                <user active="true">
+                  <name>Alice</name>
+                  <age>30</age>
+                  <pets>
+                    <pet>dog</pet>
+                    <pet>cat</pet>
+                  </pets>
+                </user>
+                <user active="false">
+                  <name>Bob</name>
+                  <age>25</age>
+                </user>
+                <user active="true">
+                  <name>Charlie</name>
+                  <age>35</age>
+                  <pets>
+                    <pet>bird</pet>
+                  </pets>
+                </user>
+              </users>
+            </root>`,
+        );
+
+        const expected = expression.checkXPathExpression(
+          "$response.body",
+          "count(//pet) > 5",
+        );
+
+        expect(expected).to.be.false;
+      });
+    });
+
+    describe(`complex`, function () {
+      it(`returns true `, function () {
+        const expression = new Expression();
+
+        expression.addToContext(
+          "response.body",
+          `<?xml version="1.0" encoding="UTF-8"?>
+            <orders>
+              <order status="pending">
+                <id>1</id>
+                <items>
+                  <item quantity="2">Widget</item>
+                  <item quantity="5">Gadget</item>
+                </items>
+              </order>
+              <order status="shipped">
+                <id>2</id>
+                <items>
+                  <item quantity="1">Doohickey</item>
+                </items>
+              </order>
+            </orders>`,
+        );
+
+        const expected = expression.checkXPathExpression(
+          "$response.body",
+          '//order[@status="pending"]',
+        );
+
+        expect(expected).to.be.true;
+      });
+
+      it(`returns false `, function () {
+        const expression = new Expression();
+
+        expression.addToContext(
+          "response.body",
+          `<?xml version="1.0" encoding="UTF-8"?>
+            <orders>
+              <order status="pending">
+                <id>1</id>
+                <items>
+                  <item quantity="2">Widget</item>
+                  <item quantity="5">Gadget</item>
+                </items>
+              </order>
+              <order status="shipped">
+                <id>2</id>
+                <items>
+                  <item quantity="1">Doohickey</item>
+                </items>
+              </order>
+            </orders>`,
+        );
+
+        const expected = expression.checkXPathExpression(
+          "$response.body",
+          '//order[@status="shipped"]/items/item[@quantity > 1]',
+        );
+
+        expect(expected).to.be.false;
+      });
+    });
+  });
+
   describe(`resolveExpression`, function () {
     it(`can resolve a simple expression`, function () {
       const expression = new Expression();
