@@ -161,6 +161,9 @@ class Rules {
         } else if (criteriaObject.type === "jsonpath") {
           const hasPassedCheck = this.jsonPathCheck(rule, criteriaObject);
           if (hasPassedCheck) passedCriteria.push(hasPassedCheck);
+        } else if (criteriaObject.type === "xpath") {
+          const hasPassedCheck = this.xPathCheck(rule, criteriaObject);
+          if (hasPassedCheck) passedCriteria.push(hasPassedCheck);
         } else if (criteriaObject.type === "simple") {
           const hasPassedCheck = this.simpleCheck(rule, criteriaObject);
           if (hasPassedCheck) passedCriteria.push(hasPassedCheck);
@@ -210,6 +213,31 @@ class Rules {
       `checking ${rule.name} rule: ${criteriaObject.context} has a matching JSONPath for ${criteriaObject.condition} `,
     );
     const hasPassedCheck = this.expression.checkJSONPathExpression(
+      criteriaObject.context,
+      criteriaObject.condition,
+    );
+
+    if (hasPassedCheck) {
+      this.logger.success(`${criteriaObject.condition} passed`);
+    } else {
+      this.logger.error(`${criteriaObject.condition} failed`);
+    }
+
+    return hasPassedCheck;
+  }
+
+  /**
+   * @function xPathCheck
+   * @private
+   * @param {successActionsObject|failureActionsObject} rule
+   * @param {criteriaObject} criteriaObject
+   * @returns {boolean}
+   */
+  xPathCheck(rule, criteriaObject) {
+    this.logger.notice(
+      `checking ${rule.name} rule: ${criteriaObject.context} has a matching xPath for ${criteriaObject.condition} `,
+    );
+    const hasPassedCheck = this.expression.checkXPathExpression(
       criteriaObject.context,
       criteriaObject.condition,
     );

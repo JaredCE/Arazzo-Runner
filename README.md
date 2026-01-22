@@ -240,10 +240,6 @@ Work on Reporting still needs completeing.
 
 Accessing an OpenAPI operation by Operation Path `'{$sourceDescriptions.petstoreDescription.url}#/paths/~1pet~1findByStatus/get'` does not work currently
 
-### XPath criteria objects
-
-Criteria Objects set as type XPath do not work
-
 ### Non application/json Responses
 
 Responses that do not conform to application/json do not work
