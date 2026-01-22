@@ -386,12 +386,15 @@ describe(`Expression`, function () {
     });
   });
 
-  xdescribe(`checkJSONPathExpression`, function () {
+  describe(`checkJSONPathExpression`, function () {
     describe(`object`, function () {
       it(`returns true `, function () {
         const expression = new Expression();
 
-        expression.addToContext("response.body", [{ pets: ["dog", "cat"] }]);
+        expression.addToContext("response.body", [
+          { pets: ["dog", "cat"] },
+          { pets: ["tortoise"] },
+        ]);
 
         const expected = expression.checkJSONPathExpression(
           "$response.body",
