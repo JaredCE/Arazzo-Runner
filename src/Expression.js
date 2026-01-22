@@ -13,6 +13,8 @@ const {
 } = require("@swaggerexpert/arazzo-runtime-expression");
 const { evaluate } = require("@swaggerexpert/json-pointer");
 const { evaluate: jsonPathEvaluate } = require("@swaggerexpert/jsonpath");
+const { DOMParser } = require("@xmldom/xmldom");
+const xpath = require("xpath");
 
 /**
  * Handles resolution of Arazzo runtime expressions to context values.
@@ -100,6 +102,24 @@ class Expression {
     } catch (e) {
       console.error(e);
       return null;
+    }
+  }
+
+  /**
+   * Runs a check on a runtime expression from a XPath Criterion Object
+   * @public
+   * @param {string} expression - The runtime expression to resolve
+   */
+  checkXPathExpression(expression, xPath) {
+    try {
+      const value = this.resolveExpression(expression);
+      const doc = new DOMParser().parseFromString(value, "text/xml");
+      const result = xpath.select(xPath, doc);
+
+      // Empty nodeset = false, non-empty = true
+      return Array.isArray(result) ? result.length > 0 : !!result;
+    } catch (e) {
+      return false;
     }
   }
 
