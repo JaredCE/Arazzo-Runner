@@ -59,10 +59,17 @@
           "status": {
             "type": "string",
             "description": "pet status in the store",
-            "enum": ["available", "pending", "sold"]
+            "enum": [
+              "available",
+              "pending",
+              "sold"
+            ]
           }
         },
-        "required": ["name", "photoUrls"],
+        "required": [
+          "name",
+          "photoUrls"
+        ],
         "xml": {
           "name": "Pet"
         }
@@ -139,10 +146,17 @@
           "status": {
             "type": "string",
             "description": "pet status in the store",
-            "enum": ["available", "pending", "sold"]
+            "enum": [
+              "available",
+              "pending",
+              "sold"
+            ]
           }
         },
-        "required": ["name", "photoUrls"],
+        "required": [
+          "name",
+          "photoUrls"
+        ],
         "xml": {
           "name": "Pet"
         }
@@ -211,10 +225,17 @@
             "status": {
               "type": "string",
               "description": "pet status in the store",
-              "enum": ["available", "pending", "sold"]
+              "enum": [
+                "available",
+                "pending",
+                "sold"
+              ]
             }
           },
-          "required": ["name", "photoUrls"],
+          "required": [
+            "name",
+            "photoUrls"
+          ],
           "xml": {
             "name": "Pet"
           }
@@ -335,7 +356,7 @@
             "headers": {}
           }
         }
-      },
+      }
     }
   },
   "servers": [
