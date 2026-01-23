@@ -206,6 +206,21 @@ You will need to provide inputs for your clientId and clientSecret:
 
 `clientId` and `clientSecret` are reserved name and will be used when oauth or openId authentication is set.
 
+## Request Bodies
+
+This can handle the encoding and sending of:
+
+ - application/json
+ - application/xml
+ - text/xml
+ - text/html
+ - text/plain
+ - application/x-www-form-urlencoded
+ - multipart/form-data
+ - application/octet-stream
+
+For anything outside of this range, it will attempt to encode as JSON if you specify an object, otherwise it will encode as plain text.
+
 ## Logging And Reporting
 
 ### Logging
@@ -243,7 +258,3 @@ Accessing an OpenAPI operation by Operation Path `'{$sourceDescriptions.petstore
 ### Non application/json Responses
 
 Responses that do not conform to application/json do not work
-
-### Non application/json Requests
-
-Requests that do not conform to application/json do not work
