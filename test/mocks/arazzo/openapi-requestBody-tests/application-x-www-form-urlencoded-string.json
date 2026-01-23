@@ -1,0 +1,55 @@
+{
+  "$schema": "https://spec.openapis.org/arazzo/1.0/schema/2025-10-15",
+  "arazzo": "1.0.1",
+  "info": {
+    "title": "Pets",
+    "description": "The Arazzo Workflow for a Pet Store Pet",
+    "summary": "Araazo Workflow for Pet Store Pet",
+    "version": "1.0.0"
+  },
+  "sourceDescriptions": [
+    {
+      "name": "pets-openAPI",
+      "url": "https://raw.githubusercontent.com/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/request-bodies/application-x-www-form-urlencoded/body.json",
+      "type": "openapi"
+    }
+  ],
+  "workflows": [
+    {
+      "workflowId": "updatePet-application/x-www-form-urlencoded-string",
+      "summary": "Update a pet",
+      "description": "Update a pet with application/x-www-form-urlencoded as a string",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "petId": {
+            "type": "integer"
+          },
+          "form": {
+            "type": "string"
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepId": "updatePet",
+          "operationId": "updatePetWithForm",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "petId",
+              "value": "$inputs.petId"
+            }
+          ],
+          "requestBody": {
+            "contentType": "application/x-www-form-urlencoded",
+            "payload": "$inputs.form"
+          },
+          "outputs": {
+            "id": "$response.body#/id"
+          }
+        }
+      ]
+    }
+  ]
+}
