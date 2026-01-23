@@ -93,7 +93,7 @@ describe(`Runner`, function () {
       nock("http://petstore.swagger.io:80", {
         encodedQueryParams: true,
       })
-        .post("/v2/user", "[object Object]")
+        .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
         .reply(201, { id: 123 });
 
       const runner = new Runner();
