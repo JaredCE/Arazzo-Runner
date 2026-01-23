@@ -883,7 +883,7 @@ class Arazzo extends Document {
    */
   mapInputs() {
     this.mapParameters();
-    this.mapRequestBody();
+    this.encodeRequestBody();
 
     this.addParamsToContext(this.operation.headers, "headers", "request");
     this.addParamsToContext(this.operation.queryParams, "query", "request");
@@ -934,7 +934,7 @@ class Arazzo extends Document {
             for (const key in this.sourceDescriptionFile.securitySchemes) {
               if (
                 this.sourceDescriptionFile.securitySchemes[key].type ===
-                  "http" &&
+                "http" &&
                 param.name === key
               ) {
                 if (
@@ -1030,7 +1030,7 @@ class Arazzo extends Document {
     this.operation.queryParams = queryParams;
   }
 
-  buildHeaderParams() {}
+  buildHeaderParams() { }
 
   /**
    * @private
@@ -1058,13 +1058,259 @@ class Arazzo extends Document {
 
       if (this.step.requestBody.contentType) {
         this.operation.headers.append(
-          "accept",
+          "content-type",
           this.step.requestBody.contentType,
         );
       }
 
-      this.operation.data = payload;
+      if (this.operation.headers.has("content-type")) {
+        if (this.operation.headers.get("content-type") === "application/json") {
+          this.operation.data = JSON.stringify(payload);
+        } else if (
+          this.operation.headers.get("content-type") ===
+          "application/x-www-form-urlencoded"
+        ) {
+          this.operation.data = new URLSearchParams(payload);
+        }
+      }
     }
+  }
+
+  /**
+ * Encode request body based on Content-Type
+ * Returns { body } with properly encoded body and headers
+ *
+ * @param {*} data - The data to encode
+ * @param {string} contentType - The Content-Type header value
+ * @param {Headers} headers - Existing headers object (will be modified)
+ * @returns {{body: *, headers: Headers}} Encoded body and updated headers
+ */
+  encodeRequestBody() {
+    if (this.step?.requestBody) {
+      const payload = this.expression.resolveExpression(
+        this.step.requestBody.payload,
+      );
+
+      if (payload === null || payload === undefined) {
+        return { body: null };
+      }
+
+      // Normalize content type (remove charset, parameters)
+      // const normalizedType = contentType.split(';')[0].trim().toLowerCase();
+      let normalizedType
+      if (this.step.requestBody.contentType) {
+        normalizedType = this.step.requestBody.contentType.split(';')[0].trim().toLowerCase();
+      }
+
+      switch (normalizedType) {
+        case 'application/json':
+          this.encodeJSON(payload);
+          break;
+
+        case 'application/x-www-form-urlencoded':
+          this.encodeFormURLEncoded(payload);
+          break;
+
+        case 'multipart/form-data':
+          this.encodeMultipartFormData(payload);
+          break;
+
+        case 'text/plain':
+          this.encodeTextPlain(payload);
+          break;
+
+        case 'text/xml':
+        case 'application/xml':
+          this.encodeXML(payload, normalizedType);
+          break;
+
+        case 'text/html':
+          this.encodeHTML(payload);
+          break;
+
+        case 'application/octet-stream':
+          this.encodeBinary(payload);
+          break;
+
+        default:
+          // For unknown types, try JSON if it's an object, otherwise text
+          if (typeof payload === 'object' && !(payload instanceof Blob) && !(payload instanceof ArrayBuffer)) {
+            this.encodeJSON(payload);
+          }
+          this.encodeTextPlain(payload);
+          break;
+      }
+    }
+  }
+
+  /**
+ * Encode as JSON
+ */
+  encodeJSON(data) {
+    this.operation.data = typeof data === 'string' ? data : JSON.stringify(data);
+    this.operation.headers.set('Content-Type', 'application/json');
+    this.operation.headers.set('Content-Length', String(Buffer.byteLength(this.operation.data, 'utf8')));
+  }
+
+  /**
+   * Encode as application/x-www-form-urlencoded
+   */
+  encodeFormURLEncoded(data) {
+    let body;
+
+    if (typeof data === 'string') {
+      body = data;
+    } else if (data instanceof URLSearchParams) {
+      body = data.toString();
+    } else if (typeof data === 'object') {
+      const params = new URLSearchParams();
+      for (const [key, value] of Object.entries(data)) {
+        if (Array.isArray(value)) {
+          value.forEach(v => params.append(key, String(v)));
+        } else {
+          params.append(key, String(value));
+        }
+      }
+      body = params.toString();
+    } else {
+      body = String(data);
+    }
+
+    this.operation.headers.set('Content-Type', 'application/x-www-form-urlencoded');
+    this.operation.headers.set('Content-Length', String(Buffer.byteLength(body, 'utf8')));
+    this.operation.data = body;
+  }
+
+  /**
+   * Encode as multipart/form-data
+   */
+  encodeMultipartFormData(data) {
+    const formData = new FormData();
+
+    if (data instanceof FormData) {
+      this.operation.data = data; // Let fetch handle the boundary
+      return;
+    }
+
+    if (typeof data === 'object') {
+      for (const [key, value] of Object.entries(data)) {
+        if (value instanceof Blob || value instanceof File) {
+          formData.append(key, value);
+        } else if (Array.isArray(value)) {
+          value.forEach(v => formData.append(key, v));
+        } else {
+          formData.append(key, String(value));
+        }
+      }
+    }
+
+    // Do NOT set Content-Type - let fetch set it with the boundary
+    // headers.set('Content-Type', 'multipart/form-data'); // WRONG!
+    this.operation.headers.delete('Content-Type'); // Let fetch handle it
+
+    this.operation.data = formData;
+  }
+
+  /**
+   * Encode as plain text
+   */
+  encodeTextPlain(data) {
+    const body = typeof data === 'string' ? data : String(data);
+    this.operation.headers.set('Content-Type', 'text/plain; charset=utf-8');
+    this.operation.headers.set('Content-Length', String(Buffer.byteLength(body, 'utf8')));
+    this.operation.data = body;
+  }
+
+  /**
+   * Encode as XML
+   */
+  encodeXML(data, contentType) {
+    let body;
+
+    if (typeof data === 'string') {
+      body = data;
+    } else if (typeof data === 'object') {
+      // Simple object to XML conversion
+      body = this.objectToXML(data);
+    } else {
+      body = String(data);
+    }
+
+    this.operation.headers.set('Content-Type', `${contentType}; charset=utf-8`);
+    this.operation.headers.set('Content-Length', String(Buffer.byteLength(body, 'utf8')));
+    this.operation.data = body;
+  }
+
+  /**
+   * Encode as HTML
+   */
+  encodeHTML(data) {
+    const body = typeof data === 'string' ? data : String(data);
+    this.operation.headers.set('Content-Type', 'text/html; charset=utf-8');
+    this.operation.headers.set('Content-Length', String(Buffer.byteLength(body, 'utf8')));
+    this.operation.data = body;
+  }
+
+  /**
+   * Encode as binary (octet-stream)
+   */
+  encodeBinary(data) {
+    let body;
+
+    if (data instanceof Blob || data instanceof ArrayBuffer || Buffer.isBuffer(data)) {
+      body = data;
+    } else if (typeof data === 'string') {
+      body = Buffer.from(data);
+    } else {
+      body = Buffer.from(JSON.stringify(data));
+    }
+
+    this.operation.headers.set('Content-Type', 'application/octet-stream');
+
+    if (Buffer.isBuffer(body)) {
+      this.operation.headers.set('Content-Length', String(body.length));
+    }
+
+    this.operation.data = body;
+  }
+
+  /**
+   * Simple object to XML converter
+   */
+  objectToXML(obj, rootName = 'root') {
+    let xml = '<?xml version="1.0" encoding="UTF-8"?>';
+
+    function buildXML(data, tagName) {
+      if (data === null || data === undefined) {
+        return `<${tagName}/>`;
+      }
+
+      if (typeof data === 'object' && !Array.isArray(data)) {
+        let result = `<${tagName}>`;
+        for (const [key, value] of Object.entries(data)) {
+          result += buildXML(value, key);
+        }
+        result += `</${tagName}>`;
+        return result;
+      }
+
+      if (Array.isArray(data)) {
+        return data.map(item => buildXML(item, tagName)).join('');
+      }
+
+      // Escape XML special characters
+      const escaped = String(data)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&apos;');
+
+      return `<${tagName}>${escaped}</${tagName}>`;
+    }
+
+    xml += buildXML(obj, rootName);
+    return xml;
   }
 
   /**

@@ -1,0 +1,84 @@
+{
+  "$schema": "https://spec.openapis.org/arazzo/1.0/schema/2025-10-15",
+  "arazzo": "1.0.1",
+  "info": {
+    "title": "Pets",
+    "description": "The Arazzo Workflow for a Pet Store Pet",
+    "summary": "Araazo Workflow for Pet Store Pet",
+    "version": "1.0.0"
+  },
+  "sourceDescriptions": [
+    {
+      "name": "pets-openAPI",
+      "url": "https://raw.githubusercontent.com/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/request-bodies/application-json/body.json",
+      "type": "openapi"
+    }
+  ],
+  "workflows": [
+    {
+      "workflowId": "addPet-application/json",
+      "summary": "Add a pet",
+      "description": "Add a pet with application/json",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "pet": {
+            "type": "object",
+            "properties": {
+              "category": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              },
+              "name": {
+                "type": "string"
+              },
+              "photoUrls": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "status": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepId": "addPet",
+          "operationId": "addPet",
+          "requestBody": {
+            "contentType": "application/json",
+            "payload": "$inputs.pet"
+          },
+          "outputs": {
+            "id": "$response.body#/id"
+          }
+        }
+      ]
+    }
+  ]
+}

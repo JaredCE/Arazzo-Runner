@@ -108,7 +108,7 @@ describe(`Arazzo Document`, function () {
                 nock("http://petstore.swagger.io:80", {
                   encodedQueryParams: true,
                 })
-                  .post("/v2/user", "[object Object]")
+                  .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                   .reply(
                     405,
                     '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><apiResponse><type>unknown</type></apiResponse>',
@@ -195,7 +195,7 @@ describe(`Arazzo Document`, function () {
                 nock("http://petstore.swagger.io:80", {
                   encodedQueryParams: true,
                 })
-                  .post("/v2/user", "[object Object]")
+                  .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                   .reply(201, { john: "paul" });
 
                 const inputFile = new Input(
@@ -268,7 +268,7 @@ describe(`Arazzo Document`, function () {
                 nock("http://petstore.swagger.io:80", {
                   encodedQueryParams: true,
                 })
-                  .post("/v2/user", "[object Object]")
+                  .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                   .reply(201, { id: 123 });
 
                 const inputFile = new Input(
@@ -287,6 +287,7 @@ describe(`Arazzo Document`, function () {
                 try {
                   await arazzo.runWorkflows(inputFile);
                 } catch (err) {
+                  console.error(err)
                   expect(err).to.not.be.instanceOf(Error);
                 }
               });
@@ -410,7 +411,7 @@ describe(`Arazzo Document`, function () {
                 nock("http://petstore.swagger.io:80", {
                   encodedQueryParams: true,
                 })
-                  .post("/v2/user", "[object Object]")
+                  .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                   .reply(404, { id: 123 });
 
                 const inputFile = new Input(
@@ -429,6 +430,7 @@ describe(`Arazzo Document`, function () {
                 try {
                   await arazzo.runWorkflows(inputFile);
                 } catch (err) {
+                  console.error(err)
                   expect(err).to.not.be.instanceOf(Error);
                 }
               });
@@ -481,7 +483,7 @@ describe(`Arazzo Document`, function () {
                 nock("http://petstore.swagger.io:80", {
                   encodedQueryParams: true,
                 })
-                  .post("/v2/user", "[object Object]")
+                  .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                   .reply(201, { id: 123 });
 
                 const inputFile = new Input(
@@ -554,7 +556,7 @@ describe(`Arazzo Document`, function () {
                 nock("http://petstore.swagger.io:80", {
                   encodedQueryParams: true,
                 })
-                  .post("/v2/user", "[object Object]")
+                  .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                   .reply(200, { id: 123 });
 
                 const inputFile = new Input(
@@ -573,6 +575,7 @@ describe(`Arazzo Document`, function () {
                 try {
                   await arazzo.runWorkflows(inputFile);
                 } catch (err) {
+                  console.error(err)
                   expect(err).to.not.be.instanceOf(Error);
                 }
               });
@@ -854,7 +857,7 @@ describe(`Arazzo Document`, function () {
                         nock("http://petstore.swagger.io:80", {
                           encodedQueryParams: true,
                         })
-                          .post("/v2/user", "[object Object]")
+                          .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                           .reply(400, { id: 123 });
 
                         const inputFile = new Input(
@@ -927,7 +930,7 @@ describe(`Arazzo Document`, function () {
                         nock("http://petstore.swagger.io:80", {
                           encodedQueryParams: true,
                         })
-                          .post("/v2/user", "[object Object]")
+                          .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                           .reply(201, { id: 123 });
 
                         const inputFile = new Input(
@@ -1001,7 +1004,7 @@ describe(`Arazzo Document`, function () {
                         nock("http://petstore.swagger.io:80", {
                           encodedQueryParams: true,
                         })
-                          .post("/v2/user", "[object Object]")
+                          .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                           .reply(201, { id: 123 });
 
                         const inputFile = new Input(
@@ -1149,14 +1152,14 @@ describe(`Arazzo Document`, function () {
                         nock("http://petstore.swagger.io:80", {
                           encodedQueryParams: true,
                         })
-                          .post("/v2/user", "[object Object]")
+                          .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                           .times(3)
                           .reply(400);
 
                         nock("http://petstore.swagger.io:80", {
                           encodedQueryParams: true,
                         })
-                          .post("/v2/user", "[object Object]")
+                          .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                           .reply(201, { id: 1234 });
 
                         const inputFile = new Input(
@@ -1237,13 +1240,13 @@ describe(`Arazzo Document`, function () {
                         nock("http://petstore.swagger.io:80", {
                           encodedQueryParams: true,
                         })
-                          .post("/v2/user", "[object Object]")
+                          .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                           .reply(400);
 
                         nock("http://petstore.swagger.io:80", {
                           encodedQueryParams: true,
                         })
-                          .post("/v2/user", "[object Object]")
+                          .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                           .reply(201, { id: 123 });
 
                         const inputFile = new Input(
@@ -1266,6 +1269,7 @@ describe(`Arazzo Document`, function () {
 
                           expect(spy.callCount).to.be.equal(2);
                         } catch (err) {
+                          console.error(err)
                           expect(err).to.not.be.instanceOf(Error);
                         }
 
@@ -1319,7 +1323,7 @@ describe(`Arazzo Document`, function () {
                         nock("http://petstore.swagger.io:80", {
                           encodedQueryParams: true,
                         })
-                          .post("/v2/user", "[object Object]")
+                          .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                           .times(4)
                           .reply(400);
 
@@ -1346,6 +1350,7 @@ describe(`Arazzo Document`, function () {
                             "createAUser step of the createUser workflow failed the successCriteria",
                           );
                         } catch (err) {
+                          console.error(err)
                           expect(err).to.be.instanceOf(Error);
                           expect(err.message).to.be.equal(
                             `createAUser step of the createUser workflow failed the successCriteria`,
@@ -1402,14 +1407,14 @@ describe(`Arazzo Document`, function () {
                         nock("http://petstore.swagger.io:80", {
                           encodedQueryParams: true,
                         })
-                          .post("/v2/user", "[object Object]")
+                          .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                           .times(2)
                           .reply(400);
 
                         nock("http://petstore.swagger.io:80", {
                           encodedQueryParams: true,
                         })
-                          .post("/v2/user", "[object Object]")
+                          .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                           .reply(201, { id: 123 });
 
                         const inputFile = new Input(
@@ -1431,6 +1436,7 @@ describe(`Arazzo Document`, function () {
                           await arazzo.runWorkflows(inputFile);
                           expect(spy.callCount).to.be.equal(3);
                         } catch (err) {
+                          console.error(err)
                           expect(err).to.not.be.instanceOf(Error);
                         }
 
@@ -1484,31 +1490,31 @@ describe(`Arazzo Document`, function () {
                         nock("http://petstore.swagger.io:80", {
                           encodedQueryParams: true,
                         })
-                          .post("/v2/user", "[object Object]")
+                          .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                           .reply(400);
 
                         nock("http://petstore.swagger.io:80", {
                           encodedQueryParams: true,
                         })
-                          .post("/v2/user", "[object Object]")
+                          .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                           .reply(404);
 
                         nock("http://petstore.swagger.io:80", {
                           encodedQueryParams: true,
                         })
-                          .post("/v2/user", "[object Object]")
+                          .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                           .reply(201, { id: 123 });
 
                         nock("http://petstore.swagger.io:80", {
                           encodedQueryParams: true,
                         })
-                          .post("/v2/user", "[object Object]")
+                          .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                           .reply(400);
 
                         nock("http://petstore.swagger.io:80", {
                           encodedQueryParams: true,
                         })
-                          .post("/v2/user", "[object Object]")
+                          .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                           .reply(201, { id: 123 });
 
                         const inputFile = new Input(
@@ -1613,6 +1619,7 @@ describe(`Arazzo Document`, function () {
                           try {
                             await arazzo.runWorkflows(inputFile);
                           } catch (err) {
+                            console.error(err)
                             expect(err).to.not.be.instanceOf(Error);
                           }
                         },
@@ -1695,6 +1702,7 @@ describe(`Arazzo Document`, function () {
                           try {
                             await arazzo.runWorkflows(inputFile);
                           } catch (err) {
+                            console.error(err)
                             expect(err).to.not.be.instanceOf(Error);
                           }
                         },
@@ -1785,6 +1793,7 @@ describe(`Arazzo Document`, function () {
                         try {
                           await arazzo.runWorkflows(inputFile);
                         } catch (err) {
+                          console.error(err)
                           expect(err).to.not.be.instanceOf(Error);
                         }
                       });
@@ -1792,7 +1801,7 @@ describe(`Arazzo Document`, function () {
                   });
                 });
 
-                xdescribe(`multiple onFailure`, function () {});
+                xdescribe(`multiple onFailure`, function () { });
               });
 
               describe(`with onSuccess`, () => {
@@ -1844,7 +1853,7 @@ describe(`Arazzo Document`, function () {
                     nock("http://petstore.swagger.io:80", {
                       encodedQueryParams: true,
                     })
-                      .post("/v2/user", "[object Object]")
+                      .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                       .reply(201, { id: 123 });
 
                     const inputFile = new Input(
@@ -1917,7 +1926,7 @@ describe(`Arazzo Document`, function () {
                     nock("http://petstore.swagger.io:80", {
                       encodedQueryParams: true,
                     })
-                      .post("/v2/user", "[object Object]")
+                      .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                       .reply(201, { id: 123 });
 
                     const inputFile = new Input(
@@ -1991,7 +2000,7 @@ describe(`Arazzo Document`, function () {
                     nock("http://petstore.swagger.io:80", {
                       encodedQueryParams: true,
                     })
-                      .post("/v2/user", "[object Object]")
+                      .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                       .reply(201, { id: 123 });
 
                     const inputFile = new Input(
@@ -2139,14 +2148,14 @@ describe(`Arazzo Document`, function () {
                     nock("http://petstore.swagger.io:80", {
                       encodedQueryParams: true,
                     })
-                      .post("/v2/user", "[object Object]")
+                      .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                       .times(3)
                       .reply(201, { id: 123 });
 
                     nock("http://petstore.swagger.io:80", {
                       encodedQueryParams: true,
                     })
-                      .post("/v2/user", "[object Object]")
+                      .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                       .reply(400);
 
                     const inputFile = new Input(
@@ -2230,7 +2239,7 @@ describe(`Arazzo Document`, function () {
                 nock("http://petstore.swagger.io:80", {
                   encodedQueryParams: true,
                 })
-                  .post("/v2/user", "[object Object]")
+                  .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                   .reply(
                     405,
                     '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><apiResponse><type>unknown</type></apiResponse>',
@@ -2317,7 +2326,7 @@ describe(`Arazzo Document`, function () {
                 nock("http://petstore.swagger.io:80", {
                   encodedQueryParams: true,
                 })
-                  .post("/v2/user", "[object Object]")
+                  .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                   .reply(201, { john: "paul" });
 
                 const inputFile = new Input(
@@ -2396,7 +2405,7 @@ describe(`Arazzo Document`, function () {
                 nock("http://petstore.swagger.io:80", {
                   encodedQueryParams: true,
                 })
-                  .post("/v2/user", "[object Object]")
+                  .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                   .reply(201, { id: 123 });
 
                 nock("http://petstore.swagger.io:80", {
@@ -2477,7 +2486,7 @@ describe(`Arazzo Document`, function () {
                 nock("http://petstore.swagger.io:80", {
                   encodedQueryParams: true,
                 })
-                  .post("/v2/user", "[object Object]")
+                  .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                   .reply(404, { id: 123 });
 
                 nock("http://petstore.swagger.io:80", {
@@ -2502,6 +2511,7 @@ describe(`Arazzo Document`, function () {
                 try {
                   await arazzo.runWorkflows(inputFile);
                 } catch (err) {
+                  console.error(err)
                   expect(err).to.not.be.instanceOf(Error);
                 }
               });
@@ -2552,7 +2562,7 @@ describe(`Arazzo Document`, function () {
                 nock("http://petstore.swagger.io:80", {
                   encodedQueryParams: true,
                 })
-                  .post("/v2/user", "[object Object]")
+                  .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                   .reply(404, { username: "FatBoyS" });
 
                 nock("http://petstore.swagger.io:80", {
@@ -2630,7 +2640,7 @@ describe(`Arazzo Document`, function () {
                 nock("http://petstore.swagger.io:80", {
                   encodedQueryParams: true,
                 })
-                  .post("/v2/user", "[object Object]")
+                  .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                   .reply(404, { id: 123 });
 
                 const inputFile = new Input(
@@ -2703,7 +2713,7 @@ describe(`Arazzo Document`, function () {
                 nock("http://petstore.swagger.io:80", {
                   encodedQueryParams: true,
                 })
-                  .post("/v2/user", "[object Object]")
+                  .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                   .reply(201, { username: "FatBoyS" });
 
                 nock("http://petstore.swagger.io:80", {
@@ -2728,6 +2738,7 @@ describe(`Arazzo Document`, function () {
                 try {
                   await arazzo.runWorkflows(inputFile);
                 } catch (err) {
+                  console.error(err)
                   expect(err).to.not.be.instanceOf(Error);
                 }
               });
@@ -3009,7 +3020,7 @@ describe(`Arazzo Document`, function () {
                           nock("http://petstore.swagger.io:80", {
                             encodedQueryParams: true,
                           })
-                            .post("/v2/user", "[object Object]")
+                            .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                             .reply(400, { id: 123 });
 
                           const inputFile = new Input(
@@ -3392,7 +3403,7 @@ describe(`Arazzo Document`, function () {
                           nock("http://petstore.swagger.io:80", {
                             encodedQueryParams: true,
                           })
-                            .post("/v2/user", "[object Object]")
+                            .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                             .times(2)
                             .reply(201, { username: "MarshallM" });
 
@@ -3428,6 +3439,7 @@ describe(`Arazzo Document`, function () {
 
                             expect(spy.callCount).to.be.equal(4);
                           } catch (err) {
+                            console.error(err)
                             expect(err).to.not.be.instanceOf(Error);
                           }
 
@@ -3481,7 +3493,7 @@ describe(`Arazzo Document`, function () {
                           nock("http://petstore.swagger.io:80", {
                             encodedQueryParams: true,
                           })
-                            .post("/v2/user", "[object Object]")
+                            .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                             .times(2)
                             .reply(201, { username: "MarshallM" });
 
@@ -3490,7 +3502,7 @@ describe(`Arazzo Document`, function () {
                           })
                             .post(
                               "/v2/user/createWithArray",
-                              "[object Object],[object Object]",
+                              [{ "username": "SlimS", "firstName": "Marshall", "lastName": "Mathers", "email": "MarshamM@example.com", "phone": "+442222222222", "userStatus": 1 }, { "username": "IceC", "firstName": "O'Shea", "lastName": "Jackson", "email": "OSheaJ@example.com", "phone": "+444444444444", "userStatus": 1 }],
                             )
                             .reply(201, { username: "FatBoyS" });
 
@@ -3526,6 +3538,7 @@ describe(`Arazzo Document`, function () {
 
                             expect(spy.callCount).to.be.equal(5);
                           } catch (err) {
+                            console.error(err)
                             expect(err).to.not.be.instanceOf(Error);
                           }
 
@@ -4278,7 +4291,7 @@ describe(`Arazzo Document`, function () {
                   });
                 });
 
-                describe(`multiple onFailure`, function () {});
+                describe(`multiple onFailure`, function () { });
               });
 
               describe(`with onSuccess`, () => {
@@ -4330,7 +4343,7 @@ describe(`Arazzo Document`, function () {
                     nock("http://petstore.swagger.io:80", {
                       encodedQueryParams: true,
                     })
-                      .post("/v2/user", "[object Object]")
+                      .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                       .reply(201, { id: 123 });
 
                     const inputFile = new Input(
@@ -4409,7 +4422,7 @@ describe(`Arazzo Document`, function () {
                     nock("http://petstore.swagger.io:80", {
                       encodedQueryParams: true,
                     })
-                      .post("/v2/user", "[object Object]")
+                      .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                       .reply(201, { id: 123 });
 
                     const inputFile = new Input(
@@ -4483,7 +4496,7 @@ describe(`Arazzo Document`, function () {
                     nock("http://petstore.swagger.io:80", {
                       encodedQueryParams: true,
                     })
-                      .post("/v2/user", "[object Object]")
+                      .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                       .reply(201, { id: 123 });
 
                     const inputFile = new Input(
@@ -4631,7 +4644,7 @@ describe(`Arazzo Document`, function () {
                     nock("http://petstore.swagger.io:80", {
                       encodedQueryParams: true,
                     })
-                      .post("/v2/user", "[object Object]")
+                      .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                       .reply(201, { username: "DannyB" });
 
                     nock("http://petstore.swagger.io:80", {
@@ -4727,11 +4740,11 @@ describe(`Arazzo Document`, function () {
               );
 
             nock("http://petstore.swagger.io:80", { encodedQueryParams: true })
-              .post("/v2/user", "[object Object]")
+              .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
               .reply(201, { username: "FatBoyS" });
 
             nock("http://petstore.swagger.io:80", { encodedQueryParams: true })
-              .post("/v2/user/login", "[object Object]")
+              .post("/v2/user/login", { "username": "FatBoyS", "password": "--p4ssW0rd" })
               .reply(200, { AccessToken: "abc-def.123" });
 
             const inputFile = new Input(
@@ -4805,12 +4818,12 @@ describe(`Arazzo Document`, function () {
               );
 
             nock("http://petstore.swagger.io:80", { encodedQueryParams: true })
-              .post("/v2/user", "[object Object]")
+              .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
               .times(2)
               .reply(201, { username: "FatBoyS" });
 
             nock("http://petstore.swagger.io:80", { encodedQueryParams: true })
-              .post("/v2/user/login", "[object Object]")
+              .post("/v2/user/login", { "username": "FatBoyS", "password": "--p4ssW0rd" })
               .reply(200, { AccessToken: "abc-def.123" });
 
             const inputFile = new Input(
@@ -4884,7 +4897,7 @@ describe(`Arazzo Document`, function () {
               );
 
             nock("http://petstore.swagger.io:80", { encodedQueryParams: true })
-              .post("/v2/user", "[object Object]")
+              .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
               .times(2)
               .reply(201, { username: "FatBoyS" });
 
@@ -4964,13 +4977,13 @@ describe(`Arazzo Document`, function () {
                   nock("http://petstore.swagger.io:80", {
                     encodedQueryParams: true,
                   })
-                    .post("/v2/user", "[object Object]")
+                    .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                     .reply(201, { username: "DannyB" });
 
                   nock("http://petstore.swagger.io:80", {
                     encodedQueryParams: true,
                   })
-                    .post("/v2/user/login", "[object Object]")
+                    .post("/v2/user/login", { "username": "$workflow.createUser.outputs.username", "password": "--p4ssW0rd" })
                     .reply(200, { username: "DannyB" });
 
                   const inputFile = new Input(
@@ -5047,20 +5060,20 @@ describe(`Arazzo Document`, function () {
                       nock("http://petstore.swagger.io:80", {
                         encodedQueryParams: true,
                       })
-                        .post("/v2/user", "[object Object]")
+                        .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                         .times(2)
                         .reply(201, { username: "FatBoyS" });
 
                       nock("http://petstore.swagger.io:80", {
                         encodedQueryParams: true,
                       })
-                        .post("/v2/user/login", "[object Object]")
+                        .post("/v2/user/login", { "username": "$workflow.createUser.outputs.username", "password": "--p4ssW0rd" })
                         .reply(400);
 
                       nock("http://petstore.swagger.io:80", {
                         encodedQueryParams: true,
                       })
-                        .post("/v2/user/login", "[object Object]")
+                        .post("/v2/user/login", { "username": "$workflow.createUser.outputs.username", "password": "--p4ssW0rd" })
                         .reply(200, { AccessToken: "abc-def.123" });
 
                       const inputFile = new Input(
@@ -5138,14 +5151,14 @@ describe(`Arazzo Document`, function () {
                       nock("http://petstore.swagger.io:80", {
                         encodedQueryParams: true,
                       })
-                        .post("/v2/user", "[object Object]")
+                        .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                         .times(2)
                         .reply(201, { username: "FatBoyS" });
 
                       nock("http://petstore.swagger.io:80", {
                         encodedQueryParams: true,
                       })
-                        .post("/v2/user/login", "[object Object]")
+                        .post("/v2/user/login", { "username": "FatBoyS", "password": "--p4ssW0rd" })
                         .reply(404);
 
                       nock("http://petstore.swagger.io:80", {
@@ -5233,7 +5246,7 @@ describe(`Arazzo Document`, function () {
               );
 
             nock("http://petstore.swagger.io:80", { encodedQueryParams: true })
-              .post("/v2/user", "[object Object]")
+              .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
               .reply(
                 201,
                 { username: "DannyB" },
@@ -5251,7 +5264,7 @@ describe(`Arazzo Document`, function () {
               );
 
             nock("http://petstore.swagger.io:80", { encodedQueryParams: true })
-              .post("/v2/user/login", "[object Object]")
+              .post("/v2/user/login", { "username": "DannyB", "password": "--p4ssW0rd" })
               .reply(200, { AccessToken: "abc-def.123" });
 
             nock("https://raw.githubusercontent.com:443", {
@@ -5591,7 +5604,7 @@ describe(`Arazzo Document`, function () {
               nock("http://petstore.swagger.io:80", {
                 encodedQueryParams: true,
               })
-                .post("/v2/user", "[object Object]")
+                .post("/v2/user", { "username": "DannyB", "firstName": "Danny", "lastName": "Brown", "email": "dannyb@example.com", "phone": "+443333333333", "userStatus": 1 })
                 .reply(201, { id: 123 });
 
               const inputFile = new Input(
@@ -5695,7 +5708,7 @@ describe(`Arazzo Document`, function () {
       stub.restore();
     });
 
-    it(`handles more than oe source description correctly `, async function () {
+    it(`handles more than one source description correctly `, async function () {
       nock("https://raw.githubusercontent.com:443", {
         encodedQueryParams: true,
       })
@@ -5738,7 +5751,10 @@ describe(`Arazzo Document`, function () {
         );
 
       nock("http://petstore.swagger.io:80", { encodedQueryParams: true })
-        .post("/v2/user/login", "[object Object]")
+        .post("/v2/user/login", {
+          "username": "FatBoyS",
+          "password": "--p4ssW0rd",
+        })
         .reply(
           200,
           {
@@ -5760,6 +5776,7 @@ describe(`Arazzo Document`, function () {
             "x-rate-limit": "5000",
           },
         );
+
       const inputFile = new Input(
         "./test/mocks/inputs/petsInput.json",
         "inputs",

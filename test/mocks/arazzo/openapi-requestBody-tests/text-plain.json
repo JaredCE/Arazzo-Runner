@@ -1,0 +1,55 @@
+{
+  "$schema": "https://spec.openapis.org/arazzo/1.0/schema/2025-10-15",
+  "arazzo": "1.0.1",
+  "info": {
+    "title": "Pets",
+    "description": "The Arazzo Workflow for a Pet Store Pet",
+    "summary": "Araazo Workflow for Pet Store Pet",
+    "version": "1.0.0"
+  },
+  "sourceDescriptions": [
+    {
+      "name": "pets-openAPI",
+      "url": "https://raw.githubusercontent.com/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/request-bodies/text-plain/body.json",
+      "type": "openapi"
+    }
+  ],
+  "workflows": [
+    {
+      "workflowId": "updatePet-text/plain",
+      "summary": "Update a pet",
+      "description": "Update a pet with text/plain",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "petId": {
+            "type": "integer"
+          },
+          "petDrink": {
+            "type": "string"
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepId": "updatePet",
+          "operationId": "updatePetWithForm",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "petId",
+              "value": "$inputs.petId"
+            }
+          ],
+          "requestBody": {
+            "contentType": "text/plain",
+            "payload": "$inputs.petDrink"
+          },
+          "outputs": {
+            "id": "$response.body#/id"
+          }
+        }
+      ]
+    }
+  ]
+}

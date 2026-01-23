@@ -70,7 +70,7 @@ describe(`OpenAPI Security`, function () {
         );
 
       nock("http://petstore.swagger.io:80", { encodedQueryParams: true })
-        .post("/v2/user/login", "[object Object]")
+        .post("/v2/user/login", { "username": "jack", "password": "p4ssW0rd" })
         .reply(
           200,
           {
@@ -183,7 +183,7 @@ describe(`OpenAPI Security`, function () {
         );
 
       nock("http://petstore.swagger.io:80", { encodedQueryParams: true })
-        .post("/v2/user/login", "[object Object]")
+        .post("/v2/user/login", { "username": "jack", "password": "p4ssW0rd" })
         .reply(
           200,
           {
@@ -294,7 +294,7 @@ describe(`OpenAPI Security`, function () {
         );
 
       nock("http://petstore.swagger.io:80", { encodedQueryParams: true })
-        .post("/v2/user/login", "[object Object]")
+        .post("/v2/user/login", { "username": "jack", "password": "p4ssW0rd" })
         .reply(
           200,
           {
@@ -405,7 +405,7 @@ describe(`OpenAPI Security`, function () {
         );
 
       nock("http://petstore.swagger.io:80", { encodedQueryParams: true })
-        .post("/v2/user/login", "[object Object]")
+        .post("/v2/user/login", { "username": "jack", "password": "p4ssW0rd" })
         .reply(
           200,
           {
@@ -516,7 +516,7 @@ describe(`OpenAPI Security`, function () {
         );
 
       nock("http://petstore.swagger.io:80", { encodedQueryParams: true })
-        .post("/v2/user/login", "[object Object]")
+        .post("/v2/user/login", { "username": "jack", "password": "p4ssW0rd" })
         .reply(
           200,
           {
@@ -809,7 +809,7 @@ describe(`OpenAPI Security`, function () {
           );
 
         nock("http://petstore.swagger.io:80", { encodedQueryParams: true })
-          .post("/v2/user/login", "[object Object]")
+          .post("/v2/user/login", { "username": "jack", "password": "p4ssW0rd" })
           .reply(
             200,
             {

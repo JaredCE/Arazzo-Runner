@@ -1,6 +1,6 @@
 {
   "name": "arazzo-runner",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "A runner to run through Arazzo Document workflows",
   "main": "index.js",
   "scripts": {

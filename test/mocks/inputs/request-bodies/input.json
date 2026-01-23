@@ -1,0 +1,66 @@
+{
+    "addPet-application/json": {
+        "pet": {
+            "category": {
+                "id": 1,
+                "name": "mammal"
+            },
+            "name": "pooch",
+            "photoUrls": [
+                "https://google.com"
+            ],
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "dog"
+                }
+            ],
+            "status": "pending"
+        }
+    },
+    "updatePet-application/xml": {
+        "petId": 1,
+        "petDrink": {
+            "name": "water",
+            "ingredients": [
+                {
+                    "id": 1,
+                    "name": "water"
+                }
+            ]
+        }
+    },
+    "updatePet-text/xml": {
+        "petId": 1,
+        "petDrink": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><root><name>water</name><ingredients><id>1</id><name>water</name></ingredients></root>"
+    },
+    "updatePet-application/x-www-form-urlencoded": {
+        "petId": 1,
+        "form": {
+            "name": "pete",
+            "status": "pending"
+        }
+    },
+    "updatePet-application/x-www-form-urlencoded-string": {
+        "petId": 1,
+        "form": "name=pete&status=pending"
+    },
+    "uploadImage-multipart/form-data": {
+        "petId": 1,
+        "form": {
+            "file": "SGVsbG8gd29ybGQh"
+        }
+    },
+    "updatePet-text/html": {
+        "petId": 1,
+        "petDrink": "<html><body><p>Hello World!</p></body></html>"
+    },
+    "updatePet-text/plain": {
+        "petId": 1,
+        "petDrink": "Hello World!"
+    },
+    "uploadImage-application/octet-stream": {
+        "petId": 1,
+        "form": "SGVsbG8gd29ybGQh"
+    }
+}

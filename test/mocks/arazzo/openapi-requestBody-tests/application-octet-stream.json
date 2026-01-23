@@ -1,0 +1,55 @@
+{
+  "$schema": "https://spec.openapis.org/arazzo/1.0/schema/2025-10-15",
+  "arazzo": "1.0.1",
+  "info": {
+    "title": "Pets",
+    "description": "The Arazzo Workflow for a Pet Store Pet",
+    "summary": "Araazo Workflow for Pet Store Pet",
+    "version": "1.0.0"
+  },
+  "sourceDescriptions": [
+    {
+      "name": "pets-openAPI",
+      "url": "https://raw.githubusercontent.com/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/request-bodies/application-octet-stream/body.json",
+      "type": "openapi"
+    }
+  ],
+  "workflows": [
+    {
+      "workflowId": "uploadImage-application/octet-stream",
+      "summary": "Update a pet",
+      "description": "Update a pet with application/octet-stream",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "petId": {
+            "type": "integer"
+          },
+          "form": {
+            "type": "string"
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepId": "uploadImage",
+          "operationId": "uploadFile",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "petId",
+              "value": "$inputs.petId"
+            }
+          ],
+          "requestBody": {
+            "contentType": "application/octet-stream",
+            "payload": "$inputs.form"
+          },
+          "outputs": {
+            "id": "$response.body#/id"
+          }
+        }
+      ]
+    }
+  ]
+}
