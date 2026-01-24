@@ -230,18 +230,34 @@ class Arazzo extends Document {
 
       if (this.openAPISteps) {
         await this.runOpenAPIStep();
+      } else if (this.isAWorkflowId) {
+        this.currentStepIndex = this.stepIndex;
+        this.currentWorkflow = this.workflow;
+        if (this.isExternalWorkflow) {
+          await this.sourceDescriptionFile.runWorkflowById(this.step.workflowId)
+          const sourceDesc = this.expression.context.sourceDescriptions[this.sourceDescriptionFile.name];
+          if (!sourceDesc[this.step.workflowId]) {
+            if (this.sourceDescriptionFile.expression?.context?.workflows?.[this.step.workflowId]?.outputs) {
+              Object.assign(sourceDesc, { [this.step.workflowId]: { outputs: this.sourceDescriptionFile.expression.context.workflows[this.step.workflowId].outputs } });
+              this.expression.context.sourceDescriptions[this.sourceDescriptionFile.name] = sourceDesc;
+            }
+          }
+        } else {
+          await this.runWorkflowById(this.step.workflowId);
+        }
+        this.stepIndex = this.currentStepIndex;
+        this.workflow = this.currentWorkflow;
       }
 
       this.isAnOperationId = false;
       this.isAWorkflowId = false;
+      this.isExternalWorkflow = false;
       this.isAnOperationPath = false;
       this.openAPISteps = false;
 
       this.logger.success(`Step ${step.stepId} completed`);
       return { noMoreSteps: false };
     } else {
-      // this.logger.notice(`All steps in ${this.workflow.workflowId} have run`);
-
       return { noMoreSteps: true };
     }
   }
@@ -653,11 +669,13 @@ class Arazzo extends Document {
     } else {
       let workflowIdArr = this.step?.workflowId?.split(".") || [];
 
-      if (workflowIdArr.length === 1) {
-        await this.runWorkflowById(workflowIdArr.at(0));
-      } else {
+      if (workflowIdArr.length !== 1) {
+        this.step.workflowId = workflowIdArr.at(-1)
+        this.isExternalWorkflow = true;
+        //   await this.runWorkflowById(workflowIdArr.at(0));
+        // } else {
         await this.sourceDescriptionFile.loadWorkflowData(this.inputFile);
-        await this.sourceDescriptionFile.runWorkflowById(workflowIdArr.at(-1));
+        // await this.sourceDescriptionFile.runWorkflowById(workflowIdArr.at(-1));
       }
     }
   }
@@ -673,6 +691,15 @@ class Arazzo extends Document {
     if (this.sourceDescriptions.length === 1) {
       return this.sourceDescriptions[0];
     } else {
+      if (this.isAnOperationId) {
+        const multipleOpenAPISourceDescriptions = this.sourceDescriptions.filter(obj => obj.type === 'openapi');
+        if (multipleOpenAPISourceDescriptions.length > 1) {
+
+        } else {
+          return multipleOpenAPISourceDescriptions[0]
+        }
+      }
+
       const operationOrWorkflowPointerArr =
         operationOrWorkflowPointer.split(".");
 
