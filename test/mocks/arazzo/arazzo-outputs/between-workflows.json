@@ -54,11 +54,14 @@
       "summary": "Deletes the current User",
       "description": "Deletes a current user",
       "inputs": {
-        "username": {
-          "type": "string"
-        },
-        "password": {
-          "type": "string"
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
         }
       },
       "steps": [
