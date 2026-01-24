@@ -2427,7 +2427,7 @@ describe(`Arazzo Document`, function () {
                 );
                 arazzo.setMainArazzo();
 
-                const spy = sinon.spy(arazzo, "runOperation");
+                const spy = sinon.spy(arazzo, "runOpenAPIStep");
 
                 try {
                   await arazzo.runWorkflows(inputFile);
@@ -4760,7 +4760,7 @@ describe(`Arazzo Document`, function () {
             );
             arazzo.setMainArazzo();
 
-            const spy = sinon.spy(arazzo, "runOperation");
+            const spy = sinon.spy(arazzo, "runOpenAPIStep");
 
             try {
               await arazzo.runWorkflows(inputFile);
@@ -4839,7 +4839,7 @@ describe(`Arazzo Document`, function () {
             );
             arazzo.setMainArazzo();
 
-            const spy = sinon.spy(arazzo, "runOperation");
+            const spy = sinon.spy(arazzo, "runOpenAPIStep");
 
             try {
               await arazzo.runWorkflows(inputFile);
@@ -4914,7 +4914,7 @@ describe(`Arazzo Document`, function () {
             );
             arazzo.setMainArazzo();
 
-            const spy = sinon.spy(arazzo, "runOperation");
+            const spy = sinon.spy(arazzo, "runOpenAPIStep");
 
             try {
               await arazzo.runWorkflows(inputFile);
@@ -5089,7 +5089,7 @@ describe(`Arazzo Document`, function () {
                       );
                       arazzo.setMainArazzo();
 
-                      const spy = sinon.spy(arazzo, "runOperation");
+                      const spy = sinon.spy(arazzo, "runOpenAPIStep");
 
                       try {
                         await arazzo.runWorkflows(inputFile);
@@ -5180,7 +5180,7 @@ describe(`Arazzo Document`, function () {
                       );
                       arazzo.setMainArazzo();
 
-                      const spy = sinon.spy(arazzo, "runOperation");
+                      const spy = sinon.spy(arazzo, "runOpenAPIStep");
 
                       try {
                         await arazzo.runWorkflows(inputFile);
