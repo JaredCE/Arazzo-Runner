@@ -1,0 +1,14 @@
+{
+    "deleteCurrentUser-apiKey": {
+        "username": "DannyB",
+        "password": "P4ssW0rd"
+    },
+    "LoginUser-apiKey": {
+        "username": "DannyB",
+        "password": "P4ssW0rd"
+    },
+    "deleteCurrentUser": {
+        "username": "DannyB",
+        "password": "P4ssW0rd"
+    }
+}

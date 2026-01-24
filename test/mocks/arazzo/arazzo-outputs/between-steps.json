@@ -15,7 +15,7 @@
   ],
   "workflows": [
     {
-      "workflowId": "LoginUser-apiKey",
+      "workflowId": "deleteCurrentUser-apiKey",
       "summary": "Deletes the current user",
       "description": "Logs the user in and then deletes them",
       "inputs": {
@@ -43,31 +43,6 @@
           "outputs": {
             "AccessToken": "$response.body#/AccessToken"
           }
-        }
-      ],
-      "outputs": {
-        "AccessToken": "$steps.LoginExistingUser.outputs.AccessToken"
-      }
-    },
-    {
-      "workflowId": "deleteCurrentUser",
-      "summary": "Deletes the current User",
-      "description": "Deletes a current user",
-      "inputs": {
-        "type": "object",
-        "properties": {
-          "username": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          }
-        }
-      },
-      "steps": [
-        {
-          "stepId": "LogUserIn",
-          "workflowId": "LoginUser-apiKey"
         },
         {
           "stepId": "deleteUser",
@@ -76,7 +51,7 @@
             {
               "name": "Authorization",
               "in": "header",
-              "value": "$workflows.LoginUser-apiKey.outputs.AccessToken"
+              "value": "$steps.LoginExistingUser.outputs.AccessToken"
             },
             {
               "name": "username",
