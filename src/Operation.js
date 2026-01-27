@@ -17,7 +17,8 @@ class Operation {
     this.operation = operation;
   }
 
-  async runOperation() {
+  async runOperation(retryAfter) {
+    this.retryAfter = retryAfter;
     this.buildOperation()
 
     return await this.makeRequest()
@@ -78,7 +79,7 @@ class Operation {
 
     if (this.retryAfter) {
       this.logger.notice(
-        `retryAfter was set: waiting ${this.retryAfter * 1000} seconds`,
+        `retryAfter was set: waiting ${this.retryAfter} seconds`,
       );
       await sleep(this.retryAfter * 1000);
     }
