@@ -1,0 +1,62 @@
+{
+    "onFailure-goto-step": {
+        "username": "DannyB",
+        "password": "P4ssW0rd",
+        "user": {
+            "username": "KanyeW",
+            "firstName": "Kanye",
+            "lastName": "West",
+            "email": "Kanye.west@yeezy.com",
+            "password": "K4nY3",
+            "phone": "+1745376573454",
+            "userStatus": 1
+        }
+    },
+    "onFailure-goto-workflow": {
+        "username": "DannyB",
+        "password": "P4ssW0rd",
+        "user": {
+            "username": "KanyeW",
+            "firstName": "Kanye",
+            "lastName": "West",
+            "email": "Kanye.west@yeezy.com",
+            "password": "K4nY3",
+            "phone": "+1745376573454",
+            "userStatus": 1
+        }
+    },
+    "deleteCurrentUser-rule": {
+        "username": "DannyB",
+        "password": "P4ssW0rd"
+    },
+    "deleteCurrentUser-retry-rule": {
+        "username": "DannyB",
+        "password": "P4ssW0rd"
+    },
+    "deleteCurrentUser-retry-step-rule": {
+        "username": "DannyB",
+        "password": "P4ssW0rd",
+        "user": {
+            "username": "KanyeW",
+            "firstName": "Kanye",
+            "lastName": "West",
+            "email": "Kanye.west@yeezy.com",
+            "password": "K4nY3",
+            "phone": "+1745376573454",
+            "userStatus": 1
+        }
+    },
+    "createUser-retry-workflow-rule": {
+        "username": "DannyB",
+        "password": "P4ssW0rd",
+        "user": {
+            "username": "KanyeW",
+            "firstName": "Kanye",
+            "lastName": "West",
+            "email": "Kanye.west@yeezy.com",
+            "password": "K4nY3",
+            "phone": "+1745376573454",
+            "userStatus": 1
+        }
+    }
+}
