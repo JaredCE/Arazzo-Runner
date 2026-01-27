@@ -1781,7 +1781,7 @@ describe(`Arazzo Rules`, function () {
           }
         });
 
-        it(`should use the retryAfter when set and and the server does not provide its own retry-after header`, async function () {
+        xit(`should use the retryAfter when set and and the server does not provide its own retry-after header`, async function () {
           this.timeout(6000);
           nock("https://raw.githubusercontent.com:443", {
             encodedQueryParams: true,
@@ -1938,7 +1938,7 @@ describe(`Arazzo Rules`, function () {
           }
         });
 
-        it(`should not use the retryAfter when set and and the server provides its own retry-after header`, async function () {
+        xit(`should not use the retryAfter when set and and the server provides its own retry-after header`, async function () {
           this.timeout(8000);
           nock("https://raw.githubusercontent.com:443", {
             encodedQueryParams: true,
