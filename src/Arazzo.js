@@ -8,6 +8,8 @@ const https = require("node:https");
 const path = require("node:path");
 
 const Document = require("./Document");
+const ExecutionContext = require('./ExecutionContext');
+const ExecutionContextStack = require('./ExecutionContextStack');
 const Expression = require("./Expression");
 const Operation = require('./Operation');
 const Rules = require("./Rules");
@@ -25,6 +27,8 @@ class Arazzo extends Document {
     this.stepRunRules = {};
     this.workflowRunRules = {};
     this.retrySet = new Set();
+    this.context = new Map();
+    this.executionStack = new ExecutionContextStack();
     this.retryLimits = {};
     this.stepContext = {};
   }
@@ -92,61 +96,105 @@ class Arazzo extends Document {
       this.abortWorkflowController = new AbortController();
     }
 
-    const rules = new Rules(this.expression, { logger: this.logger });
+
     const workflow = await this.JSONPickerToIndex("workflows", index);
 
     if (workflow) {
-      this.logger.notice(`Running Workflow: ${workflow.workflowId}`);
-
-      this.workflow = workflow;
-      this.workflowId = workflow.workflowId;
-
-      if (workflow.dependsOn) {
-        await this.runDependsOnWorkflows();
-
-        this.workflow = workflow;
-      }
-
-      this.inputs = await this.inputFile.getWorkflowInputs(
-        this.workflow.workflowId,
-        this.workflow.inputs,
+      const context = new ExecutionContext(
+        'workflow',
+        workflow.workflowId,
+        index,
+        null,
+        workflow.workflowId,
+        null
       );
+      this.executionStack.push(context);
 
-      this.expression.addToContext("inputs", this.inputs);
+      try {
+        await this.buildWorkflow(workflow);
+        // const prevWorkflowContexts = this.executionStack.getContextsByType('workflow')
+        //   .slice(0, -1);
+        // if (prevWorkflowContexts.some(ctx => ctx.workflowId === workflow.workflowId)) {
+        //   throw new Error(`Circular workflow dependency detected: ${workflow.workflowId}`);
+        // }
 
-      if (this.workflow.onSuccess) {
-        // this.workflow.rules.set(this.workflow.onSuccess);
-        rules.setSuccessRules(this.workflow.onSuccess);
-      }
 
-      if (this.workflow.onFailure) {
-        // this.workflow.rules.setWorkflowFailures(this.workflow.onFailure);
-        rules.setFailureRules(this.workflow.onFailure);
-      }
+        this.logger.notice(`Running Workflow: ${this.workflow.workflowId}`);
 
-      this.workflow.rules = rules;
+        // this.workflow = workflow;
+        // this.workflowId = workflow.workflowId;
 
-      await this.runSteps();
+        if (this.workflow.dependsOn) {
+          await this.runDependsOnWorkflows();
 
-      if (this.workflow.outputs) {
-        const outputs = {};
-
-        for (const key in this.workflow.outputs) {
-          const value = this.expression.resolveExpression(
-            this.workflow.outputs[key],
-          );
-
-          Object.assign(outputs, { [key]: value });
+          this.workflow = workflow;
         }
 
-        this.expression.addToContext("workflows", {
-          [this.workflow.workflowId]: { outputs: outputs },
-        });
-      }
+        // this.inputs = await this.inputFile.getWorkflowInputs(
+        //   this.workflow.workflowId,
+        //   this.workflow.inputs,
+        // );
 
-      this.logger.success(`Workflow ${workflow.workflowId} completed`);
-      return { noMoreWorkflows: false };
+        // this.expression.addToContext("inputs", this.inputs);
+
+        // if (this.workflow.successActions) {
+        //   rules.setSuccessRules(this.workflow.successActions);
+        // }
+
+        // if (this.workflow.failureActions) {
+        //   rules.setFailureRules(this.workflow.failureActions);
+        // }
+
+        // this.workflow.rules = rules;
+
+        await this.runSteps();
+
+        if (this.workflow.outputs) {
+          const outputs = {};
+
+          for (const key in this.workflow.outputs) {
+            const value = this.expression.resolveExpression(
+              this.workflow.outputs[key],
+            );
+
+            Object.assign(outputs, { [key]: value });
+          }
+
+          this.expression.addToContext("workflows", {
+            [this.workflow.workflowId]: { outputs: outputs },
+          });
+        }
+
+        this.logger.success(`Workflow ${workflow.workflowId} completed`);
+        return { noMoreWorkflows: false };
+      } finally {
+        this.executionStack.pop();
+      }
     }
+  }
+
+  async buildWorkflow(workflow) {
+    const rules = new Rules(this.expression, { logger: this.logger });
+
+    this.workflow = workflow;
+    this.workflowId = workflow.workflowId;
+
+    this.inputs = await this.inputFile.getWorkflowInputs(
+      this.workflow.workflowId,
+      this.workflow.inputs,
+    );
+
+    this.expression.addToContext("inputs", this.inputs);
+
+    if (this.workflow.successActions) {
+      rules.setSuccessRules(this.workflow.successActions);
+    }
+
+    if (this.workflow.failureActions) {
+      rules.setFailureRules(this.workflow.failureActions);
+    }
+
+    this.workflow.rules = rules;
   }
 
   /**
@@ -205,22 +253,36 @@ class Arazzo extends Document {
 
     const step = this.workflow.steps[index];
 
-    if (step) {
+    const context = new ExecutionContext(
+      'step',
+      step.stepId,
+      this.workflowIndex,
+      index,
+      this.workflow.workflowId,
+      step.stepId
+    );
+    this.executionStack.push(context);
+
+    try {
+      // if (this.executionStack.depth > 1) {
+      //   const prevContexts = this.executionStack.getContextsByType('step')
+      //     .slice(0, -1); // Exclude current
+      //   if (prevContexts.some(ctx => ctx.stepId === step.stepId)) {
+      //     throw new Error(`Circular step dependency detected: ${step.stepId}`);
+      //   }
+      // }
+
       this.step = step;
       const rules = new Rules(this.expression, { logger: this.logger });
-      // if (!this.stepContext[step.stepId])
-      //   Object.assign(this.stepContext, { [step.stepId]: {} });
 
       this.logger.notice(`Running Step: ${step.stepId}`);
 
       if (this.step.onSuccess) {
         rules.setSuccessRules(this.step.onSuccess);
-        // this.workflow.rules.setStepSuccesses(this.step.onSuccess);
       }
 
       if (this.step.onFailure) {
         rules.setFailureRules(this.step.onFailure);
-        // this.workflow.rules.setStepFailures(this.step.onFailure);
       }
 
       rules.combineRules(this.workflow.rules);
@@ -231,22 +293,7 @@ class Arazzo extends Document {
       if (this.openAPISteps) {
         await this.runOpenAPIStep();
       } else if (this.isAWorkflowId) {
-        this.currentStepIndex = this.stepIndex;
-        this.currentWorkflow = this.workflow;
-        if (this.isExternalWorkflow) {
-          await this.sourceDescriptionFile.runWorkflowById(this.step.workflowId)
-          const sourceDesc = this.expression.context.sourceDescriptions[this.sourceDescriptionFile.name];
-          if (!sourceDesc[this.step.workflowId]) {
-            if (this.sourceDescriptionFile.expression?.context?.workflows?.[this.step.workflowId]?.outputs) {
-              Object.assign(sourceDesc, { [this.step.workflowId]: { outputs: this.sourceDescriptionFile.expression.context.workflows[this.step.workflowId].outputs } });
-              this.expression.context.sourceDescriptions[this.sourceDescriptionFile.name] = sourceDesc;
-            }
-          }
-        } else {
-          await this.runWorkflowById(this.step.workflowId);
-        }
-        this.stepIndex = this.currentStepIndex;
-        this.workflow = this.currentWorkflow;
+        await this.runWorkflowStep()
       }
 
       this.isAnOperationId = false;
@@ -256,10 +303,29 @@ class Arazzo extends Document {
       this.openAPISteps = false;
 
       this.logger.success(`Step ${step.stepId} completed`);
-      return { noMoreSteps: false };
-    } else {
-      return { noMoreSteps: true };
+
+    } finally {
+      this.executionStack.pop();
     }
+  }
+
+  async runWorkflowStep() {
+    this.currentStepIndex = this.stepIndex;
+    this.currentWorkflow = this.workflow;
+    if (this.isExternalWorkflow) {
+      await this.sourceDescriptionFile.runWorkflowById(this.step.workflowId)
+      const sourceDesc = this.expression.context.sourceDescriptions[this.sourceDescriptionFile.name];
+      if (!sourceDesc[this.step.workflowId]) {
+        if (this.sourceDescriptionFile.expression?.context?.workflows?.[this.step.workflowId]?.outputs) {
+          Object.assign(sourceDesc, { [this.step.workflowId]: { outputs: this.sourceDescriptionFile.expression.context.workflows[this.step.workflowId].outputs } });
+          this.expression.context.sourceDescriptions[this.sourceDescriptionFile.name] = sourceDesc;
+        }
+      }
+    } else {
+      await this.runWorkflowById(this.step.workflowId);
+    }
+    this.stepIndex = this.currentStepIndex;
+    this.workflow = this.currentWorkflow;
   }
 
   /**
@@ -278,7 +344,7 @@ class Arazzo extends Document {
     };
 
     const apiOperation = new Operation(this.operation, this.sourceDescriptionFile, this.expression, this.inputs, this.logger, miniStep);
-    const response = await apiOperation.runOperation()
+    const response = await apiOperation.runOperation(this.retryAfter)
     await this.dealWithResponse(response)
   }
 
@@ -295,23 +361,25 @@ class Arazzo extends Document {
 
       if (passedSuccessCriteria) {
         this.logger.success("All criteria checks passed");
+
         if (this.currentRetryRule) {
           if (this.retryContext.doNotDeleteRetryLimits) {
             this.retryLimits[this.currentRetryRule] = 0;
             this.logger.notice("Retries stopped");
+            delete this.retryAfter;
           }
         }
 
         await this.dealWithPassedRule(response);
       } else {
         this.logger.error("Not all criteria checks passed");
-        if (this.step.onFailure) {
-          await this.dealWithFailedRule();
-        } else {
-          throw new Error(
-            `${this.step.stepId} step of the ${this.workflow.workflowId} workflow failed the successCriteria`,
-          );
-        }
+        // if (this.step.onFailure) {
+        await this.dealWithFailedRule(response);
+        // } else {
+        //   throw new Error(
+        //     `${this.step.stepId} step of the ${this.workflow.workflowId} workflow failed the successCriteria`,
+        //   );
+        // }
       }
     } else {
       if (this.step?.outputs) {
@@ -448,6 +516,11 @@ class Arazzo extends Document {
         this.logger.notice(
           `${this.step.stepId} onFailure Retry rule triggered`,
         );
+
+      if (response.headers.has('retry-after')) {
+        this.retryAfter = response.headers.get('retry-after');
+      }
+
       await this.retryProcessing(whatNext);
     }
   }
@@ -543,8 +616,15 @@ class Arazzo extends Document {
       return `${num}${suffix}`;
     };
 
+    const currentContext = this.executionStack.current;
+    currentContext.isRetrying = true;
+    currentContext.retryCount++;
+    // console.log(this.currentContext)
+    // this.currentContext.currentlyBeingRetried = true;
+
     this.retryContext = {
       doNotDeleteRetryLimits: true,
+      originContext: currentContext,
     };
 
     let shouldRunRule = true;
@@ -565,34 +645,13 @@ class Arazzo extends Document {
         this.retryContext.doNotDeleteRetryLimits = false;
 
         if (whatNext.stepId) {
-          this.logger.notice(
-            `Rule ${whatNext.name} requires Step ${whatNext.stepId} running first`,
-          );
-
-          const stepIndex = this.findStepIndexInWorkflowByStepId(
-            whatNext.stepId,
-          );
-
-          await this.runStep(stepIndex);
-
-          this.logger.notice(
-            `Rule ${whatNext.name} Step ${whatNext.stepId} has run`,
-          );
+          await this.retryStep(whatNext)
         } else {
-          this.logger.notice(
-            `Rule ${whatNext.name} requires Workflow ${whatNext.workflowId} running first`,
-          );
-
-          const workflowIndex = this.findWorkflowIndexByWorkflowId(
-            whatNext.workflowId,
-          );
-
-          await this.runWorkflow(workflowIndex);
-
-          this.logger.notice(
-            `Rule ${whatNext.name} Workflow ${whatNext.workflowId} has run`,
-          );
+          await this.retryWorkflow(whatNext)
         }
+
+        // After retry step/workflow completes, restore our context
+        await this.restoreContextFromRetry(currentContext);
       }
 
       if (!this.retryAfter && whatNext.retryAfter)
@@ -606,7 +665,7 @@ class Arazzo extends Document {
 
         let count = this.retryLimits[whatNext.name];
 
-        await this.runStep(this.stepIndex);
+        await this.runStep(currentContext.stepIndex);
 
         if (this.retryLimits[whatNext.name] !== 0) {
           count--;
@@ -616,8 +675,67 @@ class Arazzo extends Document {
       } while (this.retryLimits[whatNext.name] > 0);
     }
 
+    currentContext.isRetrying = false;
+
     if (this.retryLimits[whatNext.name] === 0)
       this.retrySet.delete(whatNext.name);
+  }
+
+  /**
+   * @private
+   * @param {*} whatNext
+   */
+  async retryStep(whatNext) {
+    const currentContext = this.executionStack.current;
+
+    this.logger.notice(
+      `Rule ${whatNext.name} requires Step ${whatNext.stepId} running first`,
+    );
+
+    const stepIndex = this.findStepIndexInWorkflowByStepId(
+      whatNext.stepId,
+    );
+
+    await this.runStep(stepIndex);
+
+    this.logger.notice(
+      `Rule ${whatNext.name} Step ${whatNext.stepId} has run`,
+    );
+  }
+
+  /**
+   * @private
+   * @param {*} whatNext
+   */
+  async retryWorkflow(whatNext) {
+    const currentContext = this.executionStack.current;
+
+    this.logger.notice(
+      `Rule ${whatNext.name} requires Workflow ${whatNext.workflowId} running first`,
+    );
+
+    const workflowIndex = this.findWorkflowIndexByWorkflowId(
+      whatNext.workflowId,
+    );
+
+    await this.runWorkflow(workflowIndex);
+
+    this.logger.notice(
+      `Rule ${whatNext.name} Workflow ${whatNext.workflowId} has run`,
+    );
+  }
+
+  async restoreContextFromRetry(context) {
+    // Restore the indexes and state
+    this.workflowIndex = context.workflowIndex;
+    this.stepIndex = context.stepIndex;
+    const workflow = await this.JSONPickerToIndex("workflows", context.workflowIndex);
+    await this.buildWorkflow(workflow)
+    this.step = this.workflow.steps[context.stepIndex];
+
+    this.logger.notice(
+      `Restored context: workflow=${context.workflowId}, step=${context.stepId}`
+    );
   }
 
   /**

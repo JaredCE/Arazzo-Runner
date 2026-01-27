@@ -40,9 +40,9 @@ class Rules {
     this.successRules = [];
 
     this.logger = options?.logger || {
-      notice: () => {},
-      error: () => {},
-      success: () => {},
+      notice: () => { },
+      error: () => { },
+      success: () => { },
     };
   }
 
@@ -83,9 +83,9 @@ class Rules {
 
     const obj = {};
 
-    if (successRules) {
+    if (successRules && this.rules.length) {
       this.logger.notice(`Running onSuccess Rules`);
-    } else {
+    } else if (!successRules && this.rules.length) {
       this.logger.notice(`Running onFailure Rules`);
     }
 

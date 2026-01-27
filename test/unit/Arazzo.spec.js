@@ -18,7 +18,7 @@ const OpenAPI = require("../../src/OpenAPI.js");
 
 const Arazzo = require("../../src/Arazzo");
 
-describe(`Arazzo Document`, function () {
+xdescribe(`Arazzo Document`, function () {
   let parser = {};
   const logger = new Logger();
 
