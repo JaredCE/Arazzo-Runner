@@ -1,0 +1,160 @@
+{
+  "$schema": "https://spec.openapis.org/arazzo/1.0/schema/2025-10-15",
+  "arazzo": "1.0.1",
+  "info": {
+    "title": "users",
+    "description": "The Arazzo Workflow for a Pet Store User",
+    "summary": "Araazo Workflow for Pet Store User",
+    "version": "1.0.0"
+  },
+  "sourceDescriptions": [
+    {
+      "name": "users-openAPI",
+      "url": "https://raw.githubusercontent.com/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/security/api-key/users-openapi.json",
+      "type": "openapi"
+    }
+  ],
+  "workflows": [
+    {
+      "workflowId": "onSuccess-goto-workflow",
+      "summary": "Deletes the current user",
+      "description": "Logs the user in and then deletes them",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "username": {
+                "type": "string"
+              },
+              "firstName": {
+                "type": "string"
+              },
+              "lastName": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
+              },
+              "phone": {
+                "type": "string"
+              },
+              "userStatus": {
+                "type": "integer",
+                "description": "User Status"
+              }
+            }
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepId": "LoginExistingUser",
+          "operationId": "loginUser",
+          "requestBody": {
+            "contentType": "application/json",
+            "payload": {
+              "username": "$inputs.username",
+              "password": "$inputs.password"
+            }
+          },
+          "outputs": {
+            "AccessToken": "$response.body#/AccessToken"
+          },
+          "successCriteria": [
+            {
+              "condition": "$statusCode == 200"
+            }
+          ],
+          "onSuccess": [
+            {
+              "criteria": [
+                {
+                  "condition": "$statusCode == 200"
+                }
+              ],
+              "name": "gotoCreateUser",
+              "workflowId": "Create-a-User",
+              "type": "goto"
+            }
+          ]
+        },
+        {
+          "stepId": "deleteUser",
+          "operationId": "deleteUser",
+          "parameters": [
+            {
+              "name": "Authorization",
+              "in": "header",
+              "value": "$steps.LoginExistingUser.outputs.AccessToken"
+            },
+            {
+              "name": "username",
+              "in": "path",
+              "value": "$inputs.username"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "workflowId": "Create-a-User",
+      "summary": "Create a new User",
+      "description": "Creates a new user",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "username": {
+                "type": "string"
+              },
+              "firstName": {
+                "type": "string"
+              },
+              "lastName": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
+              },
+              "phone": {
+                "type": "string"
+              },
+              "userStatus": {
+                "type": "integer",
+                "description": "User Status"
+              }
+            }
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepId": "createUser",
+          "operationId": "createUser",
+          "requestBody": {
+            "contentType": "application/json",
+            "payload": {
+              "user": "$inputs.user"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
