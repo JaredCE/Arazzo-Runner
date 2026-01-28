@@ -58,5 +58,76 @@
             "phone": "+1745376573454",
             "userStatus": 1
         }
+    },
+    "onSuccess-end": {
+        "username": "DannyB",
+        "password": "P4ssW0rd"
+    },
+    "onSuccess-end-middleStep": {
+        "username": "DannyB",
+        "password": "P4ssW0rd"
+    },
+    "successActions-end": {
+        "username": "DannyB",
+        "password": "P4ssW0rd"
+    },
+    "successActions-end-middleStep": {
+        "username": "DannyB",
+        "password": "P4ssW0rd"
+    },
+    "successActions-step-overrides": {
+        "username": "DannyB",
+        "password": "P4ssW0rd"
+    },
+    "onSuccess-goto-step": {
+        "username": "DannyB",
+        "password": "P4ssW0rd",
+        "user": {
+            "username": "KanyeW",
+            "firstName": "Kanye",
+            "lastName": "West",
+            "email": "Kanye.west@yeezy.com",
+            "password": "K4nY3",
+            "phone": "+1745376573454",
+            "userStatus": 1
+        }
+    },
+    "onSuccess-goto-workflow": {
+        "username": "DannyB",
+        "password": "P4ssW0rd",
+        "user": {
+            "username": "KanyeW",
+            "firstName": "Kanye",
+            "lastName": "West",
+            "email": "Kanye.west@yeezy.com",
+            "password": "K4nY3",
+            "phone": "+1745376573454",
+            "userStatus": 1
+        }
+    },
+    "onSuccess-goto-middleStep": {
+        "username": "DannyB",
+        "password": "P4ssW0rd"
+    },
+    "onSuccess-goto-workflow-from-middleStep": {
+        "username": "DannyB",
+        "password": "P4ssW0rd",
+        "user": {
+            "username": "KanyeW",
+            "firstName": "Kanye",
+            "lastName": "West",
+            "email": "Kanye.west@yeezy.com",
+            "password": "K4nY3",
+            "phone": "+1745376573454",
+            "userStatus": 1
+        }
+    },
+    "successActions-goto-firstStep": {
+        "username": "DannyB",
+        "password": "P4ssW0rd"
+    },
+    "successActions-goto-step-override": {
+        "username": "DannyB",
+        "password": "P4ssW0rd"
     }
 }
