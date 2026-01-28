@@ -38,7 +38,7 @@
   "dependencies": {
     "@redocly/openapi-core": "^2.14.5",
     "@swaggerexpert/arazzo-runtime-expression": "^1.0.1",
-    "@swaggerexpert/json-pointer": "^2.10.2",
+    "@swaggerexpert/json-pointer": "^3.0.1",
     "@swaggerexpert/jsonpath": "^4.0.1",
     "@xmldom/xmldom": "^0.8.11",
     "ajv": "^8.17.1",
