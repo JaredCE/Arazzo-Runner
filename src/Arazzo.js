@@ -400,13 +400,58 @@ class Arazzo extends Document {
     for (const criteriaObject of this.step.successCriteria) {
       if (criteriaObject?.type) {
         if (criteriaObject.type === "regex") {
+          this.logger.notice(`Testing: ${criteriaObject.context} matches ${criteriaObject.condition}`)
           const hasPassedCheck = this.expression.checkRegexExpression(
             criteriaObject.context,
             criteriaObject.condition,
           );
 
-          if (hasPassedCheck) hasPassed.push(true);
+          if (hasPassedCheck) {
+            hasPassed.push(true);
+            this.logger.success(`${criteriaObject.condition} passed`);
+          } else {
+            this.logger.error(`${criteriaObject.condition} failed`);
+          }
+        } else if (criteriaObject.type === 'jsonpath') {
+          this.logger.notice(`Testing jsonPath: ${criteriaObject.context} matches ${criteriaObject.condition}`)
+
+          const hasPassedCheck = this.expression.checkJSONPathExpression(
+            criteriaObject.context,
+            criteriaObject.condition,
+          );
+
+          if (hasPassedCheck) {
+            hasPassed.push(true);
+            this.logger.success(`${criteriaObject.condition} passed`);
+          } else {
+            this.logger.error(`${criteriaObject.condition} failed`);
+          }
+        } else if (criteriaObject.type === 'xpath') {
+          this.logger.notice(`Testing xPath: ${criteriaObject.context} matches ${criteriaObject.condition}`)
+
+          const hasPassedCheck = this.expression.checkXPathExpression(
+            criteriaObject.context,
+            criteriaObject.condition,
+          );
+
+          if (hasPassedCheck) {
+            hasPassed.push(true);
+            this.logger.success(`${criteriaObject.condition} passed`);
+          } else {
+            this.logger.error(`${criteriaObject.condition} failed`);
+          }
         } else {
+          this.logger.notice(`Checking: ${criteriaObject.condition}`);
+          const hasPassedCheck = this.expression.checkSimpleExpression(
+            criteriaObject.condition,
+          );
+
+          if (hasPassedCheck) {
+            hasPassed.push(true);
+            this.logger.success(`${criteriaObject.condition} passed`);
+          } else {
+            this.logger.error(`${criteriaObject.condition} failed`);
+          }
         }
       } else {
         this.logger.notice(`Checking: ${criteriaObject.condition}`);
@@ -511,7 +556,7 @@ class Arazzo extends Document {
     } else if (whatNext.goto) {
       this.logger.notice(`${this.step.stepId} onFailure GoTo rule triggered`);
       await this.gotoRule(whatNext);
-    } else {
+    } else if (whatNext.retry) {
       if (this.retrySet.has(whatNext.name) === false)
         this.logger.notice(
           `${this.step.stepId} onFailure Retry rule triggered`,
