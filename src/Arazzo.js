@@ -127,7 +127,8 @@ class Arazzo extends Document {
         if (this.workflow.dependsOn) {
           await this.runDependsOnWorkflows();
 
-          this.workflow = workflow;
+          const currentContext = this.executionStack.current;
+          await this.restoreContextFromRetry(currentContext);
         }
 
         // this.inputs = await this.inputFile.getWorkflowInputs(
@@ -204,11 +205,41 @@ class Arazzo extends Document {
     this.logger.notice("Running Workflows from dependsOn");
 
     for await (const workflowId of this.workflow.dependsOn) {
-      const workflowIndex = this.findWorkflowIndexByWorkflowId(workflowId);
+      let workflowIdArr = workflowId?.split(".") || [];
+      let workflowIndex = -1;
+      if (workflowIdArr.length !== 1) {
+        const actualWorkflowId = workflowIdArr.at(-1);
 
-      if (workflowIndex !== -1) {
-        await this.runWorkflow(workflowIndex);
+        const joinedoperationOrWorkflowPointer = `${workflowIdArr[0]}.${workflowIdArr[1]}`;
+
+        const sourceDescription = this.expression.resolveExpression(
+          joinedoperationOrWorkflowPointer,
+        );
+
+        await this.getSourceDescriptionFile(sourceDescription);
+        await this.sourceDescriptionFile.loadWorkflowData(this.inputFile);
+
+        workflowIndex = this.sourceDescriptionFile.findWorkflowIndexByWorkflowId(actualWorkflowId)
+
+        if (workflowIndex !== -1) {
+          await this.sourceDescriptionFile.runWorkflow(workflowIndex);
+          const sourceDesc = this.expression.context.sourceDescriptions[this.sourceDescriptionFile.name];
+          if (!sourceDesc[actualWorkflowId]) {
+            if (this.sourceDescriptionFile.expression?.context?.workflows?.[actualWorkflowId]?.outputs) {
+              Object.assign(sourceDesc, { [actualWorkflowId]: { outputs: this.sourceDescriptionFile.expression.context.workflows[actualWorkflowId].outputs } });
+              this.expression.context.sourceDescriptions[this.sourceDescriptionFile.name] = sourceDesc;
+            }
+          }
+        }
+      } else {
+        workflowIndex = this.findWorkflowIndexByWorkflowId(workflowId);
+
+        if (workflowIndex !== -1) {
+          await this.runWorkflow(workflowIndex);
+        }
       }
+
+
     }
 
     this.logger.success("All Workflows from dependsOn have run");
@@ -806,25 +837,9 @@ class Arazzo extends Document {
   async loadOperationData() {
     this.sourceDescription = this.getOperationIdSourceDescription();
 
-    if (!this.loadedSourceDescriptions[this.sourceDescription.name]) {
-      this.logger.notice(
-        `Getting Source Description for: ${this.sourceDescription.name}`,
-      );
-
-      this.sourceDescriptionFile = await this.docFactory.buildDocument(
-        this.sourceDescription.type,
-        this.sourceDescription.url,
-        this.sourceDescription.name,
-        { logger: this.logger, config: this.config },
-      );
-
-      Object.assign(this.loadedSourceDescriptions, {
-        [this.sourceDescription.name]: true,
-      });
-    }
+    await this.getSourceDescriptionFile(this.sourceDescription)
 
     if (this.isAnOperationId) {
-      // this.logger.notice(`Getting OperationId: ${this.step.operationId}`);
       let operationId = this.step.operationId;
 
       operationId = operationId.split(".").at(-1);
@@ -840,6 +855,33 @@ class Arazzo extends Document {
         await this.sourceDescriptionFile.loadWorkflowData(this.inputFile);
         // await this.sourceDescriptionFile.runWorkflowById(workflowIdArr.at(-1));
       }
+    }
+  }
+
+  async getSourceDescriptionFile(sourceDescription) {
+    if (!this.loadedSourceDescriptions[sourceDescription.name]) {
+      this.logger.notice(
+        `Getting Source Description for: ${sourceDescription.name}`,
+      );
+
+      this.sourceDescriptionFile = await this.docFactory.buildDocument(
+        sourceDescription.type,
+        sourceDescription.url,
+        sourceDescription.name,
+        { logger: this.logger, config: this.config },
+      );
+
+      Object.assign(this.loadedSourceDescriptions, {
+        [sourceDescription.name]: { loaded: true, filePath: this.sourceDescriptionFile.filePath },
+
+      });
+    } else {
+      this.sourceDescriptionFile = await this.docFactory.buildDocument(
+        sourceDescription.type,
+        this.loadedSourceDescriptions[this.sourceDescription.name].filePath,
+        sourceDescription.name,
+        { logger: this.logger, config: this.config },
+      );
     }
   }
 
