@@ -210,16 +210,26 @@ You will need to provide inputs for your clientId and clientSecret:
 
 This can handle the encoding and sending of:
 
- - application/json
- - application/xml
- - text/xml
- - text/html
- - text/plain
- - application/x-www-form-urlencoded
- - multipart/form-data
- - application/octet-stream
+- application/json
+- application/xml
+- text/xml
+- text/html
+- text/plain
+- application/x-www-form-urlencoded
+- multipart/form-data
+- application/octet-stream
 
 For anything outside of this range, it will attempt to encode as JSON if you specify an object, otherwise it will encode as plain text.
+
+## Response Bodies
+
+This can handle response bodies of:
+
+- application/json
+- application/xml
+- text/xml
+- text/html
+- text/plain
 
 ## Logging And Reporting
 
@@ -254,7 +264,3 @@ Work on Reporting still needs completeing.
 ### PathOperation
 
 Accessing an OpenAPI operation by Operation Path `'{$sourceDescriptions.petstoreDescription.url}#/paths/~1pet~1findByStatus/get'` does not work currently
-
-### Non application/json Responses
-
-Responses that do not conform to application/json do not work

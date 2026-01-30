@@ -22,6 +22,10 @@ class Document {
     this.config = config;
   }
 
+  setFilePath() {
+    this.filePath = path.resolve(this.url);
+  }
+
   async loadDocument() {
     let headers = new Headers();
     let fetchURL = new URL(this.url);
