@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --config './test/.mocharc.js'",
+    "test-specific": "mocha --config './test/.mocharc.js' --grep 'runs a dependsOn workflow belonging to another arazzo document first'",
     "test-coverage": "nyc mocha --config './test/.mocharc.js'",
     "prepare": "husky",
     "start": "node cli.js"
