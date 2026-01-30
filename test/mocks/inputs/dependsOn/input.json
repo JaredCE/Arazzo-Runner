@@ -1,0 +1,34 @@
+{
+    "getPets": {
+        "username": "DannyB",
+        "password": "P4ssW0rd",
+        "tags": [
+            "found"
+        ]
+    },
+    "createPets": {
+        "username": "DannyB",
+        "password": "P4ssW0rd",
+        "pet": {
+            "category": {
+                "id": 1,
+                "name": "dog"
+            },
+            "name": "jack",
+            "photoUrls": [
+                "https://example.com"
+            ],
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "dog"
+                }
+            ],
+            "status": "available"
+        }
+    },
+    "LoginUser-apiKey": {
+        "username": "DannyB",
+        "password": "P4ssW0rd"
+    }
+}
