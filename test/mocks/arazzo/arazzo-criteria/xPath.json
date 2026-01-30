@@ -1,0 +1,93 @@
+{
+    "$schema": "https://spec.openapis.org/arazzo/1.0/schema/2025-10-15",
+    "arazzo": "1.0.1",
+    "info": {
+        "title": "users",
+        "description": "The Arazzo Workflow for a Pet Store User",
+        "summary": "Araazo Workflow for Pet Store User",
+        "version": "1.0.0"
+    },
+    "sourceDescriptions": [
+        {
+            "name": "users-openAPI",
+            "url": "https://raw.githubusercontent.com/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/security/api-key/users-openapi.json",
+            "type": "openapi"
+        },
+        {
+            "name": "pets-openAPI",
+            "url": "https://raw.githubusercontent.com/JaredCE/Arazzo-Runner/refs/heads/main/test/mocks/openapi/pet-openapi.json",
+            "type": "openapi"
+        }
+    ],
+    "workflows": [
+        {
+            "workflowId": "getPets",
+            "summary": "gets pets by Tag",
+            "description": "Logs the user in and then gets pets",
+            "inputs": {
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "steps": [
+                {
+                    "stepId": "LoginExistingUser",
+                    "operationId": "$sourceDescriptions.users-openAPI.loginUser",
+                    "requestBody": {
+                        "contentType": "application/json",
+                        "payload": {
+                            "username": "$inputs.username",
+                            "password": "$inputs.password"
+                        }
+                    },
+                    "outputs": {
+                        "AccessToken": "$response.body#/AccessToken"
+                    },
+                    "successCriteria": [
+                        {
+                            "condition": "$statusCode == 200"
+                        }
+                    ]
+                },
+                {
+                    "stepId": "findPetsByTags",
+                    "operationId": "$sourceDescriptions.pets-openAPI.findPetsByTags",
+                    "parameters": [
+                        {
+                            "name": "Authorization",
+                            "in": "header",
+                            "value": "$steps.LoginExistingUser.outputs.AccessToken"
+                        },
+                        {
+                            "name": "tags",
+                            "in": "query",
+                            "value": "$inputs.tags"
+                        }
+                    ],
+                    "successCriteria": [
+                        {
+                            "condition": "$statusCode == 200"
+                        },
+                        {
+                            "type": "xpath",
+                            "condition": "//pet[id = '1']",
+                            "context": "$response.body"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
