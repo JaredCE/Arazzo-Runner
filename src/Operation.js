@@ -269,9 +269,20 @@ class Operation {
 
       this.expression.addToContext("response.body", json);
     } else {
-      const body = await response.body;
+      if (response.headers.has("Content-Type") && ['application/xml', 'text/xml', 'text/plain', 'text/html'].includes(response.headers.get("Content-Type"))) {
+        const data = await response?.text().catch(err => {
+          this.logger.error(
+            `Error trying to resolve ${this.step.stepId} outputs`,
+          );
+          throw new Error(err);
+        })
 
-      this.expression.addToContext("response.body", body);
+        this.expression.addToContext("response.body", data);
+      } else {
+        const body = await response.body;
+        this.expression.addToContext("response.body", body);
+      }
+
     }
   }
 
