@@ -4,7 +4,7 @@ const Arazzo = require("./Arazzo");
 const OpenAPI = require("./OpenAPI");
 
 class DocumentFactory {
-  constructor() {}
+  constructor() { }
 
   /**
    * Tests whether a string is a URL or not
@@ -40,7 +40,7 @@ class DocumentFactory {
 
     if (this.isUrl(path)) {
       await document.loadDocument();
-    } else document.setMainArazzo();
+    } else document.setFilePath();
 
     return document;
   }
