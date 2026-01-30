@@ -1,0 +1,9 @@
+{
+    "getPets": {
+        "username": "DannyB",
+        "password": "P4ssW0rd",
+        "tags": [
+            "found"
+        ]
+    }
+}
